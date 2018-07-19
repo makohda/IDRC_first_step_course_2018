@@ -22,9 +22,9 @@ If succeeded, you will get following response
     Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
 
 ## Install homebrew, a nice packge manager for macOS
-A package manager manage softwares (packages), such as install, update, and remove.  
+A package manager maintains softwares (packages), such as install, update, and remove.  
 Of course, you can manage your computer, but we usually use a package manager to make it easier.  
-Go to this page, https://brew.sh/ then, follow the install instration.  
+Go to this page, https://brew.sh/ then, follow the install instruction.  
 Open Terminal.app (is located on /Application/Utilities), then type this shell command  
 `$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`  
 _The administrator password will be required in this process_
@@ -40,19 +40,30 @@ If succeeded, you will get following response
 Wget command is a nice download utility for Web.  
 `$ brew install wget`  
 Try to download something.  
-`$ wget https://www.dropbox.com/s/smuyzxmllmoctz1/test_variant_data.tsv`
+`$ wget https://www.dropbox.com/s/smuyzxmllmoctz1/test_variant_data_01.tsv`  
 You can see the contents by this way  
-`$ cat test_variant_data.tsv`  
+`$ cat test_variant_data_01.tsv`  
 Or  
-`$ more test_variant_data.tsv`  
+`$ more test_variant_data_01.tsv`  
 Or  
-`$ less test_variant_data.tsv`  
-_Push Q key for quit._
-
-cat command is concatenate. Concatenate multiple file, like this  
-`$ cat fileA fileB`
+`$ less test_variant_data_01.tsv`  
+_Push Q key for quit_
 
 more/less is a viewer. Originally, there is more. Then, less was developped.
+
+cat command is concatenate. Concatenate multiple file, like this  
+`$ cat fileA fileB`  
+Test it
+`$ wget https://www.dropbox.com/s/5yfaiolgoi3cp3u/test_variant_data_02.tsv`  
+`$ cat test_variant_data_01.tsv test_variant_data_02.tsv`  
+To make it easier to see,  
+`$ cat test_variant_data_01.tsv test_variant_data_02.tsv | less -S`  
+_Push Q key for quit_
+-S is a option of less command. It chnage less behavior to chop-long-lines  
+Commands have their specific options. You can see like this.  
+`$ less --help`  
+`$ cat --help`
+
 
 ## Install softwares required for (minimal) WES analysis
 At first, type this, to cover scientific programs well  
