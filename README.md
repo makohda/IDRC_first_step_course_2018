@@ -1,3 +1,18 @@
+# Aim
+This mini-course is made for a lecture which let you gett a first tiny step to bioinformatic analysis.  
+It is a step by step hands-on style.
+
+This course will cover:
+- customise your macintosh environment for running bioinformatic programs
+- experience simple target resequence data analysis
+- understand what steps are there (alignment, remove duplicate, variant call..etc)
+- how interpretate variants
+
+Not cover:
+- how algorithmn works
+- how to handle massive amount data using cluster computers
+- deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how I sense danger data signs in heystacks)
+
 # Set up your mac
 
 You have to set up your macintosh environment for informatic analyses.  
@@ -53,13 +68,13 @@ more/less is a viewer. Originally, there is more. Then, less was developped.
 
 cat command is concatenate. Concatenate multiple file, like this  
 `$ cat fileA fileB`  
-Test it
+Let's test.  
 `$ wget https://www.dropbox.com/s/5yfaiolgoi3cp3u/test_variant_data_02.tsv`  
 `$ cat test_variant_data_01.tsv test_variant_data_02.tsv`  
 To make it easier to see,  
 `$ cat test_variant_data_01.tsv test_variant_data_02.tsv | less -S`  
-_Push Q key for quit_
--S is a option of less command. It chnage less behavior to chop-long-lines  
+_Push Q key for quit_  
+-S is a option of less command. It chnage less behavior to chop-long-lines.  
 Commands have their specific options. You can see like this.  
 `$ less --help`  
 `$ cat --help`
@@ -77,6 +92,8 @@ bwa for aligning reads to the reference genome (version 0.7.17)
 
 ### Install samtools
 SAMtools for manipulating next-generation sequencing data (version 1.9)  
-`$ brew search samtools`
-`$ brew info samtools`
-`$ brew install samtools`
+`$ brew search samtools`  
+`$ brew info samtools`  
+`$ brew install samtools`  
+
+
