@@ -1,1 +1,71 @@
-# juntendo_training_course_2018
+# Set up your mac
+
+You have to set up your macintosh environment for informatic analyses.  
+I know this is a first barricade to step in learning informatic skills, but this is the easiest way.
+
+## Install java (Java SE Development Kit 8u181 version)
+Java is a kind of programming launguage.  
+You need Java itself to run applications developed using Java launguage.
+
+Download Java SE Development Kit 8u181 from here  
+https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html  
+Then, install on your mac
+
+After installation, confirm it by following procedures.  
+Open Terminal.app (is located on /Application/Utilities), then type this shell command  
+`$ java -version`
+
+If succeeded, you will get following response
+
+    java version "1.8.0_181"
+    Java(TM) SE Runtime Environment (build 1.8.0_181-b13)
+    Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
+
+## Install homebrew, a nice packge manager for macOS
+A package manager manage softwares (packages), such as install, update, and remove.  
+Of course, you can manage your computer, but we usually use a package manager to make it easier.  
+Go to this page, https://brew.sh/ then, follow the install instration.  
+Open Terminal.app (is located on /Application/Utilities), then type this shell command  
+`$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`  
+_The administrator password will be required in this process_
+
+If succeeded, you will get following response
+
+    ==> Next steps:
+    - Run `brew help` to get started
+    - Further documentation:
+        https://docs.brew.sh
+
+## Let's try to install new command (program, software, or package)
+Wget command is a nice download utility for Web.  
+`$ brew install wget`  
+Try to download something.  
+`$ wget https://www.dropbox.com/s/smuyzxmllmoctz1/test_variant_data.tsv`
+You can see the contents by this way  
+`$ cat test_variant_data.tsv`  
+Or  
+`$ more test_variant_data.tsv`  
+Or  
+`$ less test_variant_data.tsv`  
+_Push Q key for quit._
+
+cat command is concatenate. Concatenate multiple file, like this  
+`$ cat fileA fileB`
+
+more/less is a viewer. Originally, there is more. Then, less was developped.
+
+## Install softwares required for (minimal) WES analysis
+At first, type this, to cover scientific programs well  
+`$ brew tap brewsci/bio`
+
+### Install bwa
+bwa for aligning reads to the reference genome (version 0.7.17)  
+`$ brew search bwa`  
+`$ brew info bwa` _see software detail information_  
+`$ brew install bwa`
+
+### Install samtools
+SAMtools for manipulating next-generation sequencing data (version 1.9)  
+`$ brew search samtools`
+`$ brew info samtools`
+`$ brew install samtools`
