@@ -148,11 +148,14 @@ You also need reference genome sequence files.
 # First analysis
 DRR006760
 - Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
-- Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown. We attempted to identify the gene responsible for autosomal recessive hereditary spastic paraplegia with cerebellar ataxia and neuropathy. Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample. Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene** in the two patients. This mutation co-segregated with the disease in the family, and located at the well-conserved amino acid. This LYST mutation was not found in 200 Japanese control DNAs. Subsequent hematological analysis in one patient could disclose peroxidase-positive large granules in the patient’s granulocytes, although he had no symptoms according to immunodeficiency or bleeding tendency.Interpretation: We considered these patients as adult Chediak-Higashi syndrome (CHS) presenting spastic paraplegia with cerebellar ataxia and neuropathy. As far as we know, this family is one of the oldest adult CHS cases in the literatures. Clinical spectrum of CHS is broader than previously recognized. Adult CHS must be considered in the differential diagnosis of AR-HSPs. The linkage analysis and exome sequencing were useful for identifying the causative mutation in this family. [less]
+- Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown.
+- Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample.
+- Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene**
 - DRA: http://ddbj.nig.ac.jp/DRASearch/study?acc=DRP000999
 - Causative gene: LYST c.4189T>G, p.F1397V
 - Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
 
+Firstly, align paired sequence reads to the 1000 genomes project-customised human reference genome build 37 (human_g1k_v37_decoy).  
 ```
 $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
@@ -161,7 +164,7 @@ $ bwa mem -t4 -M \
               samtools view -@4 -1 - | samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam
 ```  
 
-you will get following response. It will take about 51 min by my MacBookPro 2014 (2.2GHz).  
+you will get following response. It will take about few min by my MacBookPro 2014 (2.2GHz).  
 
     [M::bwa_idx_load_from_disk] read 0 ALT contigs
     [M::process] read 396040 sequences (40000040 bp)...
@@ -170,19 +173,20 @@ you will get following response. It will take about 51 min by my MacBookPro 2014
     ...snip
     [main] Version: 0.7.17-r1188
     [main] CMD: bwa mem -t4 -M -R @RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1 human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz
-    [main] Real time: 633.939 sec; CPU: 2341.969 sec
-    [bam_sort_core] merging from 4 files and 4 in-memory blocks...
-    bwa mem -t4 -M -R  human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz   2246.67s user 95.32s system 369% cpu 10:33.97 total
-    samtools view -@4 -1 -  77.93s user 1.85s system 12% cpu 10:33.97 total
-    samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam  295.67s user 46.82s system 11% cpu 51:28.08 total
+    [main] Real time: 70.132 sec; CPU: 245.810 sec
+    [bam_sort_core] merging from 0 files and 4 in-memory blocks...
+    bwa mem -t4 -M -R  human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz   225.04s user 20.79s system 350% cpu 1:10.17 total
+    samtools view -@4 -1 -  13.52s user 0.32s system 19% cpu 1:10.16 total
+    samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam  32.51s user 1.63s system 43% cpu 1:17.84 total
 
+Then, make Index file for aligned sequence file (.bam file).  
 `$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam`  
 
 you will get following response. It takes few seconds  
 
     samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam  14.11s user 1.20s system 441% cpu 3.471 total
 
-To see aligned sequence reads,  
+To see this aligned sequence reads,  
 `$ sh sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
 
 
