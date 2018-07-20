@@ -160,6 +160,7 @@ $ bwa mem -t4 -M \
               DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz | \
               samtools view -@4 -1 - | samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam
 ```  
+
 you will get following response. It will take about 51 min by my MacBookPro 2014 (2.2GHz).  
 
     [M::bwa_idx_load_from_disk] read 0 ALT contigs
@@ -175,9 +176,13 @@ you will get following response. It will take about 51 min by my MacBookPro 2014
     samtools view -@4 -1 -  77.93s user 1.85s system 12% cpu 10:33.97 total
     samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam  295.67s user 46.82s system 11% cpu 51:28.08 total
 
-`$ samtools index DRR006760_chr1.aligned_reads_sorted.bam`  
+`$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam`  
 
-To see aligned sequence reads,
+you will get following response. It takes few seconds  
+
+    samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam  14.11s user 1.20s system 441% cpu 3.471 total
+
+To see aligned sequence reads,  
 `$ sh sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
 
 
