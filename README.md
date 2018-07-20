@@ -131,15 +131,7 @@ If installation succeeded, you will get following response
     Using htslib 1.9
     Copyright (C) 2018 Genome Research Ltd.  
 
-# First analysis
-DRR006760
-- Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
-- Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown. We attempted to identify the gene responsible for autosomal recessive hereditary spastic paraplegia with cerebellar ataxia and neuropathy. Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample. Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene** in the two patients. This mutation co-segregated with the disease in the family, and located at the well-conserved amino acid. This LYST mutation was not found in 200 Japanese control DNAs. Subsequent hematological analysis in one patient could disclose peroxidase-positive large granules in the patient’s granulocytes, although he had no symptoms according to immunodeficiency or bleeding tendency.Interpretation: We considered these patients as adult Chediak-Higashi syndrome (CHS) presenting spastic paraplegia with cerebellar ataxia and neuropathy. As far as we know, this family is one of the oldest adult CHS cases in the literatures. Clinical spectrum of CHS is broader than previously recognized. Adult CHS must be considered in the differential diagnosis of AR-HSPs. The linkage analysis and exome sequencing were useful for identifying the causative mutation in this family. [less]
-- DRA: http://ddbj.nig.ac.jp/DRASearch/study?acc=DRP000999
-- Causative gene: LYST c.4189T>G, p.F1397V
-- Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
-
-
+### Download demo data and reference genome sequence files for first analysis
 I prepared small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads.  
 `$ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz`  
 `$ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz`  
@@ -152,4 +144,15 @@ You also need reference genome sequence files.
 `$ wget -c https://www.dropbox.com/s/4lgsboui7l01mq1/human_g1k_v37_decoy.fasta.fai`  
 `$ wget -c https://www.dropbox.com/s/6dkq2f6dokddyqs/human_g1k_v37_decoy.fasta.pac`  
 `$ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa`  
+
+# First analysis
+DRR006760
+- Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
+- Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown. We attempted to identify the gene responsible for autosomal recessive hereditary spastic paraplegia with cerebellar ataxia and neuropathy. Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample. Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene** in the two patients. This mutation co-segregated with the disease in the family, and located at the well-conserved amino acid. This LYST mutation was not found in 200 Japanese control DNAs. Subsequent hematological analysis in one patient could disclose peroxidase-positive large granules in the patient’s granulocytes, although he had no symptoms according to immunodeficiency or bleeding tendency.Interpretation: We considered these patients as adult Chediak-Higashi syndrome (CHS) presenting spastic paraplegia with cerebellar ataxia and neuropathy. As far as we know, this family is one of the oldest adult CHS cases in the literatures. Clinical spectrum of CHS is broader than previously recognized. Adult CHS must be considered in the differential diagnosis of AR-HSPs. The linkage analysis and exome sequencing were useful for identifying the causative mutation in this family. [less]
+- DRA: http://ddbj.nig.ac.jp/DRASearch/study?acc=DRP000999
+- Causative gene: LYST c.4189T>G, p.F1397V
+- Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
+
+
+
 
