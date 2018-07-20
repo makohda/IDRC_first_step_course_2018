@@ -8,15 +8,16 @@ It also requires some computational skills.
 1. knowledge of target diseases, especially for genetic background
 1. knowledge of associated databases (how to find the information you want)
 1. knowledge of exome sequencing/high speed sequencers/molecular biology
-1. some skills of computers
+1. computational skills
+1. knowledge of ethical problems/privacy protection/IF and SF
 
 Although not absolute, it becomes more important in order from top to bottom.  
 This is completely my biased list, so I can agree with 3 or 4 or 5 in reverse/change.
 
 # Aim
 This mini-course is made for a lecture which let you get a first tiny step to bioinformatic analysis.  
-It assumes that this is made for step by step hands-on style, but this could be applied to self studying.  
-Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect:wink:  
+It assumes that this is made for **step by step hands-on style, but this could be applied to self studying.  
+Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect**:wink:  
 
 This course will cover:
 - customise your macintosh environment for running bioinformatic programs
@@ -26,8 +27,8 @@ This course will cover:
 
 Not cover:
 - how algorithmn works
-- how to handle massive amount data using cluster computers
-- deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how I sense danger data signs in heystacks)
+- how to handle massive amount data using cluster computers (SSH, Grid Job Scheduler, memory usage, disk I/O)
+- deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in heystacks)
 
 
 
@@ -152,7 +153,7 @@ DRR006760
 - Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample.
 - Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene**
 - DRA: http://ddbj.nig.ac.jp/DRASearch/study?acc=DRP000999
-- Causative gene: LYST c.4189T>G, p.F1397V
+- **Causative gene: LYST c.4189T>G, p.F1397V**
 - Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
 
 Firstly, align paired sequence reads to the 1000 genomes project-customised human reference genome build 37 (human_g1k_v37_decoy).  
@@ -178,5 +179,8 @@ Then, make Index file for aligned sequence file (.bam file). It takes few second
 To see this aligned sequence reads,  
 `$ sh sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
 Go to 1:235,955,287-235,955,418 to see the mutation.  
+Can you see?
+![](images/IGV_01.png "")
+
 
 あと base_dir のことが必要
