@@ -1,21 +1,22 @@
 # Background
 ## What exome analysis is?
-Simply, based on genetic knowledge, find out causative variants from not so big data.  
-It requires some computational skills.
+Simply saying, based on genetic knowledge, find out causative variants from not so big data.  
+It also requires some computational skills.
 
 ## What are required to exome analysis?
-1. knowledge of gentics
-1. knowledge of target diseases, especially genetic background
+1. knowledge of genetics
+1. knowledge of target diseases, especially for genetic background
 1. knowledge of associated databases (how to find the information you want)
 1. knowledge of exome sequencing/high speed sequencers/molecular biology
 1. some skills of computers
 
 Although not absolute, it becomes more important in order from top to bottom.  
-This is completely my biased idea, so I can agree with 4 or 5 in reverse.
+This is completely my biased list, so I can agree with 3 or 4 or 5 in reverse/change.
 
 # Aim
 This mini-course is made for a lecture which let you get a first tiny step to bioinformatic analysis.  
-It is a step by step hands-on style.
+It assumes that this is made for step by step hands-on style, but this could be applied to self studying.  
+Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect:wink:  
 
 This course will cover:
 - customise your macintosh environment for running bioinformatic programs
@@ -28,10 +29,12 @@ Not cover:
 - how to handle massive amount data using cluster computers
 - deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how I sense danger data signs in heystacks)
 
+
+
 # :computer: Set up your mac
 #### :point_right: Ideally, you should try and complete this section before hands-on
 You have to set up your macintosh environment for informatic analyses.  
-I know this is a first barricade to step in learning informatic skills, but this is the easiest way.
+I know this is a first barricade to step in learning informatic skills, but this shold be done. I tried to make it as easy as possible.
 
 ## Install java (Java SE Development Kit 8u181 version)
 Java is a kind of programming launguage.  
@@ -51,7 +54,7 @@ If succeeded, you will get following response
     Java(TM) SE Runtime Environment (build 1.8.0_181-b13)
     Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
 
-## Install homebrew, a nice packge manager for macOS
+## Install homebrew, a nice packge manager for macOS:beer:
 A package manager maintains softwares (packages), such as install, update, and remove.  
 Of course, you can manage your computer, but we usually use a package manager to make it easier.  
 Go to this page, https://brew.sh/ then, follow the install instruction.  
@@ -103,13 +106,30 @@ At first, type this, to cover scientific programs well
 bwa for aligning reads to the reference genome (version 0.7.17)  
 `$ brew search bwa`  
 `$ brew info bwa` _see software detail information_  
-`$ brew install bwa`
+`$ brew install bwa`  
+Type to check the installation  
+`$ bwa`  
+
+If installation succeeded, you will get following response  
+
+    Program: bwa (alignment via Burrows-Wheeler transformation)
+    Version: 0.7.17-r1188
+    Contact: Heng Li <lh3@sanger.ac.uk>
+    ...
 
 ### Install samtools
 SAMtools for manipulating next-generation sequencing data (version 1.9)  
 `$ brew search samtools`  
 `$ brew info samtools`  
 `$ brew install samtools`  
+Type to check the installation  
+`$ samtools --version`  
+
+If installation succeeded, you will get following response  
+
+    samtools 1.8
+    Using htslib 1.9
+    Copyright (C) 2018 Genome Research Ltd.  
 
 # First analysis
 DRR006760
