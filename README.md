@@ -179,12 +179,8 @@ you will get following response. It will take about few min by my MacBookPro 201
     samtools view -@4 -1 -  13.52s user 0.32s system 19% cpu 1:10.16 total
     samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam  32.51s user 1.63s system 43% cpu 1:17.84 total
 
-Then, make Index file for aligned sequence file (.bam file).  
+Then, make Index file for aligned sequence file (.bam file). It takes few seconds.  
 `$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam`  
-
-you will get following response. It takes few seconds  
-
-    samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam  14.11s user 1.20s system 441% cpu 3.471 total
 
 To see this aligned sequence reads,  
 `$ sh sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
