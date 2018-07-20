@@ -133,11 +133,11 @@ If installation succeeded, you will get following response
     Copyright (C) 2018 Genome Research Ltd.  
 
 ### Download demo data and reference genome sequence files for first analysis
-I prepared small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads.  
+I prepared small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads. File size are 54M and 55M.  
 `$ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz`  
 `$ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz`  
 
-You also need reference genome sequence files.  
+You also need reference genome sequence files. Totally, 8.1G will be downloaded.  
 `$ wget -c https://www.dropbox.com/s/9qmtqwgq8pxyj99/human_g1k_v37_decoy.fasta`  
 `$ wget -c https://www.dropbox.com/s/9dpu7ver996c8m0/human_g1k_v37_decoy.fasta.amb`  
 `$ wget -c https://www.dropbox.com/s/b3rmp79xgixiyk5/human_g1k_v37_decoy.fasta.ann`  
@@ -146,7 +146,7 @@ You also need reference genome sequence files.
 `$ wget -c https://www.dropbox.com/s/6dkq2f6dokddyqs/human_g1k_v37_decoy.fasta.pac`  
 `$ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa`  
 
-# First analysis
+# First analysis (< 10 min.)
 DRR006760
 - Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
 - Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown.
@@ -180,7 +180,7 @@ To see this aligned sequence reads,
 `$ sh sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
 Go to 1:235,955,287-235,955,418 to see the mutation.  
 Can you see?
-![](images/IGV_01.png "")
+![](images/IGV_LYST.png "")
 
 
 あと base_dir のことが必要
