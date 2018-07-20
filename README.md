@@ -159,7 +159,21 @@ $ bwa mem -t4 -M \
               human_g1k_v37_decoy.fasta \
               DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz | \
               samtools view -@4 -1 - | samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam
-```
+```  
+you will get following response. It will take about 51 min by my MacBookPro 2014 (2.2GHz).  
+
+    [M::bwa_idx_load_from_disk] read 0 ALT contigs
+    [M::process] read 396040 sequences (40000040 bp)...
+    [M::process] read 396040 sequences (40000040 bp)...
+    [M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 142256, 0, 0)
+    ...snip
+    [main] Version: 0.7.17-r1188
+    [main] CMD: bwa mem -t4 -M -R @RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1 human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz
+    [main] Real time: 633.939 sec; CPU: 2341.969 sec
+    [bam_sort_core] merging from 4 files and 4 in-memory blocks...
+    bwa mem -t4 -M -R  human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz   2246.67s user 95.32s system 369% cpu 10:33.97 total
+    samtools view -@4 -1 -  77.93s user 1.85s system 12% cpu 10:33.97 total
+    samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam  295.67s user 46.82s system 11% cpu 51:28.08 total
 
 `$ samtools index DRR006760_chr1.aligned_reads_sorted.bam`  
 
