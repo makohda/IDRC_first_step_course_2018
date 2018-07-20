@@ -171,19 +171,12 @@ you will get following response. It will take about few min by my MacBookPro 201
     [M::process] read 396040 sequences (40000040 bp)...
     [M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 142256, 0, 0)
     ...snip
-    [main] Version: 0.7.17-r1188
-    [main] CMD: bwa mem -t4 -M -R @RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1 human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz
-    [main] Real time: 70.132 sec; CPU: 245.810 sec
-    [bam_sort_core] merging from 0 files and 4 in-memory blocks...
-    bwa mem -t4 -M -R  human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz   225.04s user 20.79s system 350% cpu 1:10.17 total
-    samtools view -@4 -1 -  13.52s user 0.32s system 19% cpu 1:10.16 total
-    samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam  32.51s user 1.63s system 43% cpu 1:17.84 total
 
 Then, make Index file for aligned sequence file (.bam file). It takes few seconds.  
 `$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam`  
 
 To see this aligned sequence reads,  
 `$ sh sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
-
+Go to 1:235,955,287-235,955,418 to see the mutation.  
 
 あと base_dir のことが必要
