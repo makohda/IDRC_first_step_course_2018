@@ -153,6 +153,15 @@ DRR006760
 - Causative gene: LYST c.4189T>G, p.F1397V
 - Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
 
+`$ bwa mem -t4 -M \
+               -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
+               human_g1k_v37_decoy.fasta \
+               DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz | \
+               samtools view -@4 -1 - | samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam`  
+`$ samtools index DRR006760_chr1.aligned_reads_sorted.bam`  
+
+To see aligned sequence reads,
+`$ sh sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
 
 
-
+あと base_dir のことが必要
