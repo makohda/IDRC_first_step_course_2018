@@ -1,4 +1,4 @@
-# Background
+# 1. Background
 ## What exome analysis is?
 Simply saying, based on genetic knowledge, find out causative variants from not so big data.  
 It also requires some computational skills.
@@ -14,7 +14,7 @@ It also requires some computational skills.
 Although not absolute, it becomes more important in order from top to bottom.  
 This is completely my biased list, so I can agree with 3 or 4 or 5 in reverse/change.
 
-# Aim
+# 2. Aim
 This mini-course is made for a lecture which let you get a first tiny step to bioinformatic analysis.  
 It assumes that this is made for **step by step hands-on style, but this could be applied to self studying.  
 Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect**:wink:  
@@ -32,7 +32,7 @@ Not cover:
 
 
 
-# :computer: Set up your mac
+# 3. Set up your mac :computer:
 #### :point_right: Ideally, you should try and complete this section before hands-on
 You have to set up your macintosh environment for informatic analyses.  
 I know this is a first barricade to step in learning informatic skills, but this shold be done. I tried to make it as easy as possible.
@@ -85,7 +85,7 @@ _Push Q key for quit_
 
 more/less is a viewer. Originally, there is more. Then, less was developped.
 
-cat command is concatenate. Concatenate multiple file, like this  
+cat command means con**cat**enate. Concatenate multiple file, like this  
 `$ cat fileA fileB`  
 Let's test.  
 `$ wget https://www.dropbox.com/s/5yfaiolgoi3cp3u/test_variant_data_02.tsv`  
@@ -146,8 +146,9 @@ You also need reference genome sequence files. Totally, 8.1G will be downloaded.
 `$ wget -c https://www.dropbox.com/s/6dkq2f6dokddyqs/human_g1k_v37_decoy.fasta.pac`  
 `$ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa`  
 
-# First analysis (< 10 min.)
-DRR006760
+# 4. First analysis (< 10 min.)
+In this section, we will analyze following public data. 
+This is very first step, so we just do align and see it using viewer.
 - Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
 - Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown.
 - Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample.
@@ -181,6 +182,20 @@ To see this aligned sequence reads,
 Go to 1:235,955,287-235,955,418 to see the mutation.  
 Can you see?
 ![](images/IGV_LYST.png "")
+
+## tips: using memory, avoid using disk for speeding up
+We did alignment using bwa program previously. As you can see, the bwa command was long, and included samtools command.  
+This is done by "|". **Pipe**. "|" connects two command. In previous command, connected bwa and samtools. The result of bwa aligned data passed to samtools. This is very important. Why? If we used "|", we can use memory space instead of writing data to the very slow hard disk. Memory speed is extrem faster than hard disk.  
+Let's experience.  
+```
+$ bwa mem -t4 -M \
+              -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
+              human_g1k_v37_decoy.fasta \
+              DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz > DRR006760_chr1.aligned_reads.sam
+$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam -o DRR006760_chr1.aligned_reads.bam
+$ samtools sort -@4  DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam
+```  
+
 
 
 あと base_dir のことが必要
