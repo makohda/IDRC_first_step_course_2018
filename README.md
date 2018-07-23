@@ -37,6 +37,17 @@ Not cover:
 You have to set up your macintosh environment for informatic analyses.  
 I know this is a first barricade to step in learning informatic skills, but this shold be done. I tried to make it as easy as possible.
 
+## Rules/minimal knowledge
+- Terminal.app is a application to tell what you want to your computer via command lines
+- `$ ` means command line in this page. $ is a prompt, so you don't need type $. Just type following characters
+- `$ cd` cd means _**C**hange **D**irectory_
+- `$ pwd` pwd means _**P**rint **W**orking **D**irectory_
+- `$ mkdir new_diretory_name` mkdir means _**M**ake **D**irectory_
+- `$ cat cnvkit.${platform}.summary.out C -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' S -k1,1g` _not a magic._ Similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
+- **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
+- Linux/Unix is a kind of OS (Operation Systems). Same as Windows/macOS. Most of servers are Linux
+- Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small...too diverse to express
+
 ## Install java (Java SE Development Kit 8u181 version)
 Java is a kind of programming launguage.  
 You need Java itself to run applications developed using Java launguage.
