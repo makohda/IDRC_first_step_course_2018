@@ -145,7 +145,7 @@ If installation succeeded, you will get following response
     Using htslib 1.9
     Copyright (C) 2018 Genome Research Ltd.  
 
-## Install IGV
+### Install IGV
 Integrative Genomics Viewer is a viewer for NGS/Microarray data, developed by Broad Institute.  
 Go to https://software.broadinstitute.org/software/igv/download and click 'Download and unzip the Binary Distribution archive'  
 Or  
@@ -156,11 +156,15 @@ Or
 double click it to expand. you will find IGV_2.4.13 directory.  
 To start up IGV, type  
 `$ sh IGV_2.4.13/igv.sh`  
-Java language will run IGV program. We will use IGV after sequece data alignment.
+Java language will run IGV program. We will use IGV after sequece data alignment.  
+You also need to download the specific version of reference human genome (Human 1kg, b37 + decoy), it can be found in Menu bar "Genomes > Load Genome From Server"  
 
-memo_to_me:ここに1kg v37のことを追記
+#### 1kg? b37? decoy?
+1kg means 1000 genome project.  
+b37 is a version of human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
+The decoy genome, starting point is here http://www.cureffi.org/2013/02/01/the-decoy-genome/
 
-### Download demo data and reference genome sequence files for first analysis
+## Download demo data and reference genome sequence files for first analysis
 I prepared small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads. File size are 54M and 55M.  
 `$ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz`  
 `$ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz`  
@@ -210,9 +214,10 @@ Then, make Index file for aligned sequence file (.bam file). It takes few second
 `$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam`  
 
 To see this aligned sequence reads,  
-`$ sh sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
-Go to 1:235,955,287-235,955,418 to see the mutation.  
-Can you see?
+`$ sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
+Go to 1:235,955,287-235,955,418 to see the mutation.
+
+Can you see? Genomic position of this screenshot is 1:235955298-235955423
 ![](images/IGV_LYST.png "")
 
 
