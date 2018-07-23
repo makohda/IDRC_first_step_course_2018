@@ -170,7 +170,24 @@ You also need to download the specific version of reference human genome (Human 
 b37 is a version of human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
 The decoy genome, starting point is here http://www.cureffi.org/2013/02/01/the-decoy-genome/
 
-## Download demo data and reference genome sequence files for first analysis
+# 4. First step
+Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
+Prepare (download!) sequence data,reference genome and related files, see the raw data (fastq), align fastq to the reference human genome, see the result using IGV.  
+
+## First analysis (< 10 min.)
+In this section, we will analyze following public data. 
+This is very first step, so we just do align and see it using viewer.
+
+Followings are summary of data we will use in this section.  
+- Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
+- Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown.
+- Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample.
+- Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene**
+- DRA: http://ddbj.nig.ac.jp/DRASearch/study?acc=DRP000999
+- **Causative gene: LYST c.4189T>G, p.F1397V**
+- Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
+
+Firstly, download demo data and reference genome sequence files.  
 I prepared small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads. File size are 54M and 55M.  
 ```
 $ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz
@@ -188,22 +205,7 @@ $ wget -c https://www.dropbox.com/s/6dkq2f6dokddyqs/human_g1k_v37_decoy.fasta.pa
 $ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa
 ```
 
-# 4. First step
-Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
-Prepare (download!) sequence data,reference genome and related files, see the raw data (fastq), align fastq to the reference human genome, see the result using IGV.  
-
-## First analysis (< 10 min.)
-In this section, we will analyze following public data. 
-This is very first step, so we just do align and see it using viewer.
-- Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
-- Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown.
-- Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample.
-- Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene**
-- DRA: http://ddbj.nig.ac.jp/DRASearch/study?acc=DRP000999
-- **Causative gene: LYST c.4189T>G, p.F1397V**
-- Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
-
-Firstly, align paired sequence reads to the 1000 genomes project-customised human reference genome build 37 (human_g1k_v37_decoy).  
+Secondary, align paired sequence reads to the 1000 genomes project-customised human reference genome build 37 (human_g1k_v37_decoy).  
 ```
 $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
@@ -223,7 +225,7 @@ you will get following response. It will take about few min by my MacBookPro 201
 Then, make Index file for aligned sequence file (.bam file). It takes few seconds.  
 `$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam`  
 
-To see this aligned sequence reads,  
+Thirdly, see this aligned sequence reads,  
 `$ sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
 Go to 1:235,955,287-235,955,418 to see the mutation.
 
