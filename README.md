@@ -51,7 +51,7 @@ I know this is a first barricade to step in learning informatic skills, but this
 
 ## Install java (Java SE Development Kit 8u181 version)
 Java is a kind of programming launguage.  
-You need Java itself to run applications developed using Java launguage.
+You need Java itself to run applications developed using Java launguage. For example, IGV, Picard and GATK are Java application.
 
 Download Java SE Development Kit 8u181 from here  
 https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html  
