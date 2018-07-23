@@ -69,7 +69,8 @@ If succeeded, you will get following response
 ## Install homebrew, a nice packge manager for macOS:beer:
 A package manager maintains softwares (packages), such as install, update, and remove.  
 Of course, you can manage your computer, but we usually use a package manager to make it easier.  
-Go to this page, https://brew.sh/ then, follow the install instruction.  
+Go to this page, https://brew.sh/ then, follow the install instruction.
+
 Open Terminal.app (is located on /Application/Utilities), then type this shell command  
 `$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`  
 _The administrator password will be required in this process_
@@ -121,7 +122,8 @@ At first, type this, to tell homebrew much more scientific programs
 bwa for aligning reads to the reference genome (version 0.7.17)  
 `$ brew search bwa`  
 `$ brew info bwa` _see software detail information_  
-`$ brew install bwa`  
+`$ brew install bwa`
+
 Type to check the installation  
 `$ bwa`  
 
@@ -136,7 +138,8 @@ If installation succeeded, you will get following response
 SAMtools for manipulating next-generation sequencing data (version 1.9)  
 `$ brew search samtools`  
 `$ brew info samtools`  
-`$ brew install samtools`  
+`$ brew install samtools`
+
 Type to check the installation  
 `$ samtools --version`  
 
@@ -155,13 +158,14 @@ You get IGV_2.4.13.zip
 `$ unzip IGV_2.4.13.zip`  
 Or  
 double click it to expand. you will find IGV_2.4.13 directory.  
+
 To start up IGV, type  
 `$ sh IGV_2.4.13/igv.sh`  
 Java language will run IGV program. We will use IGV after sequece data alignment.  
 You also need to download the specific version of reference human genome (Human 1kg, b37 + decoy), it can be found in Menu bar "Genomes > Load Genome From Server"  
 
 #### 1kg? b37? decoy?
-1kg means 1000 genome project.  
+1kg means 1000 genomes project http://www.internationalgenome.org/  
 b37 is a version of human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
 The decoy genome, starting point is here http://www.cureffi.org/2013/02/01/the-decoy-genome/
 
