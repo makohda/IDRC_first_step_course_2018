@@ -43,10 +43,11 @@ I know this is a first barricade to step in learning informatic skills, but this
 - `$ cd` cd means _**C**hange **D**irectory_
 - `$ pwd` pwd means _**P**rint **W**orking **D**irectory_
 - `$ mkdir new_diretory_name` mkdir means _**M**ake **D**irectory_
-- `$ cat cnvkit.${platform}.summary.out C -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' S -k1,1g` _Don't be panic. No need to memorise today._ This is done by "|". Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
+- `$ cat cnvkit.${platform}.summary.out C -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' S -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
 - **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
 - Linux/Unix is a kind of OS (Operation Systems). Same as Windows/macOS. Most of servers are Linux
 - Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small...too diverse to express
+- may add later (frequently asked words or something)
 
 ## Install java (Java SE Development Kit 8u181 version)
 Java is a kind of programming launguage.  
@@ -171,8 +172,10 @@ The decoy genome, starting point is here http://www.cureffi.org/2013/02/01/the-d
 
 ## Download demo data and reference genome sequence files for first analysis
 I prepared small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads. File size are 54M and 55M.  
-`$ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz`  
-`$ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz`  
+```
+$ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz
+$ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz
+```
 
 You also need reference genome sequence files. Totally, 8.1G will be downloaded.  
 ```
@@ -184,7 +187,6 @@ $ wget -c https://www.dropbox.com/s/4lgsboui7l01mq1/human_g1k_v37_decoy.fasta.fa
 $ wget -c https://www.dropbox.com/s/6dkq2f6dokddyqs/human_g1k_v37_decoy.fasta.pac
 $ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa
 ```
-
 
 # 4. First step
 Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
@@ -238,12 +240,14 @@ And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) 
 Exam. In other words, homework. But, don't move data to your home!  
 Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint. Most of cases are easy. Some cases are quit difficult. I solved all the cases. Happy to see your excellent result :satisfied:
 
+___
 
+Under construction
 
-## tips: using memory, avoid using disk for speeding up
+## tips: using memory, avoid using slow hard disk for speeding up
 We did alignment using bwa program previously. As you can see, the bwa command was long, and included samtools command.  
 This is done by "|". **Pipe**. "|" connects two command. In previous command, connected bwa and samtools. The result of bwa aligned data passed to samtools. This is very important. Why? If we used "|", we can use memory space instead of writing data to the very slow hard disk. Memory speed is extrem faster than hard disk.  
-Let's experience.  
+Let's experience (but, if you used small data, you can't feel it).  
 ```
 $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
