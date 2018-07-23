@@ -106,6 +106,7 @@ Let's test.
 To make it easier to see,  
 `$ cat test_variant_data_01.tsv test_variant_data_02.tsv | less -S`  
 _Push Q key for quit_  
+
 -S is a option of less command. It change less behavior to chop-long-lines.  
 Commands have their specific options. You can see like this.  
 `$ less --help`  
@@ -113,7 +114,7 @@ Commands have their specific options. You can see like this.
 
 
 ## Install softwares required for (minimal) sequence analysis
-At first, type this, to cover scientific programs well  
+At first, type this, to tell homebrew much more scientific programs  
 `$ brew tap brewsci/bio`
 
 ### Install bwa
