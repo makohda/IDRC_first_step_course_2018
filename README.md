@@ -143,6 +143,21 @@ If installation succeeded, you will get following response
     Using htslib 1.9
     Copyright (C) 2018 Genome Research Ltd.  
 
+## Install IGV
+Integrative Genomics Viewer is a viewer for NGS/Microarray data, developed by Broad Institute.  
+Go to https://software.broadinstitute.org/software/igv/download and click 'Download and unzip the Binary Distribution archive'  
+Or  
+`$ wget http://data.broadinstitute.org/igv/projects/downloads/2.4/IGV_Win_2.4.13.zip`  
+You get IGV_2.4.13.zip  
+`$ unzip IGV_2.4.13.zip`  
+Or  
+double click it to expand. you will find IGV_2.4.13 directory.  
+To start up IGV, type  
+`$ sh IGV_2.4.13/igv.sh`  
+Java language will run IGV program. We will use IGV after sequece data alignment.
+
+memo_to_me:ここに1kg v37のことを追記
+
 ### Download demo data and reference genome sequence files for first analysis
 I prepared small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads. File size are 54M and 55M.  
 `$ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz`  
@@ -157,7 +172,11 @@ You also need reference genome sequence files. Totally, 8.1G will be downloaded.
 `$ wget -c https://www.dropbox.com/s/6dkq2f6dokddyqs/human_g1k_v37_decoy.fasta.pac`  
 `$ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa`  
 
-# 4. First analysis (< 10 min.)
+# 4. First step
+Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
+Prepare (download!) sequence data,reference genome and related files, see the raw data (fastq), align fastq to the reference human genome, see the result using IGV.  
+
+## First analysis (< 10 min.)
 In this section, we will analyze following public data. 
 This is very first step, so we just do align and see it using viewer.
 - Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
@@ -193,6 +212,18 @@ To see this aligned sequence reads,
 Go to 1:235,955,287-235,955,418 to see the mutation.  
 Can you see?
 ![](images/IGV_LYST.png "")
+
+
+# Second step
+More similar with real one.  
+Using same fastq, but add Quality Check, Trimming, data cleaning for variant call, variant call, annotate variants, interpretation.  
+And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) for specific disease.  
+
+# Third step
+Exam. In other words, homework. But, don't move data to your home!  
+Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint. Most of cases are easy. Some cases are quit difficult. I solved all the cases. Happy to see your excellent result :satisfied:
+
+
 
 ## tips: using memory, avoid using disk for speeding up
 We did alignment using bwa program previously. As you can see, the bwa command was long, and included samtools command.  
