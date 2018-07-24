@@ -334,8 +334,8 @@ If installation succeeded, you will get
     This tool sorts the input SAM or BAM file by coordinate, queryname (QNAME), or some other property of the SAM record.
     ...
 
-This is the reason that you frequently see the screenshot of StarTreck.
-![](images/picard.jpg "")
+This is the reason that you frequently saw the screenshot of StarTrek in presentations for NGS analysis  
+![](images/picard.jpg "Captain Picard")
 
 
 GATK
