@@ -134,7 +134,7 @@ $ cat --help
 At first, type this, to tell homebrew much more scientific programs  
 `$ brew tap brewsci/bio`
 
-### Install bwa
+### Install bwa < 3min
 bwa for aligning reads to the reference genome (version 0.7.17)  
 Burrows-Wheeler Aligner http://bio-bwa.sourceforge.net/
 Manual Reference Pages  - bwa (1) http://bio-bwa.sourceforge.net/bwa.shtml
@@ -154,7 +154,7 @@ If installation succeeded, you will get following response
     Contact: Heng Li <lh3@sanger.ac.uk>
     ...
 
-### Install samtools
+### Install samtools < 3min
 SAMtools for manipulating next-generation sequencing data (version 1.9)  
 ```
 $ brew search samtools
@@ -171,7 +171,7 @@ If installation succeeded, you will get following response
     Using htslib 1.9
     Copyright (C) 2018 Genome Research Ltd.  
 
-### Install IGV
+### Install IGV < 3min
 Integrative Genomics Viewer is a viewer for NGS/Microarray data, developed by Broad Institute.  
 Go to https://software.broadinstitute.org/software/igv/download and click 'Download and unzip the Binary Distribution archive'  
 Then, double click downloaded item to expand. you will find IGV_2.4.13 directory.  
@@ -196,7 +196,7 @@ You also need to download the specific version of reference human genome (Human 
 Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
 Prepare (download!) sequence data,reference genome and related files, see the raw data (fastq), align fastq to the reference human genome, see the result using IGV.  
 
-## First analysis (< 10 min.)
+## First analysis < 20 min
 In this section, we will analyze following public data. 
 This is very first step, so we just do align and see it using viewer.
 
@@ -216,7 +216,7 @@ $ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz
 $ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz
 ```
 
-You also need reference genome sequence files. Totally, 8.1G will be downloaded.  
+You also need reference genome sequence files. Totally, 8.1G will be downloaded (< 10 min).  
 ```
 $ wget -c https://www.dropbox.com/s/9qmtqwgq8pxyj99/human_g1k_v37_decoy.fasta
 $ wget -c https://www.dropbox.com/s/9dpu7ver996c8m0/human_g1k_v37_decoy.fasta.amb
@@ -225,7 +225,6 @@ $ wget -c https://www.dropbox.com/s/oplswegvl68fd96/human_g1k_v37_decoy.fasta.bw
 $ wget -c https://www.dropbox.com/s/4lgsboui7l01mq1/human_g1k_v37_decoy.fasta.fai
 $ wget -c https://www.dropbox.com/s/6dkq2f6dokddyqs/human_g1k_v37_decoy.fasta.pac
 $ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa
-
 $ wget -c https://www.dropbox.com/s/drit0y6xu6dnpg7/human_g1k_v37_decoy.dict
 ```
 
@@ -264,7 +263,7 @@ And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) 
 
 ## Install softwares required for sequence analysis#2
 
-### Install GNU grep
+### Install GNU grep < 3min
 grep is a command-line utility for searching plain-text data sets for lines.  
 GNU version is faster than BSD grep.
 `$ brew install grep --with-default-names`
@@ -278,7 +277,7 @@ If installation succeeded, you will get
     Packaged by Homebrew
     Copyright (C) 2017 Free Software Foundation, Inc.
 
-### Install Tableview
+### Install Tableview < 3min
 Format CSV file as human readable table  https://github.com/informationsea/tableview
 ```
 $ wget https://github.com/informationsea/tableview/releases/download/v0.4.6/tableview_darwin_amd64
@@ -295,7 +294,7 @@ If installation succeeded, you will get
 
 ### brew install fastqc
 
-### Install Trimmomatic
+### Install Trimmomatic < 3min
 Trimmomatic is a trimming tool for Illumina NGS data
 
 USADELLAB.org - Trimmomatic: A flexible read trimming tool for Illumina NGS data http://www.usadellab.org/cms/?page=trimmomatic
@@ -314,9 +313,10 @@ If installation succeeded, you will get
     PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
     ...
 
-### Install Picard
-Similar with SAMtools, Picard is a multi-purpose program for NGS analyses
-Picard Tools - By Broad Institute https://broadinstitute.github.io/picard/
+### Install Picard < 3min
+Similar with SAMtools, Picard is a multi-purpose program for NGS analyses.  
+Picard Tools - By Broad Institute https://broadinstitute.github.io/picard/  
+Currently, Picard has 86 tools   
 
 ```
 $ brew search picard
@@ -338,23 +338,128 @@ This is the reason that you frequently saw the screenshot of StarTrek in present
 ![](images/picard.jpg "Captain Picard")
 
 
-GATK
+### Install GATK < 3min
+GATK (**G**enome **A**nalysis **T**ool**k**it) is a tool for variant discovery in high-throughput sequencing data.  
+GATK | Home https://software.broadinstitute.org/gatk/
+Newest version is 4.0.6. But, we use version 3.8.1 in this hands-on. If you became familier with command lines, I strongly recommend to upgrade to latest version.  
 
-https://software.broadinstitute.org/gatk
+```
+$ wget https://software.broadinstitute.org/gatk/download/auth\?package\=GATK-archive\&version\=3.8-1-0-gf15c1c3ef -O GATK-3.8-1-0-gf15c1c3ef.tar.gz
+$ tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
+```
+Type to check the installation  
+`$ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar --version`
 
-wget https://software.broadinstitute.org/gatk/download/auth\?package\=GATK-archive\&version\=3.8-1-0-gf15c1c3ef -O GATK-3.8-1-0-gf15c1c3ef.tar.gz
-tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
-GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
+If installation succeeded, you will get
+
+    3.8-1-0-gf15c1c3ef
+
+### Install GATK bundle resource 10min
+Resouce bundle is a collection of standard files for working with human resequencing data with the GATK.  
+Go to resource bundle page https://software.broadinstitute.org/gatk/download/bundle  
+Read "FTP Server Access" section, and go to ftp site. Dive to b37 directory.  
+There are 70 files :astonished:  
+Luckly, we only need two files in this course :laughing:  
+- dbsnp_138.b37.vcf
+- Mills_and_1000G_gold_standard.indels.b37.vcf
+
+Download following files, and expand them.
+- Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+- Mills_and_1000G_gold_standard.indels.b37.vcf.gz.md5
+- Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
+- Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz.md5
+- dbsnp_138.b37.vcf.gz
+- dbsnp_138.b37.vcf.gz.md5
+- dbsnp_138.b37.vcf.idx.gz
+- dbsnp_138.b37.vcf.idx.gz.md5
+Totally, 1.4G. It takes about 10 mins.
 
 
-/bundle/ のインデックス ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/
-/bundle/b37/ のインデックス ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
-                          ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
+More detail information of resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
 
-GATK | Doc #11017 | Resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
+I know you are tired for downloading. I'm too.  
+Most part of molecular work are occupied by pipetting, most part of bioinformatic work are occupied by preparing and data cleaning. Please calm down :sob:  
 
+Before staring analysis, check your directory and files.  
+`$ pwd`  
+Are you in the working directory (exome_analysis)? If not, change directory by type this command  
+`$ cd ~/exome_analysis`  
+Then, check files. Are you ready?  
+`$ ls -vlhrt`  
+ここにファイルを書く
+
+## Let's step forward
 
 FASTQ format - Wikipedia https://en.wikipedia.org/wiki/FASTQ_format
+
+ここに手順の概略を
+
+```
+$ id=DRR006760_chr1
+$ echo ${id}
+```
+
+### Fastq trimming <1 min
+```
+$ java -Xmx4g -jar Trimmomatic-0.38//Trimmomatic-0.38.jar PE \
+                 -threads 4 -phred33 -trimlog ${id}.trimlog \
+                 ${id}_1.fastq.gz \
+                 ${id}_2.fastq.gz \
+                 ${id}_1.paired.fastq.gz ${id}_1.unpaired.fastq.gz \
+                 ${id}_2.paired.fastq.gz ${id}_2.unpaired.fastq.gz \
+                 TRAILING:20 MINLEN:50
+```
+
+You will get following respond
+
+    TrimmomaticPE: Started with arguments:
+     -threads 4 -phred33 -trimlog DRR006760_chr1.trimlog DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz DRR006760_chr1_1.paired.fastq.gz DRR006760_chr1_1.unpaired.fastq.gz DRR006760_chr1_2.paired.fastq.gz DRR006760_chr1_2.unpaired.fastq.gz TRAILING:20 MINLEN:50
+    Input Read Pairs: 1058370 Both Surviving: 1041699 (98.42%) Forward Only Surviving: 10118 (0.96%) Reverse Only Surviving: 6029 (0.57%) Dropped: 524 (0.05%)
+    TrimmomaticPE: Completed successfull
+
+Check file size of all fastq.gz  
+`$ ls -hl ${id}*fastq.gz`
+
+## Mapping sequence reads to the reference genome <1 min
+```
+$ bwa mem -t4 -M \
+            -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
+            human_g1k_v37_decoy.fasta \
+            ${id}_1.paired.fastq.gz ${id}_2.paired.fastq.gz -o ${id}.aligned_reads.sam
+
+$ samtools view -@4 -1 ${id}.aligned_reads.sam > ${id}.aligned_reads.bam
+$ samtools sort -@4 -m 2G ${id}.aligned_reads.bam -o ${id}.aligned_reads_sorted.bam
+$ samtools index ${id}.aligned_reads_sorted.bam
+```
+
+echo "bwa bam サイズ確認"
+$ ls -hl ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam
+
+
+echo "MarkDuplicates <1min."
+
+$ picard MarkDuplicates \
+       INPUT=${id}.aligned_reads_sorted.bam \
+       OUTPUT=${id}.aligned_reads_dedup_sorted.bam \
+       METRICS_FILE=${id}.duplicate.metrics \
+       VALIDATION_STRINGENCY=LENIENT \
+       ASSUME_SORTED=true REMOVE_DUPLICATES=true
+
+ILLUMINACLIP: Cut adapter and other illumina-specific sequences from the read.
+SLIDINGWINDOW: Perform a sliding window trimming, cutting once the average quality within the window falls below a threshold.
+LEADING: Cut bases off the start of a read, if below a threshold quality
+TRAILING: Cut bases off the end of a read, if below a threshold quality
+CROP: Cut the read to a specified length
+HEADCROP: Cut the specified number of bases from the start of the read
+MINLEN: Drop the read if it is below a specified length
+TOPHRED33: Convert quality scores to Phred-33
+TOPHRED64: Convert quality scores to Phred-64
+
+$ samtools index ${id}.aligned_reads_dedup_sorted.bam
+
+echo "picard bam サイズ確認2"
+$ ls -hl ${id}.aligned_reads_sorted.bam
+$ ls -hl ${id}.aligned_reads_dedup_sorted.bam
 
 
 # Third step
