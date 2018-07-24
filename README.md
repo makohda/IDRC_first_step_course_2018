@@ -37,17 +37,25 @@ Not cover:
 You have to set up your macintosh environment for informatic analyses.  
 I know this is a first barricade to step in learning informatic skills, but this shold be done. I tried to make it as easy as possible.
 
-## Rules/minimal knowledge
+## Minimal knowledge
 - Terminal.app is a application to tell what you want to your computer via command lines
 - `$ ` means command line in this page. $ is a prompt, so you don't need type $. Just type following characters
-- `$ cd` cd means _**C**hange **D**irectory_
 - `$ pwd` pwd means _**P**rint **W**orking **D**irectory_
+- `$ cd` cd means _**C**hange **D**irectory_
 - `$ mkdir new_diretory_name` mkdir means _**M**ake **D**irectory_
 - `$ cat cnvkit.${platform}.summary.out C -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' S -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
 - **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
-- Linux/Unix is a kind of OS (Operation Systems). Same as Windows/macOS. Most of servers are Linux
+- GNU/Linux is a kind of OS (Operation Systems). Same as Windows and macOS. Most of servers are Linux
 - Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small...too diverse to express
+- Linux is a open source copy of UNIX
+- macOS is a kind of FreeBSD OS. BSD is a kind of UNIX
+- Therefore, we frequently recomment to use Mac when you start to use command lines
 - may add later (frequently asked words or something)
+
+## Make and move to your working directory
+`$ cd ~/` go to your home directory (e.g. /Users/okazaki, /Users/kohda)  
+`$ mkdir ~/exome_analysis` make directory named as exome_analysis under your home directory  
+`$ cd ~/exome_analysis` move to ~/exome_analysis and use it as our basecamp directory  
 
 ## Install java (Java SE Development Kit 8u181 version)
 Java is a kind of programming launguage.  
@@ -106,7 +114,10 @@ Let's test.
 `$ wget https://www.dropbox.com/s/5yfaiolgoi3cp3u/test_variant_data_02.tsv`  
 `$ cat test_variant_data_01.tsv test_variant_data_02.tsv`  
 To make it easier to see,  
-`$ cat test_variant_data_01.tsv test_variant_data_02.tsv | less -S`  
+```
+$ cat test_variant_data_01.tsv test_variant_data_02.tsv > test_variant_data.concatenated.tsv 
+$ less -S test_variant_data.concatenated.tsv
+```
 _Push Q key for quit_  
 
 -S is a option of less command. It change less behavior to chop-long-lines.  
@@ -115,15 +126,19 @@ Commands have their specific options. You can see like this.
 `$ cat --help`
 
 
-## Install softwares required for (minimal) sequence analysis
+## Install softwares required for sequence analysis#1
 At first, type this, to tell homebrew much more scientific programs  
 `$ brew tap brewsci/bio`
 
 ### Install bwa
 bwa for aligning reads to the reference genome (version 0.7.17)  
-`$ brew search bwa`  
-`$ brew info bwa` _see software detail information_  
-`$ brew install bwa`
+Burrows-Wheeler Aligner http://bio-bwa.sourceforge.net/
+Manual Reference Pages  - bwa (1) http://bio-bwa.sourceforge.net/bwa.shtml
+```
+$ brew search bwa
+$ brew info bwa #_see software detail information_  
+$ brew install bwa
+```
 
 Type to check the installation  
 `$ bwa`  
@@ -137,16 +152,18 @@ If installation succeeded, you will get following response
 
 ### Install samtools
 SAMtools for manipulating next-generation sequencing data (version 1.9)  
-`$ brew search samtools`  
-`$ brew info samtools`  
-`$ brew install samtools`
+```
+$ brew search samtools
+$ brew info samtools
+$ brew install samtools
+```
 
 Type to check the installation  
 `$ samtools --version`  
 
 If installation succeeded, you will get following response  
 
-    samtools 1.8
+    samtools 1.9
     Using htslib 1.9
     Copyright (C) 2018 Genome Research Ltd.  
 
@@ -162,7 +179,8 @@ double click it to expand. you will find IGV_2.4.13 directory.
 
 To start up IGV, type  
 `$ sh IGV_2.4.13/igv.sh`  
-Java language will run IGV program. We will use IGV after sequece data alignment.  
+Java language will run IGV program. We will use IGV after sequece data alignment.
+
 You also need to download the specific version of reference human genome (Human 1kg, b37 + decoy), it can be found in Menu bar "Genomes > Load Genome From Server"  
 
 #### 1kg? b37? decoy?
@@ -239,6 +257,92 @@ Can you see? Genomic position of this screenshot is 1:235955298-235955423
 More similar with real one.  
 Using same fastq, but add Quality Check, Trimming, data cleaning for variant call, variant call, annotate variants, interpretation.  
 And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) for specific disease.  
+
+## Install softwares required for sequence analysis#2
+
+### Install GNU grep
+grep is a command-line utility for searching plain-text data sets for lines.  
+GNU version is faster than BSD grep.
+`$ brew install grep --with-default-names`
+
+Type to check the installation  
+`$ grep --version`
+
+If installation succeeded, you will get
+
+    grep (GNU grep) 3.1
+    Packaged by Homebrew
+    Copyright (C) 2017 Free Software Foundation, Inc.
+
+### Install Tableview
+Format CSV file as human readable table  https://github.com/informationsea/tableview
+```
+$ wget https://github.com/informationsea/tableview/releases/download/v0.4.6/tableview_darwin_amd64
+$ chmod +x ./tableview_darwin_amd64
+```
+
+Type to check the installation  
+`./tableview_darwin_amd64 -version`
+
+If installation succeeded, you will get
+
+    tableview : human friendly table viewer
+    Version: v0.4.6(f7310cc7b05b43b7e8f5f9df9c09182bd98bd7f7)
+
+#brew install fastqc
+#Trimmomatic | FASTQ クリーニングツール https://bi.biopapyrus.jp/rnaseq/qc/trimmomatic.html
+
+
+### Install Trimmomatic
+Trimmomatic is a trimming tool for Illumina NGS data
+
+USADELLAB.org - Trimmomatic: A flexible read trimming tool for Illumina NGS data http://www.usadellab.org/cms/?page=trimmomatic
+
+```
+$ wget -c http://www.usadellab.org/cms/uploads/supplementary/Trimmomatic/Trimmomatic-0.38.zip
+$ unzip Trimmomatic-0.38.zip
+```
+
+Type to check the installation  
+`$ java -jar Trimmomatic-0.38/trimmomatic-0.38.jar`
+
+If installation succeeded, you will get
+
+    Usage:
+    PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
+    ...
+
+### Install Trimmomatic
+Picard Tools - By Broad Institute https://broadinstitute.github.io/picard/
+
+```
+$ brew search picard
+$ brew info picard-tools
+$ brew install picard-tools
+```
+
+Type to check the installation  
+If installation succeeded, you will get
+
+
+Similar with SAMtools, Picard is a multi-purpose program for NGS analyses
+
+$ picard SortSam -h
+USAGE: SortSam [options]
+
+Documentation: http://broadinstitute.github.io/picard/command-line-overview.html#SortSam
+
+This tool sorts the input SAM or BAM file by coordinate, queryname (QNAME), or some other property of the SAM record.
+The SortOrder of a SAM/BAM file is found in the SAM file header tag @HD in the field labeled SO.
+...
+
+
+
+
+FASTQ format - Wikipedia https://en.wikipedia.org/wiki/FASTQ_format
+
+
+
 
 # Third step
 Exam. In other words, homework. But, don't move data to your home!  
