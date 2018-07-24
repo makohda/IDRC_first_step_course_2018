@@ -50,6 +50,7 @@ I know this is a first barricade to step in learning informatic skills, but this
 - Linux is a open source copy of UNIX
 - macOS is a kind of FreeBSD OS. BSD is a kind of UNIX
 - Therefore, we frequently recomment to use Mac when you start to use command lines
+- Google is your friend :+1:
 - may add later (frequently asked words or something)
 
 ## Make and move to your working directory
@@ -111,8 +112,10 @@ more/less is a viewer. Originally, there is more. Then, less was developped.
 cat command means con**cat**enate. Concatenate multiple file, like this  
 `$ cat fileA fileB`  
 Let's test.  
-`$ wget https://www.dropbox.com/s/5yfaiolgoi3cp3u/test_variant_data_02.tsv`  
-`$ cat test_variant_data_01.tsv test_variant_data_02.tsv`  
+```
+$ wget https://www.dropbox.com/s/5yfaiolgoi3cp3u/test_variant_data_02.tsv
+$ cat test_variant_data_01.tsv test_variant_data_02.tsv
+```
 To make it easier to see,  
 ```
 $ cat test_variant_data_01.tsv test_variant_data_02.tsv > test_variant_data.concatenated.tsv 
@@ -122,9 +125,10 @@ _Push Q key for quit_
 
 -S is a option of less command. It change less behavior to chop-long-lines.  
 Commands have their specific options. You can see like this.  
-`$ less --help`  
-`$ cat --help`
-
+```
+$ less --help
+$ cat --help
+```
 
 ## Install softwares required for sequence analysis#1
 At first, type this, to tell homebrew much more scientific programs  
@@ -170,12 +174,12 @@ If installation succeeded, you will get following response
 ### Install IGV
 Integrative Genomics Viewer is a viewer for NGS/Microarray data, developed by Broad Institute.  
 Go to https://software.broadinstitute.org/software/igv/download and click 'Download and unzip the Binary Distribution archive'  
+Then, double click downloaded item to expand. you will find IGV_2.4.13 directory.  
 Or  
-`$ wget http://data.broadinstitute.org/igv/projects/downloads/2.4/IGV_Win_2.4.13.zip`  
-You get IGV_2.4.13.zip  
-`$ unzip IGV_2.4.13.zip`  
-Or  
-double click it to expand. you will find IGV_2.4.13 directory.  
+```
+$ wget http://data.broadinstitute.org/igv/projects/downloads/2.4/IGV_Win_2.4.13.zip
+$ unzip IGV_2.4.13.zip
+```
 
 To start up IGV, type  
 `$ sh IGV_2.4.13/igv.sh`  
@@ -183,10 +187,10 @@ Java language will run IGV program. We will use IGV after sequece data alignment
 
 You also need to download the specific version of reference human genome (Human 1kg, b37 + decoy), it can be found in Menu bar "Genomes > Load Genome From Server"  
 
-#### 1kg? b37? decoy?
-1kg means 1000 genomes project http://www.internationalgenome.org/  
-b37 is a version of human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
-The decoy genome, starting point is here http://www.cureffi.org/2013/02/01/the-decoy-genome/
+#### Tips: 1kg? b37?? decoy???
+- 1kg means 1000 genomes project http://www.internationalgenome.org/  
+- b37 is a version of human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
+- The decoy genome, starting point is here http://www.cureffi.org/2013/02/01/the-decoy-genome/
 
 # 4. First step
 Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
@@ -289,9 +293,7 @@ If installation succeeded, you will get
     tableview : human friendly table viewer
     Version: v0.4.6(f7310cc7b05b43b7e8f5f9df9c09182bd98bd7f7)
 
-#brew install fastqc
-#Trimmomatic | FASTQ クリーニングツール https://bi.biopapyrus.jp/rnaseq/qc/trimmomatic.html
-
+### brew install fastqc
 
 ### Install Trimmomatic
 Trimmomatic is a trimming tool for Illumina NGS data
@@ -312,7 +314,8 @@ If installation succeeded, you will get
     PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
     ...
 
-### Install Trimmomatic
+### Install Picard
+Similar with SAMtools, Picard is a multi-purpose program for NGS analyses
 Picard Tools - By Broad Institute https://broadinstitute.github.io/picard/
 
 ```
@@ -322,26 +325,36 @@ $ brew install picard-tools
 ```
 
 Type to check the installation  
+`$ picard SortSam -h`
+
 If installation succeeded, you will get
 
+    USAGE: SortSam [options]
+    Documentation: http://broadinstitute.github.io/picard/command-line-overview.html#SortSam
+    This tool sorts the input SAM or BAM file by coordinate, queryname (QNAME), or some other property of the SAM record.
+    ...
 
-Similar with SAMtools, Picard is a multi-purpose program for NGS analyses
-
-$ picard SortSam -h
-USAGE: SortSam [options]
-
-Documentation: http://broadinstitute.github.io/picard/command-line-overview.html#SortSam
-
-This tool sorts the input SAM or BAM file by coordinate, queryname (QNAME), or some other property of the SAM record.
-The SortOrder of a SAM/BAM file is found in the SAM file header tag @HD in the field labeled SO.
-...
+This is the reason that you frequently see the screenshot of StarTreck.
+![](images/picard.jpg "")
 
 
+GATK
+
+https://software.broadinstitute.org/gatk
+
+wget https://software.broadinstitute.org/gatk/download/auth\?package\=GATK-archive\&version\=3.8-1-0-gf15c1c3ef -O GATK-3.8-1-0-gf15c1c3ef.tar.gz
+tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
+GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar
+
+
+/bundle/ のインデックス ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/
+/bundle/b37/ のインデックス ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
+                          ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
+
+GATK | Doc #11017 | Resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
 
 
 FASTQ format - Wikipedia https://en.wikipedia.org/wiki/FASTQ_format
-
-
 
 
 # Third step
@@ -352,7 +365,7 @@ ___
 
 Under construction
 
-## tips: using memory, avoid using slow hard disk for speeding up
+## Tips: using memory, avoid using slow hard disk for speeding up
 We did alignment using bwa program previously. As you can see, the bwa command was long, and included samtools command.  
 This is done by "|". **Pipe**. "|" connects two command. In previous command, connected bwa and samtools. The result of bwa aligned data passed to samtools. This is very important. Why? If we used "|", we can use memory space instead of writing data to the very slow hard disk. Memory speed is extrem faster than hard disk.  
 Let's experience (but, if you used small data, you can't feel it).  
