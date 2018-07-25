@@ -402,9 +402,11 @@ Download following files, and expand them.
 - dbsnp_138.b37.vcf.gz.md5
 - dbsnp_138.b37.vcf.idx.gz
 - dbsnp_138.b37.vcf.idx.gz.md5
+
 Totally, 1.4G. It takes about 10 mins.
 
-You notice .md5 files. MD5 stands for Message Digest Algorithm 5, and is a hash value. Hash value is a summarized value. So, it is a something like a fingerprint, unique identifier of the file.  
+You notice .md5 files. MD5 stands for Message Digest Algorithm 5, and is a hash value.  
+A hash value is a something like a fingerprint, unique identifier of the file.  
 Large files, such as 2G size, are sometime failed to download or copy. So, you should compare hash values of the original file and copied one. You can create the hash value of your copy, like this.  
 ```
 $ brew install coreutils # coreutils includes some commands. e.g. gmd5sum
