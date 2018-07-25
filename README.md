@@ -551,7 +551,7 @@ $ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam
 Check the file size of generated .bam files.  
 `$ ls -hl ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
 
-### MarkDuplicates <  1min
+### MarkDuplicates < 1min
 Remove (or just add mark) PCR duplicates entries in .bam file.  
 ```
 $ picard MarkDuplicates \
@@ -587,7 +587,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
 If you were doing whole genome analysis, you don't use this option.  
 If you were doing whole exome analysis, there may be several choices.
 
-You will get following respond
+You will get following respond.
 
     INFO  11:30:01,851 ProgressMeter - Total runtime 87.25 secs, 1.45 min, 0.02 hours
     INFO  11:30:01,852 MicroScheduler - 53278 reads were filtered out during the traversal out of approximately 1604532 total reads (3.32%)
@@ -603,8 +603,7 @@ You will get following respond
     Done. There were no warn messages.
     ------------------------------------------------------------------------------------------
 
-
-### (Optional) > 30min
+### (Optional) < 5min
 Plot recalibration data.
 ```
 $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T BaseRecalibrator -R human_g1k_v37_decoy.fasta -I ${id}.aligned_reads_dedup_sorted.bam -knownSites dbsnp_138.b37.vcf -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf -BQSR ${id}_recal.table -o post_${id}_recal.table
@@ -614,9 +613,41 @@ $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T AnalyzeC
 $ open ${id}_recalibration_plots.pdf
 ```
 
+See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
 
+### PrintReads
 
+```
+$ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
+                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+                 -T PrintReads -R human_g1k_v37_decoy.fasta \
+                 -I ${id}.aligned_reads_dedup_sorted.bam \
+                 -BQSR ${id}_recal.table \
+                 -o ${id}.aligned_reads_dedup_recal_sorted.bam
 
+```
+
+You will get following respond.
+
+    INFO  11:31:51,182 ProgressMeter -            done   1611084.0    79.0 s      49.0 s       99.1%    79.0 s       0.0 s
+
+    INFO  11:31:51,183 ProgressMeter - Total runtime 79.15 secs, 1.32 min, 0.02 hours
+
+    INFO  11:31:51,183 MicroScheduler - 0 reads were filtered out during the traversal out of approximately 1611084 total reads (0.00%)
+
+    INFO  11:31:51,183 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
+
+    INFO  11:31:51,184 MicroScheduler -   -> 0 reads (0.00% of total) failing FailsVendorQualityCheckFilter
+
+    INFO  11:31:51,184 MicroScheduler -   -> 0 reads (0.00% of total) failing MalformedReadFilter
+
+    INFO  11:31:51,184 MicroScheduler -   -> 0 reads (0.00% of total) failing MappingQualityUnavailableFilter
+
+    ------------------------------------------------------------------------------------------
+
+    Done. There were no warn messages.
+
+    ------------------------------------------------------------------------------------------
 
 
 # Third step
