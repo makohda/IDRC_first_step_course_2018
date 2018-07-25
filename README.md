@@ -68,7 +68,7 @@ https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.
 Then, install on your mac.
 
 After installation, confirm it by following procedures.  
-Open Terminal.app (is located on /Application/Utilities), then type this shell command
+Open Terminal.app (is located on /Application/Utilities), then type this shell command  
 `$ java -version`
 
 If succeeded, you will get following response
@@ -110,7 +110,7 @@ _Push Q key for quit_
 
 more/less is a viewer. Originally, there is more. Then, less was developped.
 
-cat command means con**cat**enate. Concatenate multiple file, like this
+cat command means con**cat**enate. Concatenate multiple file, like this  
 `$ cat fileA fileB`  
 Let's test.
 ```
@@ -253,7 +253,7 @@ Thirdly, see this aligned sequence reads,
 `$ sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
 Go to 1:235,955,287-235,955,418 to see the mutation.
 
-Can you see? Genomic position of this screenshot is 1:235955298-235955423
+Can you see? Genomic position of this screenshot is 1:235955298-235955423 (build 37).
 ![](images/IGV_LYST.png "")
 
 
