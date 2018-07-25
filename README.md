@@ -20,18 +20,20 @@ This mini-course is made for a lecture which let you get a first tiny step to bi
 It assumes that this is made for **step by step hands-on style, but this could be applied to self studying.  
 Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect**:wink:
 
-This course will cover:
+## This course will cover:
 - customise your macintosh environment for running bioinformatic programs
 - experience simple target resequence data analysis
 - understand what steps are there (alignment, remove duplicate, variant call..etc)
 - how interpretate variants
 
-Not cover:
+## Not cover:
 - how algorithmn works
 - how to handle massive amount data using cluster computers (SSH, Grid Job Scheduler, memory usage, disk I/O)
 - deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in heystacks)
 
-For further advanced self studies, I know there are so many :astonished:, these materials might be nice for the next step.
+## Beyond this course
+For further advanced self studies, I know there are so many :astonished:  
+These materials might be nice for the next step.  
 - The Canadian Bioinformatics workshops (past workshop materials/videos are ready) https://bioinformatics.ca/workshops/
 - 平成28年度NGSハンズオン講習会カリキュラム NBDC https://biosciencedbc.jp/human/human-resources/workshop/h28-2
 
