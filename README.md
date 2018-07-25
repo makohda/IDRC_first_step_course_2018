@@ -31,6 +31,9 @@ Not cover:
 - how to handle massive amount data using cluster computers (SSH, Grid Job Scheduler, memory usage, disk I/O)
 - deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in heystacks)
 
+For further advanced self studies, I know there are so many :astonished:, these materials might be nice for the next step.
+- The Canadian Bioinformatics workshops (past workshop materials/videos are ready) https://bioinformatics.ca/workshops/
+- 平成28年度NGSハンズオン講習会カリキュラム NBDC https://biosciencedbc.jp/human/human-resources/workshop/h28-2
 
 # 3. Set up your mac :computer:
 #### :point_right: Ideally, you should try and complete this section before hands-on
