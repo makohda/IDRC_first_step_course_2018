@@ -32,8 +32,8 @@ Do not be afraid. If you failed something, nothing will happen. No sample lost. 
 - deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in heystacks)
 
 ## Beyond this course
-For further advanced self studies, I know there are so many pages in the internet :astonished:  
-These materials might be nice for the next step.  
+For further advanced self studies, you already know there are so many pages in the internet :astonished:  
+I think these materials might be nice for the next step.  
 - The Canadian Bioinformatics workshops (past workshop materials/videos are ready) https://bioinformatics.ca/workshops/
 - 平成28年度NGSハンズオン講習会カリキュラム NBDC https://biosciencedbc.jp/human/human-resources/workshop/h28-2
 
@@ -235,22 +235,21 @@ $ wget -c https://www.dropbox.com/s/drit0y6xu6dnpg7/human_g1k_v37_decoy.dict
 ```
 
 Secondary, align paired sequence reads to the 1000 genomes project-customised human reference genome build 37 (human_g1k_v37_decoy).  
+Alignment.  
 ```
-# alignment # This line is a comment, not command.
 $ bwa mem -t4 -M \
             -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
             human_g1k_v37_decoy.fasta \
             DRR006760_chr1_1.paired.fastq.gz DRR006760_chr1_2.paired.fastq.gz > DRR006760_chr1.aligned_reads.sam
+```
+Convert .sam file to .bam format.  
+`$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam`  
+Sort .bam contents.  
+`$ samtools sort -@4 -m 2G DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam`  
+Make .bam index file to make search.  
+`$ samtools index DRR006760_chr1.aligned_reads_sorted.bam`
 
-# convert .sam file to .bam format
-$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam
-# sort .bam contents
-$ samtools sort -@4 -m 2G DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam
-# make .bam index file to make search
-$ samtools index DRR006760_chr1.aligned_reads_sorted.bam
-```  
-
-you will get following response. It will take about few min by my MacBookPro 2014 (2.2GHz).  
+You will get following response. It will take about few min by my MacBookPro 2014 (2.2GHz).  
 
     [M::bwa_idx_load_from_disk] read 0 ALT contigs
     [M::process] read 396040 sequences (40000040 bp)...
@@ -430,10 +429,10 @@ $ gunzip dbsnp_138.b37.vcf.idx.gz
 
 More detail information of resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
 
-I know you are tired for downloading. I'm too.  
+I know you are tired for downloading. To be honest, I'm too.  
 Most part of molecular work are occupied by pipetting, most part of bioinformatic work are occupied by preparing and data cleaning. Please calm down :sob:  
 
-Before staring analysis, we have to check your directory and files. To avoid to take a bad slipping.  
+Before starting analysis, we have to check your directory and files. To avoid to take a bad slipping.  
 `$ pwd`  
 Are you in the working directory (exome_analysis)? If not, change directory by type this command.  
 `$ cd ~/exome_analysis`  
@@ -486,10 +485,12 @@ FASTQ format - Wikipedia https://en.wikipedia.org/wiki/FASTQ_format
 $ id=DRR006760_chr1
 $ echo ${id}
 ```
+Here, id is a variable. It can keep a specific value.  
+We will use this variable to present the sample name.  
 
-### Fastq trimming <1 min
+### Fastq trimming < 1min
 ```
-$ java -Xmx4g -jar Trimmomatic-0.38//Trimmomatic-0.38.jar PE \
+$ java -Xmx4g -jar Trimmomatic-0.38/Trimmomatic-0.38.jar PE \
                  -threads 4 -phred33 -trimlog ${id}.trimlog \
                  ${id}_1.fastq.gz \
                  ${id}_2.fastq.gz \
@@ -497,6 +498,19 @@ $ java -Xmx4g -jar Trimmomatic-0.38//Trimmomatic-0.38.jar PE \
                  ${id}_2.paired.fastq.gz ${id}_2.unpaired.fastq.gz \
                  TRAILING:20 MINLEN:50
 ```
+From Trimmomatic web page,
+- TRAILING: Cut bases off the end of a read, if below a threshold quality
+- MINLEN: Drop the read if it is below a specified length
+
+threads 4?  
+Thread means threads of execution. Roughly saying, dividing a single task to four parts to reduce the calculation time.  
+phred33??
+Phred score is originally developed for Sanger sequence. So, I expect you already know well.  
+
+This fastq file encodes quality values with Sanger institute-style. It's offset is 33.  
+There is another option, phred64. It is for Solexa-style, Illumina 1.3+-style, Illumina 1.5+-style.  
+The offset of Illumina 1.8+ is 33. Crazy. Unbelievable. I can't understand what they want to do :weary:  
+See more detail at https://en.wikipedia.org/wiki/FASTQ_format
 
 You will get following respond
 
@@ -508,46 +522,51 @@ You will get following respond
 Check file size of all fastq.gz  
 `$ ls -hl ${id}*fastq.gz`
 
-## Mapping sequence reads to the reference genome <1 min
+Can you see two .paired.fastq.gz?
+
+### Mapping sequence reads to the reference genome < 1min
 ```
 $ bwa mem -t4 -M \
             -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
             human_g1k_v37_decoy.fasta \
-            ${id}_1.paired.fastq.gz ${id}_2.paired.fastq.gz -o ${id}.aligned_reads.sam
+            ${id}_1.paired.fastq.gz ${id}_2.paired.fastq.gz > ${id}.aligned_reads.sam
 
 $ samtools view -@4 -1 ${id}.aligned_reads.sam > ${id}.aligned_reads.bam
 $ samtools sort -@4 -m 2G ${id}.aligned_reads.bam -o ${id}.aligned_reads_sorted.bam
 $ samtools index ${id}.aligned_reads_sorted.bam
 ```
+These lines are almost same with previous bwa/samtools commands.
 
-echo "bwa bam サイズ確認"
-$ ls -hl ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam
+### (Optional)
+This is another way. Connect bwa and samtools view/sort to speed up.
+```
+$ bwa mem -t4 -M \
+              -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
+              human_g1k_v37_decoy.fasta \
+              DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz | \
+              samtools view -@4 -1 - | samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam
+$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam
+```
 
+Check the file size of generated .bam files.  
+`$ ls -hl ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
 
-echo "MarkDuplicates <1min."
-
+### MarkDuplicates <  1min
+Remove (or just add mark) PCR duplicates entries in .bam file.  
+```
 $ picard MarkDuplicates \
        INPUT=${id}.aligned_reads_sorted.bam \
        OUTPUT=${id}.aligned_reads_dedup_sorted.bam \
        METRICS_FILE=${id}.duplicate.metrics \
        VALIDATION_STRINGENCY=LENIENT \
        ASSUME_SORTED=true REMOVE_DUPLICATES=true
-
-ILLUMINACLIP: Cut adapter and other illumina-specific sequences from the read.
-SLIDINGWINDOW: Perform a sliding window trimming, cutting once the average quality within the window falls below a threshold.
-LEADING: Cut bases off the start of a read, if below a threshold quality
-TRAILING: Cut bases off the end of a read, if below a threshold quality
-CROP: Cut the read to a specified length
-HEADCROP: Cut the specified number of bases from the start of the read
-MINLEN: Drop the read if it is below a specified length
-TOPHRED33: Convert quality scores to Phred-33
-TOPHRED64: Convert quality scores to Phred-64
-
 $ samtools index ${id}.aligned_reads_dedup_sorted.bam
+```
 
-echo "picard bam サイズ確認2"
-$ ls -hl ${id}.aligned_reads_sorted.bam
-$ ls -hl ${id}.aligned_reads_dedup_sorted.bam
+Check the file size of generated .bam files.  
+`$ ls -hl ${id}.aligned_reads_sorted.bam; ls -hl ${id}.aligned_reads_dedup_sorted.bam`  
+By MarkDuplicates with remove_duplicates option, PCR duplicated entires are removed from .bam contents. So, file size is reduced.  
+For detail information of generated metrics, see https://broadinstitute.github.io/picard/picard-metric-definitions.html#DuplicationMetrics
 
 
 # Third step
