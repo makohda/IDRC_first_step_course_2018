@@ -56,7 +56,7 @@ I know this is a first barricade to step in learning informatic skills, but this
 - macOS is a kind of FreeBSD OS. BSD is a kind of UNIX https://en.wikipedia.org/wiki/Unix-like#/media/File:Unix_history-simple.svg
 - UNIX is a OS developed by AT&T and MIT. It has several good features https://www.gotothings.com/unix/unix-features-and-advantages.htm
 - Therefore, we frequently recomment to use Mac when you start to use command lines
-- Google is your best friend :+1:
+- **Google is your best friend** :+1:
 - may add later (frequently asked words or something)
 
 ## Make and move to your working directory
