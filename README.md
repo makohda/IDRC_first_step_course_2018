@@ -49,7 +49,7 @@ I know this is a first barricade to step in learning informatic skills, but this
 - **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
 - `$ cd` cd means _**C**hange **D**irectory_
 - `$ mkdir new_diretory_name` mkdir means _**M**ake **D**irectory_
-- `$ cat cnvkit.${platform}.summary.out C -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' S -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
+- `$ cat cnvkit.${platform}.summary.out | cut -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' | sort -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
 - GNU/Linux is a kind of OS (Operation Systems). Same as Windows and macOS. Most of servers are Linux
 - Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small/Mail/Web...too diverse to express
 - Linux is a open source copy of UNIX (not exactly)
@@ -410,11 +410,11 @@ Large files, such as 2G size, are sometime failed to download or copy. So, you s
 $ brew install coreutils # coreutils includes some commands. e.g. gmd5sum
 $ gmd5sum Mills_and_1000G_gold_standard.indels.b37.vcf.gz
 
-a0764a80311aee369375c5c7dda7e266  Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+#=> a0764a80311aee369375c5c7dda7e266  Mills_and_1000G_gold_standard.indels.b37.vcf.gz
 
 $ cat Mills_and_1000G_gold_standard.indels.b37.vcf.gz.md5
 
-a0764a80311aee369375c5c7dda7e266  /humgen/gsa-scr1/pub/bundle/2.8/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+#=> a0764a80311aee369375c5c7dda7e266  /humgen/gsa-scr1/pub/bundle/2.8/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.gz
 ```
 You probably see the same hash values.
 
@@ -431,12 +431,13 @@ More detail information of resource bundle https://software.broadinstitute.org/g
 I know you are tired for downloading. I'm too.  
 Most part of molecular work are occupied by pipetting, most part of bioinformatic work are occupied by preparing and data cleaning. Please calm down :sob:  
 
-Before staring analysis, check your directory and files.  
+Before staring analysis, we have to check your directory and files. To avoid to take a bad slipping.  
 `$ pwd`  
-Are you in the working directory (exome_analysis)? If not, change directory by type this command  
+Are you in the working directory (exome_analysis)? If not, change directory by type this command.  
 `$ cd ~/exome_analysis`  
-Then, check files. Are you ready?  
+Then, check files.  
 `$ ls -vlhrt`  
+Do you have same files?
 ここにファイルを書く
 
 ## Let's step forward
