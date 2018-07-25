@@ -258,11 +258,25 @@ you will get following response. It will take about few min by my MacBookPro 201
     [M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 142256, 0, 0)
     ...snip
 
+Check generated files.  
+`$ ls -vlhrt DRR006760*`
+
+You will see like this.
+
+    -rw-r--r-- 1 mako  55M  7 20 22:09 DRR006760_chr1_2.fastq.gz
+    -rw-r--r-- 1 mako  54M  7 20 22:09 DRR006760_chr1_1.fastq.gz
+    -rw-r--r-- 1 mako 660M  7 25 13:08 DRR006760_chr1.aligned_reads.sam
+    -rw-r--r-- 1 mako 158M  7 25 13:54 DRR006760_chr1.aligned_reads.bam
+    -rw-r--r-- 1 mako 141M  7 25 13:54 DRR006760_chr1.aligned_reads_sorted.bam
+    -rw-r--r-- 1 mako 1.5M  7 25 13:54 DRR006760_chr1.aligned_reads_sorted.bam.bai
+
 Thirdly, see this aligned sequence reads,  
 `$ sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
+
+Confirm your selected genome is "Human (1kg, b37+decoy)".  
 Go to 1:235,955,287-235,955,418 to see the mutation.
 
-Can you see? Genomic position of this screenshot is 1:235955298-235955423 (build 37).
+Can you find this? Genomic position of LYST:c.4189T>G:p.F1397V is 1:235955298-235955423 (build 37).
 ![](images/IGV_LYST.png "")
 
 
@@ -303,6 +317,15 @@ If installation succeeded, you will get
     Version: v0.4.6(f7310cc7b05b43b7e8f5f9df9c09182bd98bd7f7)
 
 ### brew install fastqc
+FastQC is a quality control tool for high throughput sequence data.  
+`$ brew install fastqc`
+
+Type to check the installation  
+`$ fastqc --version`
+
+If installation succeeded, you will get
+
+    FastQC v0.11.7
 
 ### Install Trimmomatic < 3min
 Trimmomatic is a trimming tool for Illumina NGS data.
@@ -327,7 +350,6 @@ If installation succeeded, you will get
 Similar with SAMtools, Picard is a multi-purpose program for NGS analyses.  
 Picard Tools - By Broad Institute https://broadinstitute.github.io/picard/  
 Currently, Picard has 86 tools.   
-
 ```
 $ brew search picard
 $ brew info picard-tools
@@ -351,7 +373,6 @@ This is the reason that you frequently saw the screenshot of StarTrek in present
 GATK (**G**enome **A**nalysis **T**ool**k**it) is a tool for variant discovery in high-throughput sequencing data.  
 GATK | Home https://software.broadinstitute.org/gatk/
 Newest version is 4.0.6. But, we use version 3.8.1 in this hands-on. If you became familier with command lines, I strongly recommend to upgrade to latest version.  
-
 ```
 $ wget https://software.broadinstitute.org/gatk/download/auth\?package\=GATK-archive\&version\=3.8-1-0-gf15c1c3ef -O GATK-3.8-1-0-gf15c1c3ef.tar.gz
 $ tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
@@ -382,8 +403,27 @@ Download following files, and expand them.
 - dbsnp_138.b37.vcf.idx.gz
 - dbsnp_138.b37.vcf.idx.gz.md5
 Totally, 1.4G. It takes about 10 mins.
+
+You notice .md5 files. MD5 stands for Message Digest Algorithm 5, and is a hash value. Hash value is a summarized value. So, it is a something like a fingerprint, unique identifier of the file.  
+Large files, such as 2G size, are sometime failed to download or copy. So, you should compare hash values of the original file and copied one. You can create the hash value of your copy, like this.  
 ```
-$ あああああああああああああああ
+$ brew install coreutils # coreutils includes some commands. e.g. gmd5sum
+$ gmd5sum Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+
+a0764a80311aee369375c5c7dda7e266  Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+
+$ cat Mills_and_1000G_gold_standard.indels.b37.vcf.gz.md5
+
+a0764a80311aee369375c5c7dda7e266  /humgen/gsa-scr1/pub/bundle/2.8/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+```
+You probably see the same hash values.
+
+Let's uncompress .gz files.
+```
+$ gunzip Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+$ gunzip Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
+$ gunzip dbsnp_138.b37.vcf.gz
+$ gunzip dbsnp_138.b37.vcf.idx.gz
 ```
 
 More detail information of resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
