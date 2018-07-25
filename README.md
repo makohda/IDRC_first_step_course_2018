@@ -189,10 +189,10 @@ $ unzip IGV_2.4.13.zip
 ```
 
 To start up IGV, type  
-`$ sh IGV_2.4.13/igv.sh`  
+`$ sh IGV_2.4.13/igv.sh -g 1kg_v37`  
 Java language will run IGV program. We will use IGV after sequece data alignment.
-
-**You also need to download the specific version of reference human genome (Human 1kg, b37 + decoy), it can be found in Menu bar "Genomes > Load Genome From Server"**  
+1kg_v37 specify the human genome version. If this is the first time IGV wake up, it will start downloading automatically.  
+You can download the specific version of reference human genome (Human 1kg, b37 + decoy), it can be found in Menu bar "Genomes > Load Genome From Server"  
 
 #### Tips: 1kg? b37?? decoy???
 - 1kg means 1000 genomes project http://www.internationalgenome.org/  
