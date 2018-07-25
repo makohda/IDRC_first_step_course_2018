@@ -32,7 +32,7 @@ Do not be afraid. If you failed something, nothing will happen. No sample lost. 
 - deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in heystacks)
 
 ## Beyond this course
-For further advanced self studies, I know there are so many :astonished:  
+For further advanced self studies, I know there are so many pages in the internet :astonished:  
 These materials might be nice for the next step.  
 - The Canadian Bioinformatics workshops (past workshop materials/videos are ready) https://bioinformatics.ca/workshops/
 - 平成28年度NGSハンズオン講習会カリキュラム NBDC https://biosciencedbc.jp/human/human-resources/workshop/h28-2
@@ -59,14 +59,15 @@ I know this is a first barricade to step in learning informatic skills, but this
 - **Google is your best friend** :+1:
 - may add later (frequently asked words or something)
 
-## Make and move to your working directory
+## Make and move into your working directory
 `$ cd ~/` go to your home directory (e.g. /Users/okazaki, /Users/kohda)  
 `$ mkdir ~/exome_analysis` make directory named as exome_analysis under your home directory  
 `$ cd ~/exome_analysis` move to ~/exome_analysis and use it as our basecamp directory  
+All data should be gathered here.
 
 ## Install java (Java SE Development Kit 8u181 version)
 Java is a kind of programming launguage.  
-You need Java itself to run applications developed using Java launguage. For example, IGV, Picard and GATK are Java application.
+You need Java itself to run applications developed using Java launguage. For example, IGV, Picard and GATK are Java application. We will install them.
 
 Download Java SE Development Kit 8u181 from here  
 https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html  
@@ -82,7 +83,7 @@ If succeeded, you will get following response
     Java(TM) SE Runtime Environment (build 1.8.0_181-b13)
     Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
 
-## Install homebrew, a nice packge manager for macOS:beer:
+## Install homebrew, a nice packge manager for macOS :beer:
 A package manager maintains softwares (packages), such as install, update, and remove.  
 Of course, you can manage your computer, but we usually use a package manager to make it easier.  
 Go to this page, https://brew.sh/ then, follow the install instruction.
@@ -200,23 +201,22 @@ You also need to download the specific version of reference human genome (Human 
 
 # 4. First step
 Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
-Prepare (download!) sequence data,reference genome and related files, see the raw data (fastq), align fastq to the reference human genome, see the result using IGV.
 
 ## First analysis < 20 min
 In this section, we will analyze following public data. 
-This is very first step, so we just do align and see it using viewer.
+We just prepare (**download by yourself!**) sequence reads, reference genome and related files. Then, align reads (fastq) to the reference human genome using BWA, see the result using IGV.
 
 Followings are summary of data we will use in this section.  
 - Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
-- Abstract: Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission. Background: Autosomal recessive hereditary spastic paraplegias (AR-HSP) constitute a heterogeneous group of neurodegenerative diseases involving pyramidal tracts dysfunction. The genes responsible for many types of AR-HSPs remain unknown.
-- Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and exome sequencing using one patient’s sample.
+- Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission.
+- Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and **exome sequencing using one patient’s sample.**
 - Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene**
 - DRA: http://ddbj.nig.ac.jp/DRASearch/study?acc=DRP000999
 - **Causative gene: LYST c.4189T>G, p.F1397V**
 - Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
 
 Firstly, download demo data and reference genome sequence files.  
-I prepared small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads. File size are 54M and 55M.  
+I made small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads only. File size are 54M and 55M (original sizes are 4.8G and 4.9G).  
 ```
 $ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz
 $ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz
@@ -262,9 +262,9 @@ Can you see? Genomic position of this screenshot is 1:235955298-235955423 (build
 ![](images/IGV_LYST.png "")
 
 
-# Second step
-More similar with real one.  
-Using same fastq, but add Quality Check, Trimming, data cleaning for variant call, variant call, annotate variants, interpretation.  
+# 5. Second step
+More similar with real analysis.  
+Using same fastq, but add quality check, trimming, data cleaning for variant call, variant call, annotate variants, interpretation steps.  
 And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) for specific disease.  
 
 ## Install softwares required for sequence analysis#2
@@ -301,7 +301,7 @@ If installation succeeded, you will get
 ### brew install fastqc
 
 ### Install Trimmomatic < 3min
-Trimmomatic is a trimming tool for Illumina NGS data
+Trimmomatic is a trimming tool for Illumina NGS data.
 
 USADELLAB.org - Trimmomatic: A flexible read trimming tool for Illumina NGS data http://www.usadellab.org/cms/?page=trimmomatic
 
@@ -322,7 +322,7 @@ If installation succeeded, you will get
 ### Install Picard < 3min
 Similar with SAMtools, Picard is a multi-purpose program for NGS analyses.  
 Picard Tools - By Broad Institute https://broadinstitute.github.io/picard/  
-Currently, Picard has 86 tools   
+Currently, Picard has 86 tools.   
 
 ```
 $ brew search picard
@@ -342,7 +342,6 @@ If installation succeeded, you will get
 
 This is the reason that you frequently saw the screenshot of StarTrek in presentations for NGS analysis  
 ![](images/picard.jpg "Captain Picard")
-
 
 ### Install GATK < 3min
 GATK (**G**enome **A**nalysis **T**ool**k**it) is a tool for variant discovery in high-throughput sequencing data.  
@@ -379,7 +378,9 @@ Download following files, and expand them.
 - dbsnp_138.b37.vcf.idx.gz
 - dbsnp_138.b37.vcf.idx.gz.md5
 Totally, 1.4G. It takes about 10 mins.
-
+```
+$ あああああああああああああああ
+```
 
 More detail information of resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
 
