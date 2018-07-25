@@ -309,7 +309,7 @@ $ chmod +x ./tableview_darwin_amd64
 ```
 
 Type to check the installation  
-`./tableview_darwin_amd64 -version`
+`$ ./tableview_darwin_amd64 -version`
 
 If installation succeeded, you will get
 
