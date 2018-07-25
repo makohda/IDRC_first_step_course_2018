@@ -615,7 +615,7 @@ $ open ${id}_recalibration_plots.pdf
 
 See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
 
-### PrintReads
+### PrintReads < 3min
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -624,7 +624,6 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -I ${id}.aligned_reads_dedup_sorted.bam \
                  -BQSR ${id}_recal.table \
                  -o ${id}.aligned_reads_dedup_recal_sorted.bam
-
 ```
 
 You will get following respond.
@@ -639,6 +638,9 @@ You will get following respond.
     ------------------------------------------------------------------------------------------
     Done. There were no warn messages.
     ------------------------------------------------------------------------------------------
+
+_PrintRead is replaced with ApplyBQSR at GATK4._  
+GATK | Tool Documentation Index https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.0.0/org_broadinstitute_hellbender_tools_walkers_bqsr_ApplyBQSR.php
 
 # Third step
 Exam. In other words, homework. But, don't move data to your home!  
