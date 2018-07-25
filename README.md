@@ -568,6 +568,56 @@ Check the file size of generated .bam files.
 By MarkDuplicates with remove_duplicates option, PCR duplicated entires are removed from .bam contents. So, file size is reduced.  
 For detail information of generated metrics, see https://broadinstitute.github.io/picard/picard-metric-definitions.html#DuplicationMetrics
 
+### BaseRecalibrator < 2min
+Base quality score recalibration (BQSR) is a process to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls.   
+
+GATK | Tool Documentation Index https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
+
+```
+$ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
+                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+                 -T BaseRecalibrator -R human_g1k_v37_decoy.fasta \
+                 -knownSites dbsnp_138.b37.vcf \
+                 -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf \
+                 -I ${id}.aligned_reads_dedup_sorted.bam \
+                 -L 1 \
+                 -o ${id}_recal.table
+```
+-L is a option for specifying chromosome, or chromosomal location. e.g. -L chr1:123-123450  
+If you were doing whole genome analysis, you don't use this option.  
+If you were doing whole exome analysis, there may be several choices.
+
+You will get following respond
+
+    INFO  11:30:01,851 ProgressMeter - Total runtime 87.25 secs, 1.45 min, 0.02 hours
+    INFO  11:30:01,852 MicroScheduler - 53278 reads were filtered out during the traversal out of approximately 1604532 total reads (3.32%)
+    INFO  11:30:01,852 MicroScheduler -   -> 0 reads (0.00% of total) failing BadCigarFilter
+    INFO  11:30:01,852 MicroScheduler -   -> 0 reads (0.00% of total) failing DuplicateReadFilter
+    INFO  11:30:01,852 MicroScheduler -   -> 0 reads (0.00% of total) failing FailsVendorQualityCheckFilter
+    INFO  11:30:01,852 MicroScheduler -   -> 0 reads (0.00% of total) failing MalformedReadFilter
+    INFO  11:30:01,852 MicroScheduler -   -> 0 reads (0.00% of total) failing MappingQualityUnavailableFilter
+    INFO  11:30:01,852 MicroScheduler -   -> 53120 reads (3.31% of total) failing MappingQualityZeroFilter
+    INFO  11:30:01,853 MicroScheduler -   -> 158 reads (0.01% of total) failing NotPrimaryAlignmentFilter
+    INFO  11:30:01,853 MicroScheduler -   -> 0 reads (0.00% of total) failing UnmappedReadFilter
+    ------------------------------------------------------------------------------------------
+    Done. There were no warn messages.
+    ------------------------------------------------------------------------------------------
+
+
+### (Optional) > 30min
+Plot recalibration data.
+```
+$ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T BaseRecalibrator -R human_g1k_v37_decoy.fasta -I ${id}.aligned_reads_dedup_sorted.bam -knownSites dbsnp_138.b37.vcf -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf -BQSR ${id}_recal.table -o post_${id}_recal.table
+
+$ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T AnalyzeCovariates -R human_g1k_v37_decoy.fasta -before ${id}_recal.table -after post_${id}_recal.table -plots ${id}_recalibration_plots.pdf
+
+$ open ${id}_recalibration_plots.pdf
+```
+
+
+
+
+
 
 # Third step
 Exam. In other words, homework. But, don't move data to your home!  
