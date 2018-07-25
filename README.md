@@ -46,10 +46,10 @@ I know this is a first barricade to step in learning informatic skills, but this
 - Terminal.app is a application to tell what you want to your computer via command lines
 - `$ ` means command line in this page. $ is a prompt, so you don't need type $. Just type following characters
 - `$ pwd` pwd means _**P**rint **W**orking **D**irectory_
+- **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
 - `$ cd` cd means _**C**hange **D**irectory_
 - `$ mkdir new_diretory_name` mkdir means _**M**ake **D**irectory_
 - `$ cat cnvkit.${platform}.summary.out C -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' S -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
-- **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
 - GNU/Linux is a kind of OS (Operation Systems). Same as Windows and macOS. Most of servers are Linux
 - Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small/Mail/Web...too diverse to express
 - Linux is a open source copy of UNIX (not exactly)
