@@ -437,10 +437,44 @@ Before staring analysis, we have to check your directory and files. To avoid to 
 `$ pwd`  
 Are you in the working directory (exome_analysis)? If not, change directory by type this command.  
 `$ cd ~/exome_analysis`  
+Are these tools ready?
+```
+$ java -version
+$ bwa
+$ samtools --version
+$ ls -vlhrt IGV_2.4.13/igv.sh
+$ grep --version
+$ ./tableview_darwin_amd64 -version
+$ fastqc --version
+$ java -jar Trimmomatic-0.38/trimmomatic-0.38.jar -version
+$ picard SortSam -h
+$ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar --version
+```
 Then, check files.  
 `$ ls -vlhrt`  
 Do you have same files?
-ここにファイルを書く
+
+    DRR006760_chr1_1.fastq.gz
+    DRR006760_chr1_2.fastq.gz
+    human_g1k_v37_decoy.fasta
+    human_g1k_v37_decoy.fasta.amb
+    human_g1k_v37_decoy.fasta.ann
+    human_g1k_v37_decoy.fasta.bwt
+    human_g1k_v37_decoy.fasta.fai
+    human_g1k_v37_decoy.fasta.pac
+    human_g1k_v37_decoy.fasta.sa
+    human_g1k_v37_decoy.dict
+    Mills_and_1000G_gold_standard.indels.b37.vcf
+    dbsnp_138.b37.vcf
+
+Lastly, move old files, generated in last section, to other directory. Here, it is named as zzold.
+```
+$ mkdir zzold
+$ mv DRR006760_chr1.aligned_reads.sam zzold/
+$ mv DRR006760_chr1.aligned_reads.bam zzold/
+$ mv DRR006760_chr1.aligned_reads_sorted.bam zzold/
+$ mv DRR006760_chr1.aligned_reads_sorted.bam.bai zzold/
+```
 
 ## Let's step forward
 
