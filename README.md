@@ -14,10 +14,11 @@ It also requires some computational skills.
 Although not absolute, it becomes more important in order from top to bottom.  
 This is completely my biased list, so I can agree with 3 or 4 or 5 in reverse/change.
 
+
 # 2. Aim
 This mini-course is made for a lecture which let you get a first tiny step to bioinformatic analysis.  
 It assumes that this is made for **step by step hands-on style, but this could be applied to self studying.  
-Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect**:wink:  
+Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect**:wink:
 
 This course will cover:
 - customise your macintosh environment for running bioinformatic programs
@@ -29,7 +30,6 @@ Not cover:
 - how algorithmn works
 - how to handle massive amount data using cluster computers (SSH, Grid Job Scheduler, memory usage, disk I/O)
 - deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in heystacks)
-
 
 
 # 3. Set up your mac :computer:
@@ -46,11 +46,12 @@ I know this is a first barricade to step in learning informatic skills, but this
 - `$ cat cnvkit.${platform}.summary.out C -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' S -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
 - **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
 - GNU/Linux is a kind of OS (Operation Systems). Same as Windows and macOS. Most of servers are Linux
-- Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small...too diverse to express
-- Linux is a open source copy of UNIX
-- macOS is a kind of FreeBSD OS. BSD is a kind of UNIX
+- Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small/Mail/Web...too diverse to express
+- Linux is a open source copy of UNIX (not exactly)
+- macOS is a kind of FreeBSD OS. BSD is a kind of UNIX https://en.wikipedia.org/wiki/Unix-like#/media/File:Unix_history-simple.svg
+- UNIX is a OS developed by AT&T and MIT. It has several good features https://www.gotothings.com/unix/unix-features-and-advantages.htm
 - Therefore, we frequently recomment to use Mac when you start to use command lines
-- Google is your friend :+1:
+- Google is your best friend :+1:
 - may add later (frequently asked words or something)
 
 ## Make and move to your working directory
@@ -64,10 +65,10 @@ You need Java itself to run applications developed using Java launguage. For exa
 
 Download Java SE Development Kit 8u181 from here  
 https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html  
-Then, install on your mac
+Then, install on your mac.
 
 After installation, confirm it by following procedures.  
-Open Terminal.app (is located on /Application/Utilities), then type this shell command  
+Open Terminal.app (is located on /Application/Utilities), then type this shell command
 `$ java -version`
 
 If succeeded, you will get following response
@@ -109,14 +110,14 @@ _Push Q key for quit_
 
 more/less is a viewer. Originally, there is more. Then, less was developped.
 
-cat command means con**cat**enate. Concatenate multiple file, like this  
+cat command means con**cat**enate. Concatenate multiple file, like this
 `$ cat fileA fileB`  
-Let's test.  
+Let's test.
 ```
 $ wget https://www.dropbox.com/s/5yfaiolgoi3cp3u/test_variant_data_02.tsv
 $ cat test_variant_data_01.tsv test_variant_data_02.tsv
 ```
-To make it easier to see,  
+To make it easier to see,
 ```
 $ cat test_variant_data_01.tsv test_variant_data_02.tsv > test_variant_data.concatenated.tsv 
 $ less -S test_variant_data.concatenated.tsv
@@ -136,8 +137,8 @@ At first, type this, to tell homebrew much more scientific programs
 
 ### Install bwa < 3min
 bwa for aligning reads to the reference genome (version 0.7.17)  
-Burrows-Wheeler Aligner http://bio-bwa.sourceforge.net/
-Manual Reference Pages  - bwa (1) http://bio-bwa.sourceforge.net/bwa.shtml
+Burrows-Wheeler Aligner http://bio-bwa.sourceforge.net/  
+Manual Reference Pages  - bwa (1) http://bio-bwa.sourceforge.net/bwa.shtml  
 ```
 $ brew search bwa
 $ brew info bwa #_see software detail information_  
@@ -163,9 +164,9 @@ $ brew install samtools
 ```
 
 Type to check the installation  
-`$ samtools --version`  
+`$ samtools --version`
 
-If installation succeeded, you will get following response  
+If installation succeeded, you will get following response
 
     samtools 1.9
     Using htslib 1.9
@@ -194,7 +195,7 @@ You also need to download the specific version of reference human genome (Human 
 
 # 4. First step
 Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
-Prepare (download!) sequence data,reference genome and related files, see the raw data (fastq), align fastq to the reference human genome, see the result using IGV.  
+Prepare (download!) sequence data,reference genome and related files, see the raw data (fastq), align fastq to the reference human genome, see the result using IGV.
 
 ## First analysis < 20 min
 In this section, we will analyze following public data. 
