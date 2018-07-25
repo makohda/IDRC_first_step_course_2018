@@ -236,11 +236,18 @@ $ wget -c https://www.dropbox.com/s/drit0y6xu6dnpg7/human_g1k_v37_decoy.dict
 
 Secondary, align paired sequence reads to the 1000 genomes project-customised human reference genome build 37 (human_g1k_v37_decoy).  
 ```
+# alignment # This line is a comment, not command.
 $ bwa mem -t4 -M \
-              -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
-              human_g1k_v37_decoy.fasta \
-              DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz | \
-              samtools view -@4 -1 - | samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam
+            -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
+            human_g1k_v37_decoy.fasta \
+            DRR006760_chr1_1.paired.fastq.gz DRR006760_chr1_2.paired.fastq.gz > DRR006760_chr1.aligned_reads.sam
+
+# convert .sam file to .bam format
+$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam
+# sort .bam contents
+$ samtools sort -@4 -m 2G DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam
+# make .bam index file to make search
+$ samtools index DRR006760_chr1.aligned_reads_sorted.bam
 ```  
 
 you will get following response. It will take about few min by my MacBookPro 2014 (2.2GHz).  
@@ -250,9 +257,6 @@ you will get following response. It will take about few min by my MacBookPro 201
     [M::process] read 396040 sequences (40000040 bp)...
     [M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 142256, 0, 0)
     ...snip
-
-Then, make Index file for aligned sequence file (.bam file). It takes few seconds.  
-`$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam`  
 
 Thirdly, see this aligned sequence reads,  
 `$ sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
