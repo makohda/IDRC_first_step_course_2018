@@ -18,7 +18,7 @@ This is completely my biased list, so I can agree with 3 or 4 or 5 in reverse/ch
 # 2. Aim
 This mini-course is made for a lecture which let you get a first tiny step to bioinformatic analysis.  
 It assumes that this is made for **step by step hands-on style, but this could be applied to self studying.  
-Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect**:wink:
+Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect** :wink:
 
 ## This course will cover:
 - customise your macintosh environment for running bioinformatic programs
