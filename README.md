@@ -613,8 +613,7 @@ $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T AnalyzeC
 
 $ open ${id}_recalibration_plots.pdf
 ```
-![](images/BSQR1.png "")
-![](images/BSQR2.png "")
+![](images/BSQR3.png "")
 
 See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
 
