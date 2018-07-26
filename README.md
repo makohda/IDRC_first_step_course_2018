@@ -201,7 +201,10 @@ You can download the specific version of reference human genome (Human 1kg, b37 
 #### Tips: 1kg? b37?? decoy???
 - 1kg means 1000 genomes project http://www.internationalgenome.org/  
 - b37 is a version of human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
-- The decoy genome, starting point is here http://www.cureffi.org/2013/02/01/the-decoy-genome/
+- decoy is a sequence derived from HuRef, human BAC and Fosmid clones, and NA12878.
+-- Scientific Notes/human genome - DNAnexus Wiki https://wiki.dnanexus.com/scientific-notes/human-genome
+-- hs37d5.slides.pdfftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.slides.pdf
+
 
 # 4. First step
 Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
