@@ -50,6 +50,9 @@ I know this is a first barricade to step in learning informatic skills, but this
 - `$ cd` cd means _**C**hange **D**irectory_
 - `$ mkdir new_diretory_name` mkdir means _**M**ake **D**irectory_
 - `$ cat cnvkit.${platform}.summary.out | cut -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' | sort -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
+- \t means TAB code. This is a kind of regular expression
+- \n means RETURN code. This is a kind of regular expression
+- Regular expression is frequently used in pattern matching like this. `$ echo Okazaki-sense` `$ echo Okazaki-sense | perl -pe 's/O.*i/Kohda/'`
 - GNU/Linux is a kind of OS (Operation Systems). Same as Windows and macOS. Most of servers are Linux
 - Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small/Mail/Web...too diverse to express
 - Linux is a open source copy of UNIX (not exactly)
@@ -141,7 +144,7 @@ $ cat --help
 At first, type this, to tell homebrew much more scientific programs  
 `$ brew tap brewsci/bio`
 
-### Install bwa < 3min
+### Install bwa (< 3 min)
 bwa for aligning reads to the reference genome (version 0.7.17)  
 Burrows-Wheeler Aligner http://bio-bwa.sourceforge.net/  
 Manual Reference Pages  - bwa (1) http://bio-bwa.sourceforge.net/bwa.shtml  
@@ -162,7 +165,7 @@ If succeeded, you will get following response
     Contact: Heng Li <lh3@sanger.ac.uk>
     ...
 
-### Install samtools < 3min
+### Install samtools (< 3 min)
 SAMtools for manipulating next-generation sequencing data (version 1.9)  
 ```
 $ brew search samtools
@@ -179,7 +182,7 @@ If succeeded, you will get following response
     Using htslib 1.9
     Copyright (C) 2018 Genome Research Ltd.  
 
-### Install IGV < 3min
+### Install IGV (< 3 min)
 Integrative Genomics Viewer is a viewer for NGS/Microarray data, developed by Broad Institute.  
 Go to https://software.broadinstitute.org/software/igv/download and click 'Download and unzip the Binary Distribution archive'  
 Then, double click downloaded item to expand. you will find IGV_2.4.13 directory.  
@@ -203,7 +206,7 @@ You can download the specific version of reference human genome (Human 1kg, b37 
 # 4. First step
 Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
 
-## First analysis < 20 min
+## First analysis (< 20 min)
 In this section, we will analyze following public data. 
 We just prepare (**download by yourself!**) sequence reads, reference genome and related files. Then, align reads (fastq) to the reference human genome using BWA, see the result using IGV.
 
@@ -243,6 +246,9 @@ $ bwa mem -t4 -M \
             human_g1k_v37_decoy.fasta \
             DRR006760_chr1_1.paired.fastq.gz DRR006760_chr1_2.paired.fastq.gz > DRR006760_chr1.aligned_reads.sam
 ```
+Backslash \, this is a special character which could supresses RETURN character.  
+We use this for separating single command line to multi lines for easy viewing.
+
 Convert .sam file to .bam format.  
 `$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam`  
 Sort .bam contents.  
@@ -280,14 +286,14 @@ Can you find this? Genomic position of LYST:c.4189T>G:p.F1397V is 1:235955298-23
 ![](images/IGV_LYST.png "")
 
 
-# 5. Second step
+# 5. Second step (< 2 days; depend on you)
 More similar with real analysis.  
 Using same fastq, but add quality check, trimming, data cleaning for variant call, variant call, annotate variants, interpretation steps.  
 And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) for specific disease.  
 
 ## Install softwares required for sequence analysis#2
 
-### Install GNU grep < 3min
+### Install GNU grep (< 3 min)
 grep is a command-line utility for searching plain-text data sets for lines.  
 GNU version is faster than BSD grep.  
 `$ brew install grep --with-default-names`
@@ -301,7 +307,12 @@ If succeeded, you will get following response
     Packaged by Homebrew
     Copyright (C) 2017 Free Software Foundation, Inc.
 
-### Install Tableview < 3min
+### Install GNU version utilities (< 3 min)
+Coreutils includes GNU version of some commands. Such as md5sum, ls, and more than 100 commands.  
+`$ brew install coreutils`  
+Unfortunately, there is slight different command behaviors between macOS (FreeBSD) version and GNU Linux version. We will use some GNU version commands.
+
+### Install Tableview (< 3 min)
 Format CSV file as human readable table  https://github.com/informationsea/tableview
 ```
 $ wget https://github.com/informationsea/tableview/releases/download/v0.4.6/tableview_darwin_amd64
@@ -327,7 +338,7 @@ If succeeded, you will get following response
 
     FastQC v0.11.7
 
-### Install Trimmomatic < 3min
+### Install Trimmomatic (< 3 min)
 Trimmomatic is a trimming tool for Illumina NGS data.
 
 USADELLAB.org - Trimmomatic: A flexible read trimming tool for Illumina NGS data http://www.usadellab.org/cms/?page=trimmomatic
@@ -346,7 +357,7 @@ If succeeded, you will get following response
     PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
     ...
 
-### Install Picard < 3min
+### Install Picard (< 3 min)
 Similar with SAMtools, Picard is a multi-purpose program for NGS analyses.  
 Picard Tools - By Broad Institute https://broadinstitute.github.io/picard/  
 Currently, Picard has 86 tools.   
@@ -359,17 +370,17 @@ $ brew install picard-tools
 Type to check the installation  
 `$ picard SortSam -h`
 
-If succeeded, you will get
+If succeeded, you will get following response
 
     USAGE: SortSam [options]
     Documentation: http://broadinstitute.github.io/picard/command-line-overview.html#SortSam
     This tool sorts the input SAM or BAM file by coordinate, queryname (QNAME), or some other property of the SAM record.
     ...
 
-This is the reason that you frequently saw the screenshot of StarTrek in presentations for NGS analysis  
+This is the reason that you frequently see the screenshot of StarTrek in presentations for NGS analysis  
 ![](images/picard.jpg "Captain Picard")
 
-### Install GATK < 3min
+### Install GATK (< 3 min)
 GATK (**G**enome **A**nalysis **T**ool**k**it) is a tool for variant discovery in high-throughput sequencing data.  
 GATK | Home https://software.broadinstitute.org/gatk/
 Newest version is 4.0.6. But, we use version 3.8.1 in this hands-on. If you became familier with command lines, I strongly recommend to upgrade to latest version.  
@@ -381,11 +392,11 @@ $ tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
 Type to check the installation  
 `$ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar --version`
 
-If succeeded, you will get
+If succeeded, you will get following response
 
     3.8-1-0-gf15c1c3ef
 
-### Install GATK bundle resource 10min
+### Install GATK bundle resource (10 min)
 Resouce bundle is a collection of standard files for working with human resequencing data with the GATK.  
 Go to resource bundle page https://software.broadinstitute.org/gatk/download/bundle  
 Read "FTP Server Access" section, and go to ftp site. Dive to b37 directory.  
@@ -410,7 +421,6 @@ You notice .md5 files. MD5 stands for Message Digest Algorithm 5, and is a hash 
 A hash value is a something like a fingerprint, unique identifier of the file.  
 Large files, such as 2G size, are sometime failed to download or copy. So, you should compare hash values of the original file and copied one. You can create the hash value of your copy, like this.  
 ```
-$ brew install coreutils # coreutils includes some commands. e.g. gmd5sum
 $ gmd5sum Mills_and_1000G_gold_standard.indels.b37.vcf.gz
 
 #=> a0764a80311aee369375c5c7dda7e266  Mills_and_1000G_gold_standard.indels.b37.vcf.gz
@@ -438,6 +448,7 @@ Before starting analysis, we have to check your directory and files. To avoid to
 `$ pwd`  
 Are you in the working directory (exome_analysis)? If not, change directory by type this command.  
 `$ cd ~/exome_analysis`  
+
 Are these tools ready?
 ```
 $ java -version
@@ -451,6 +462,7 @@ $ java -jar Trimmomatic-0.38/trimmomatic-0.38.jar -version
 $ picard SortSam -h
 $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar --version
 ```
+
 Then, check files.  
 `$ ls -vlhrt`  
 Do you have same files?
@@ -479,18 +491,99 @@ $ mv DRR006760_chr1.aligned_reads_sorted.bam.bai zzold/
 
 ## Let's step forward
 
-FASTQ format - Wikipedia https://en.wikipedia.org/wiki/FASTQ_format
+### fastq, sequence read data format
 
-ここに手順の概略を
+There are two major sequence data formats, fasta and fastq.  
+fasta is the origin of sequence data format. It has description line (header) and sequence contents. Here, you can see by this command,  
+`$ less human_g1k_v37_decoy.fasta`
 
+    >1 dna:chromosome chromosome:GRCh37:1:1:249250621:1
+    NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+    ...
+    ATCCAAGACCTGGCTTCCTTCCTTTTTTTCAGTCTCAGAGAATAACATACTCTTTCCCTG
+_Push Q key for quit_
+
+fast**q** is a extended format for sequence data.  
+It has both sequence letter and quality score, which is each encoded with a single ASCII character for brevity. Here, you can see,  
+`$ zless DRR006760_chr1_1.fastq.gz`
+
+    @DRR006760.35495851/1
+    TATGTCTGCATACTTAGGGGTACATGATACACAGTGCAAACACTGTATTGAGTCTGTAATGTGAGTCTTGCTATCTGGTCCCCTGAACACTCTGAGTCTG
+    +
+    CCCFFFFFHHHGHJJIJJJJGHIIJJIIJIHIJIGIIJJJJIJJJIJJJJJJIIJJIIJJJJJJJIJJIJJGIJJHIIIJHHHHFFFFFEEEEEEDCCDD
+    @DRR006760.21924942/1
+    GAGGCTTGTTAATGCTTCTCTCCTTTACTTGACCCCTCTACCAGACACAATGTCTAGGATTATCTTGGATTCAGCCTTGAGCATAAGTTGAGCTAGAGAA
+    +
+    CCCFFFFFFHDHFEHHHIJJJJJGJJIEHJHHIJIJJIIIJJIGIJJJCHGIIJIJJJEHIGJJIJGIIJJJIBHEHHFDFFDFFEEEFDDEDDDDDDCD
+
+zless has almost same function with less, but it can work with compressed file.
+
+fastq always uses four lines.
+- @DRR006760.35495851/1 => description line
+- TATGTCTG... => sequence line
+- + => most of cases, just "+". It can be used as description line. But, I have never seen.
+- CCCFFFFFHHHGHJJ => ASCII encoded quality scores
+
+If you were familiar with fastq data, you can get more information.
+
+    @M01934:11:000000000-A8CLN:1:1101:15986:1347 1:N:0:27
+
+- This data is seqeunced by MiSeq
+- Used flowcell id is 000000000-A8CLN
+- Used flowcell lane is 1
+- Tile number within the lane is 1101
+- X-position of PCR cluster is 15986
+- Y-position of PCR cluster is 1347
+- ...
+
+Base quality scores
+![](images/phred_illimina.png "")
+https://www.illumina.com/documents/products/technotes/technote_Q-Scores.pdf
+
+FASTA format - Wikipedia https://en.wikipedia.org/wiki/FASTA_format  
+FASTQ format - Wikipedia https://en.wikipedia.org/wiki/FASTQ_format  
+
+### Prepare: 
+From now, we will use variables. One of shell functions. It memorise a value.  
+We will use this variable to have the sample name.
 ```
 $ id=DRR006760_chr1
 $ echo ${id}
 ```
-Here, id is a variable. It can keep a specific value.  
-We will use this variable to present the sample name.  
+Here, **id** is the variable. **DRR006760_chr1** is the value.  
+You can call the value by typing $id or ${id}.  
 
-### Fastq trimming < 1min
+### Visualize base qualities
+Using fastQC program, summarize and visualize data features.  
+`$ fastqc -t 4 #{id}_1.fastq.gz #{id}_2.fastq.gz`
+
+-t 4?  
+This option means that we use four threads.  
+Thread means threads of execution. Roughly saying, dividing a single task into four parts to reduce the calculation time.  
+
+If succeeded, you will get following response
+
+    Approx 95% complete for DRR006760_chr1_1.fastq.gz
+    Approx 90% complete for DRR006760_chr1_2.fastq.gz
+    Analysis complete for DRR006760_chr1_1.fastq.gz
+    Approx 95% complete for DRR006760_chr1_2.fastq.gz
+    Analysis complete for DRR006760_chr1_2.fastq.gz
+
+You will find generated by this process.  
+`$ ls -vlhrt ${id}*fastqc*`
+
+    -rw-r--r--  1 mako 231K  7 26 18:19 DRR006760_chr1_2_fastqc.zip
+    -rw-r--r--  1 mako 219K  7 26 18:19 DRR006760_chr1_2_fastqc.html
+    -rw-r--r--  1 mako 227K  7 26 18:19 DRR006760_chr1_1_fastqc.zip
+    -rw-r--r--  1 mako 218K  7 26 18:19 DRR006760_chr1_1_fastqc.html
+
+To see the results, type like this. **open** is a special command of macOS. It opens file usin apropriate application.  
+`$ open ${id}_1_fastqc.html`
+
+![](images/fastqc1.png "")
+
+
+### Fastq trimming (< 1 min)
 ```
 $ java -Xmx4g -jar Trimmomatic-0.38/Trimmomatic-0.38.jar PE \
                  -threads 4 -phred33 -trimlog ${id}.trimlog \
@@ -522,11 +615,11 @@ You will get following respond
     TrimmomaticPE: Completed successfull
 
 Check file size of all fastq.gz  
-`$ ls -hl ${id}*fastq.gz`
+`$ ls -vlhrt ${id}*fastq.gz`
 
 Can you see two .paired.fastq.gz?
 
-### Mapping sequence reads to the reference genome < 1min
+### Mapping sequence reads to the reference genome (< 1 min)
 ```
 $ bwa mem -t4 -M \
             -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
@@ -542,9 +635,9 @@ $ samtools index ${id}.aligned_reads_sorted.bam
 These lines are almost same with previous bwa/samtools commands.
 
 Check the file size of generated .bam files.  
-`$ ls -hl ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
+`$ ls -vlhrt ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
 
-### (Optional)
+### (Optional) Tips: using memory, avoid using slow hard disk for speeding up
 This is another way. Connect bwa and samtools view/sort to speed up.
 ```
 $ bwa mem -t4 -M \
@@ -555,8 +648,12 @@ $ bwa mem -t4 -M \
 
 $ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam
 ```
+Here, as you can see, this command line is long, and includes bwa and samtools view/sort commands.  
+This is done by "|". **Pipe**. "|" connects two command. Here, it connected bwa and samtools. The result of bwa aligned data passed to samtools.  
+This is very important. Why? If we used "|", we can use memory space instead of writing data to the very slow hard disk. Memory speed is faster than SSD, at least 10x. SSD is faster than HDD, at least 10x.  
 
-### MarkDuplicates < 1min
+
+### MarkDuplicates (< 1 min)
 Remove (or just add mark) PCR duplicates entries in .bam file.  
 ```
 $ picard MarkDuplicates \
@@ -570,11 +667,11 @@ $ samtools index ${id}.aligned_reads_dedup_sorted.bam
 
 Check the file size of generated .bam files.  
 PCR duplicated entires are removed from .bam contents. So, file size is reduced.  
-`$ ls -hl ${id}.aligned_reads_sorted.bam; ls -hl ${id}.aligned_reads_dedup_sorted.bam`  
+`$ ls -vlhrt ${id}.aligned_reads_sorted.bam; ls -vlhrt ${id}.aligned_reads_dedup_sorted.bam`  
 
 For detail information, see https://broadinstitute.github.io/picard/picard-metric-definitions.html#DuplicationMetrics
 
-### BaseRecalibrator < 2min
+### BaseRecalibrator (< 2 min)
 Base quality score recalibration (BQSR) is a process to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls.   
 
 For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
@@ -611,7 +708,7 @@ You will get following respond.
     Done. There were no warn messages.
     ------------------------------------------------------------------------------------------
 
-### (Optional) Plot recalibration data< 5min
+### (Optional) Plot recalibration data (< 5 min)
 Run BaseRecalibrator again with the generated table for base quality recalibration.  
 You can visualize the difference between before and after base quality recalibration.  
 ```
@@ -626,7 +723,7 @@ $ open ${id}_recalibration_plots.pdf
 
 See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
 
-### PrintReads < 3min
+### PrintReads (< 3 min)
 PrintReads is a tool to extract subset reads by genomic interval.
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -656,13 +753,13 @@ _PrintRead is replaced with ApplyBQSR at GATK4._
 For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.0.0/org_broadinstitute_hellbender_tools_walkers_bqsr_ApplyBQSR.php
 
 Check the file size of generated .bam files.  
-`$ ls -hl ${id}.aligned_reads_dedup_recal_sorted.bam`  
+`$ ls -vlhrt ${id}.aligned_reads_dedup_recal_sorted.bam`  
 
 You will get following respond.
 
     -rw-r--r-- 1 mako 183M  7 24 11:31 DRR006760_chr1.aligned_reads_dedup_recal_sorted.bam
 
-### HaplotypeCaller < 5min
+### HaplotypeCaller (< 5 min)
 Call germline SNPs and indels via local re-assembly of haplotypes.
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -724,7 +821,7 @@ Then, type this. ">" is a kind of shell function. Here, ">" works for redirectin
 
 
 
-### GenotypeGVCFs < 1min
+### GenotypeGVCFs (< 1 min)
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -751,7 +848,7 @@ You will get following respond.
     ------------------------------------------------------------------------------------------
 
 combined_genotyped.vcf の確認
-`$ ls -hl combined_genotyped.vcf`
+`$ ls -vlhrt combined_genotyped.vcf`
 
     -rw-r--r-- 1 mako 930K  7 24 11:41 combined_genotyped.vcf
 
@@ -759,7 +856,7 @@ combined_genotyped.vcf の確認
 
     5736 combined_genotyped.vcf
 
-### Select SNP < few seconds
+### Select SNP (< few seconds)
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -771,7 +868,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
 ```
 
 combined_genotyped_raw_snps.vcf の確認"
-$ ls -hl combined_genotyped_raw_snps.vcf
+$ ls -vlhrt combined_genotyped_raw_snps.vcf
 -rw-r--r-- 1 mako 827K  7 24 11:42 combined_genotyped_raw_snps.vcf
 
 $ wc -l combined_genotyped_raw_snps.vcf
@@ -808,7 +905,7 @@ https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadi
 これの Broad workshop スライドどこにあるかな fitering threshold
 
 Check generated combined_genotyped_filtered_snps.vcf size.  
-`$ ls -hl combined_genotyped_filtered_snps.vcf`
+`$ ls -vlhrt combined_genotyped_filtered_snps.vcf`
 
     -rw-r--r-- 1 mako 859K  7 24 11:43 combined_genotyped_filtered_snps.vcf
 
@@ -839,7 +936,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
 
 Check generated file.  
-`$ ls -hl combined_genotyped_raw_indels.vcf`
+`$ ls -vlhrt combined_genotyped_raw_indels.vcf`
 
     -rw-r--r-- 1 mako 125K  7 24 11:45 combined_genotyped_raw_indels.vcf
 
@@ -868,7 +965,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
 ```
 
 Check generated file.  
-`$ ls -hl combined_genotyped_filtered_indels.vcf`
+`$ ls -vlhrt combined_genotyped_filtered_indels.vcf`
 
     -rw-r--r-- 1 mako 129K  7 24 11:45 combined_genotyped_filtered_indels.vcf
 
@@ -899,7 +996,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
 
 check generated file.  
-`$ ls -hl combined_genotyped_filtered_snps_indels_mixed.vcf`
+`$ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.vcf`
 
     -rw-r--r-- 1 mako 969K  7 24 11:46 combined_genotyped_filtered_snps_indels_mixed.vcf
 
@@ -930,7 +1027,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
 
 Check generated file.  
-`$ ls -hl combined_genotyped_filtered_snps_indels_mixed.PASS.vcf`
+`$ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.PASS.vcf`
 
     -rw-r--r-- 1 mako 644K  7 24 11:47 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
 
@@ -954,7 +1051,7 @@ $ ./annovar/convert2annovar.pl -format vcf4 --includeinfo --withzyg --allsample 
 
 Check generated file.  
 ```
-$ ls -hl combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
+$ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
 $ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
 ```
 
@@ -1004,8 +1101,10 @@ or
 $ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_dropped | ./tableview_darwin_amd64
 ```
 
-I wish you got fine results. However, obtained results are far from ideal. They are separated, few annotation.  
-Next is combining some annotation using table_annovar.pl  
+I wish you got fine results. However, obtained results are far from ideal.  
+They are separated, few annotation.  
+
+Next step realizes combining some annotation using table_annovar.pl  
 ```
 $ for avinput in combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput; do
   ./annovar/table_annovar.pl ${avinput} annovar/humandb/ \
@@ -1049,20 +1148,6 @@ ___
 
 Under construction
 
-## Tips: using memory, avoid using slow hard disk for speeding up
-We did alignment using bwa program previously. As you can see, the bwa command was long, and included samtools command.  
-This is done by "|". **Pipe**. "|" connects two command. In previous command, connected bwa and samtools. The result of bwa aligned data passed to samtools. This is very important. Why? If we used "|", we can use memory space instead of writing data to the very slow hard disk. Memory speed is extrem faster than hard disk.  
-Let's experience (but, if you used small data, you can't feel it).  
-```
-$ bwa mem -t4 -M \
-              -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
-              human_g1k_v37_decoy.fasta \
-              DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz > DRR006760_chr1.aligned_reads.sam
-
-$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam -o DRR006760_chr1.aligned_reads.bam
-
-$ samtools sort -@4  DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam
-```  
 
 
 
