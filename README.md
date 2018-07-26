@@ -603,8 +603,9 @@ You will get following respond.
     Done. There were no warn messages.
     ------------------------------------------------------------------------------------------
 
-### (Optional) < 5min
-Plot recalibration data.
+### (Optional) Plot recalibration data< 5min
+Run BaseRecalibrator again with the generated table for base quality recalibration.  
+You can visualize the difference between before and after base quality recalibration.  
 ```
 $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T BaseRecalibrator -R human_g1k_v37_decoy.fasta -I ${id}.aligned_reads_dedup_sorted.bam -knownSites dbsnp_138.b37.vcf -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf -BQSR ${id}_recal.table -o post_${id}_recal.table
 
@@ -612,6 +613,8 @@ $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T AnalyzeC
 
 $ open ${id}_recalibration_plots.pdf
 ```
+![](images/BSQR1.png "")
+![](images/BSQR2.png "")
 
 See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
 
