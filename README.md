@@ -145,6 +145,7 @@ At first, type this, to tell homebrew much more scientific programs
 bwa for aligning reads to the reference genome (version 0.7.17)  
 Burrows-Wheeler Aligner http://bio-bwa.sourceforge.net/  
 Manual Reference Pages  - bwa (1) http://bio-bwa.sourceforge.net/bwa.shtml  
+
 ```
 $ brew search bwa
 $ brew info bwa #_see software detail information_  
@@ -154,7 +155,7 @@ $ brew install bwa
 Type to check the installation  
 `$ bwa`  
 
-If installation succeeded, you will get following response  
+If succeeded, you will get following response  
 
     Program: bwa (alignment via Burrows-Wheeler transformation)
     Version: 0.7.17-r1188
@@ -172,7 +173,7 @@ $ brew install samtools
 Type to check the installation  
 `$ samtools --version`
 
-If installation succeeded, you will get following response
+If succeeded, you will get following response
 
     samtools 1.9
     Using htslib 1.9
@@ -294,7 +295,7 @@ GNU version is faster than BSD grep.
 Type to check the installation  
 `$ grep --version`
 
-If installation succeeded, you will get
+If succeeded, you will get following response
 
     grep (GNU grep) 3.1
     Packaged by Homebrew
@@ -310,7 +311,7 @@ $ chmod +x ./tableview_darwin_amd64
 Type to check the installation  
 `$ ./tableview_darwin_amd64 -version`
 
-If installation succeeded, you will get
+If succeeded, you will get following response
 
     tableview : human friendly table viewer
     Version: v0.4.6(f7310cc7b05b43b7e8f5f9df9c09182bd98bd7f7)
@@ -322,7 +323,7 @@ FastQC is a quality control tool for high throughput sequence data.
 Type to check the installation  
 `$ fastqc --version`
 
-If installation succeeded, you will get
+If succeeded, you will get following response
 
     FastQC v0.11.7
 
@@ -339,7 +340,7 @@ $ unzip Trimmomatic-0.38.zip
 Type to check the installation  
 `$ java -jar Trimmomatic-0.38/trimmomatic-0.38.jar`
 
-If installation succeeded, you will get
+If succeeded, you will get following response
 
     Usage:
     PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
@@ -358,7 +359,7 @@ $ brew install picard-tools
 Type to check the installation  
 `$ picard SortSam -h`
 
-If installation succeeded, you will get
+If succeeded, you will get
 
     USAGE: SortSam [options]
     Documentation: http://broadinstitute.github.io/picard/command-line-overview.html#SortSam
@@ -380,7 +381,7 @@ $ tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
 Type to check the installation  
 `$ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar --version`
 
-If installation succeeded, you will get
+If succeeded, you will get
 
     3.8-1-0-gf15c1c3ef
 
@@ -422,10 +423,10 @@ You probably see the same hash values.
 
 Let's uncompress .gz files.
 ```
-$ gunzip Mills_and_1000G_gold_standard.indels.b37.vcf.gz
-$ gunzip Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
-$ gunzip dbsnp_138.b37.vcf.gz
-$ gunzip dbsnp_138.b37.vcf.idx.gz
+$ gunzip -d Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+$ gunzip -d Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
+$ gunzip -d dbsnp_138.b37.vcf.gz
+$ gunzip -d dbsnp_138.b37.vcf.idx.gz
 ```
 
 More detail information of resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
@@ -540,6 +541,9 @@ $ samtools index ${id}.aligned_reads_sorted.bam
 ```
 These lines are almost same with previous bwa/samtools commands.
 
+Check the file size of generated .bam files.  
+`$ ls -hl ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
+
 ### (Optional)
 This is another way. Connect bwa and samtools view/sort to speed up.
 ```
@@ -551,9 +555,6 @@ $ bwa mem -t4 -M \
 
 $ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam
 ```
-
-Check the file size of generated .bam files.  
-`$ ls -hl ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
 
 ### MarkDuplicates < 1min
 Remove (or just add mark) PCR duplicates entries in .bam file.  
@@ -568,15 +569,15 @@ $ samtools index ${id}.aligned_reads_dedup_sorted.bam
 ```
 
 Check the file size of generated .bam files.  
+PCR duplicated entires are removed from .bam contents. So, file size is reduced.  
 `$ ls -hl ${id}.aligned_reads_sorted.bam; ls -hl ${id}.aligned_reads_dedup_sorted.bam`  
-By MarkDuplicates with remove_duplicates option, PCR duplicated entires are removed from .bam contents. So, file size is reduced.
 
-For detail information of generated metrics, see https://broadinstitute.github.io/picard/picard-metric-definitions.html#DuplicationMetrics
+For detail information, see https://broadinstitute.github.io/picard/picard-metric-definitions.html#DuplicationMetrics
 
 ### BaseRecalibrator < 2min
 Base quality score recalibration (BQSR) is a process to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls.   
 
-GATK | Tool Documentation Index https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
+For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
 
 
 ```
@@ -652,11 +653,12 @@ You will get following respond.
     ------------------------------------------------------------------------------------------
 
 _PrintRead is replaced with ApplyBQSR at GATK4._  
-GATK | Tool Documentation Index https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.0.0/org_broadinstitute_hellbender_tools_walkers_bqsr_ApplyBQSR.php
+For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.0.0/org_broadinstitute_hellbender_tools_walkers_bqsr_ApplyBQSR.php
 
 Check the file size of generated .bam files.  
 `$ ls -hl ${id}.aligned_reads_dedup_recal_sorted.bam`  
-You will get following respond.  
+
+You will get following respond.
 
     -rw-r--r-- 1 mako 183M  7 24 11:31 DRR006760_chr1.aligned_reads_dedup_recal_sorted.bam
 
@@ -696,17 +698,31 @@ You will get following respond.
 
 You will find .g.vcf is generated by this process.
 
-GATK | Tool Documentation Index https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_haplotypecaller_HaplotypeCaller.php
+`$ ls -lh ${id}_raw_variants.g.vcf`
 
-### 
-$ ls -1 *_raw_variants.g.vcf > gVCF.list
+    -rw-r--r-- 1 mako 49M  7 24 11:38 DRR006760_chr1_raw_variants.g.vcf
 
-echo "${id}_raw_variants.g.vcf の確認"
-$ ls -lh ${id}_raw_variants.g.vcf 
--rw-r--r-- 1 mako 49M  7 24 11:38 DRR006760_chr1_raw_variants.g.vcf
+`$ wc -l ${id}_raw_variants.g.vcf`
 
-$ wc -l ${id}_raw_variants.g.vcf 
-616847 DRR006760_chr1_raw_variants.g.vcf
+    616847 DRR006760_chr1_raw_variants.g.vcf
+
+Do you have similar result?
+
+For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_haplotypecaller_HaplotypeCaller.php
+
+### Gather .g.vcf files
+This step have less meaning in this course, because this step is mainly for mutli sample processing.  
+But, in almost cases, you need to analyze multi samples at once. So, we should experience this way.  
+`$ ls -1 *_raw_variants.g.vcf > gVCF.list`
+
+If you can see following response,
+
+    aaaa
+
+Then, type this. ">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.  
+`$ ls -1 *_raw_variants.g.vcf > gVCF.list`
+
+
 
 ### GenotypeGVCFs < 1min
 
@@ -892,7 +908,7 @@ check generated file.
     5750 combined_genotyped_filtered_snps_indels_mixed.vcf
 
 
-echo "SelectVariants exclude MNP"
+### SelectVariants exclude MNP
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -936,13 +952,15 @@ $ ./annovar/convert2annovar.pl -format vcf4 --includeinfo --withzyg --allsample 
     NOTICE: A total of 3687 locus in VCF file passed QC threshold, representing 3088 SNPs (2141 transitions and 947 transversions) and 605 indels/substitutions
     NOTICE: Finished writing 3088 SNP genotypes (2141 transitions and 947 transversions) and 605 indels/substitutions for 1 samples
 
-Check generated combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput file.  
-`$ ls -hl combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput`  
+Check generated file.  
+```
+$ ls -hl combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
+$ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
+```
+
+If succeeded, you will get following response
 
     -rw-r--r-- 1 mako 761K  7 24 12:03 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput
-
-`$ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput`
-
     3693 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput
 
 Do you find almost same file? If so, go next.  
@@ -1049,3 +1067,19 @@ $ samtools sort -@4  DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_
 
 
 あと base_dir のことが必要
+
+
+Human Variation Sets in VCF Format https://www.ncbi.nlm.nih.gov/variation/docs/human_variation_vcf/
+
+Human variations without clinical assertions that have been mapped to assemblies GRCh37 and GRCh38, are provided by dbSNP at their FTP repository ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/.
+Human variations with clinical assertions that have been mapped to assemblies GRCh37 and GRCh38, are provided by ClinVar at their FTP repository ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/. 
+
+ClinVar Variations in VCF Format https://www.ncbi.nlm.nih.gov/variation/docs/ClinVar_vcf_files/
+
+ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/
+
+Download
+wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180701.vcf.gz
+
+ zgrep -wF OMIM_Allelic_Variant clinvar_20180701.vcf.gz | grep -wFf ARHSP_known_genes.txt > clinvar_20180701.ARHSP_OMIM.vcf                                                                                                                            18-07-26 - 16:36:21
+
