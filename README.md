@@ -288,7 +288,7 @@ And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) 
 
 ### Install GNU grep < 3min
 grep is a command-line utility for searching plain-text data sets for lines.  
-GNU version is faster than BSD grep.
+GNU version is faster than BSD grep.  
 `$ brew install grep --with-default-names`
 
 Type to check the installation  
@@ -376,6 +376,7 @@ Newest version is 4.0.6. But, we use version 3.8.1 in this hands-on. If you beca
 $ wget https://software.broadinstitute.org/gatk/download/auth\?package\=GATK-archive\&version\=3.8-1-0-gf15c1c3ef -O GATK-3.8-1-0-gf15c1c3ef.tar.gz
 $ tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
 ```
+
 Type to check the installation  
 `$ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar --version`
 
@@ -532,7 +533,9 @@ $ bwa mem -t4 -M \
             ${id}_1.paired.fastq.gz ${id}_2.paired.fastq.gz > ${id}.aligned_reads.sam
 
 $ samtools view -@4 -1 ${id}.aligned_reads.sam > ${id}.aligned_reads.bam
+
 $ samtools sort -@4 -m 2G ${id}.aligned_reads.bam -o ${id}.aligned_reads_sorted.bam
+
 $ samtools index ${id}.aligned_reads_sorted.bam
 ```
 These lines are almost same with previous bwa/samtools commands.
@@ -545,6 +548,7 @@ $ bwa mem -t4 -M \
               human_g1k_v37_decoy.fasta \
               DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz | \
               samtools view -@4 -1 - | samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam
+
 $ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam
 ```
 
@@ -574,6 +578,7 @@ Base quality score recalibration (BQSR) is a process to model these errors empir
 
 GATK | Tool Documentation Index https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
 
+
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
@@ -584,6 +589,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -L 1 \
                  -o ${id}_recal.table
 ```
+
 -L is a option for specifying chromosome, or chromosomal location. e.g. -L chr1:123-123450  
 If you were doing whole genome analysis, you don't use this option.  
 If you were doing whole exome analysis, there may be several choices.
@@ -614,12 +620,13 @@ $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T AnalyzeC
 
 $ open ${id}_recalibration_plots.pdf
 ```
+
 ![](images/BSQR3.png "")
 
 See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
 
 ### PrintReads < 3min
-
+PrintReads is a tool to extract subset reads by genomic interval.
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
@@ -627,6 +634,8 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -I ${id}.aligned_reads_dedup_sorted.bam \
                  -BQSR ${id}_recal.table \
                  -o ${id}.aligned_reads_dedup_recal_sorted.bam
+
+$ samtools index ${id}.aligned_reads_dedup_recal_sorted.bam
 ```
 
 You will get following respond.
@@ -644,9 +653,6 @@ You will get following respond.
 
 _PrintRead is replaced with ApplyBQSR at GATK4._  
 GATK | Tool Documentation Index https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.0.0/org_broadinstitute_hellbender_tools_walkers_bqsr_ApplyBQSR.php
-
-Make .bam index file.  
-`$ samtools index ${id}.aligned_reads_dedup_recal_sorted.bam`
 
 Check the file size of generated .bam files.  
 `$ ls -hl ${id}.aligned_reads_dedup_recal_sorted.bam`  
@@ -711,8 +717,9 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -V gVCF.list \
                  -L 1 \
                  -o combined_genotyped.vcf
-
 ```
+
+You will get following respond.
 
     INFO  11:41:03,733 ProgressMeter -     1:113574901      1.13E8    30.0 s       0.0 s       45.6%    65.0 s      35.0 s
     WARN  11:41:25,911 HaplotypeScore - Annotation will not be calculated, must be called from UnifiedGenotyper, not GenotypeGVCFs
@@ -728,11 +735,13 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
 
 combined_genotyped.vcf の確認
-$ ls -hl combined_genotyped.vcf
--rw-r--r-- 1 mako 930K  7 24 11:41 combined_genotyped.vcf
+`$ ls -hl combined_genotyped.vcf`
 
-$ wc -l combined_genotyped.vcf
-5736 combined_genotyped.vcf
+    -rw-r--r-- 1 mako 930K  7 24 11:41 combined_genotyped.vcf
+
+`$ wc -l combined_genotyped.vcf`
+
+    5736 combined_genotyped.vcf
 
 ### Select SNP < few seconds
 
@@ -792,33 +801,39 @@ Check generated combined_genotyped_filtered_snps.vcf size.
     5141 combined_genotyped_filtered_snps.vcf
 
 
-echo "select INDEL"
+### select INDEL
 
+```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
                  -T SelectVariants -R human_g1k_v37_decoy.fasta \
                  -V combined_genotyped.vcf \
                  -selectType INDEL \
                  -o combined_genotyped_raw_indels.vcf
+```
 
-INFO  11:45:05,416 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
-INFO  11:45:05,416 ProgressMeter -                 | processed |    time |    per 1M |           |   total | remaining
-INFO  11:45:05,416 ProgressMeter -        Location |     sites | elapsed |     sites | completed | runtime |   runtime
-INFO  11:45:05,823 SelectVariants - 5612 records processed.
-INFO  11:45:05,860 ProgressMeter -            done      6588.0     0.0 s      67.0 s        7.9%     0.0 s       0.0 s
-INFO  11:45:05,860 ProgressMeter - Total runtime 0.44 secs, 0.01 min, 0.00 hours
-------------------------------------------------------------------------------------------
-Done. There were no warn messages.
-------------------------------------------------------------------------------------------
+    INFO  11:45:05,416 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
+    INFO  11:45:05,416 ProgressMeter -                 | processed |    time |    per 1M |           |   total | remaining
+    INFO  11:45:05,416 ProgressMeter -        Location |     sites | elapsed |     sites | completed | runtime |   runtime
+    INFO  11:45:05,823 SelectVariants - 5612 records processed.
+    INFO  11:45:05,860 ProgressMeter -            done      6588.0     0.0 s      67.0 s        7.9%     0.0 s       0.0 s
+    INFO  11:45:05,860 ProgressMeter - Total runtime 0.44 secs, 0.01 min, 0.00 hours
+    ------------------------------------------------------------------------------------------
+    Done. There were no warn messages.
+    ------------------------------------------------------------------------------------------
 
-echo "combined_genotyped_raw_indels.vcf の確認"
-$ ls -hl combined_genotyped_raw_indels.vcf
--rw-r--r-- 1 mako 125K  7 24 11:45 combined_genotyped_raw_indels.vcf
+Check generated file.  
+`$ ls -hl combined_genotyped_raw_indels.vcf`
 
-$ wc -l combined_genotyped_raw_indels.vcf
-734 combined_genotyped_raw_indels.vcf
+    -rw-r--r-- 1 mako 125K  7 24 11:45 combined_genotyped_raw_indels.vcf
 
+`$ wc -l combined_genotyped_raw_indels.vcf`
 
+    734 combined_genotyped_raw_indels.vcf
+
+### Filter INDELs
+
+```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
                  -T VariantFiltration -R human_g1k_v37_decoy.fasta \
@@ -828,24 +843,27 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  --filterExpression 'ReadPosRankSum < -20.0' --filterName 'LowReadPosRankSum' \
                  -o combined_genotyped_filtered_indels.vcf
 
-WARN  11:45:36,993 Interpreter - ![0,14]: 'ReadPosRankSum < -20.0;' undefined variable ReadPosRankSum
-INFO  11:45:37,034 ProgressMeter -            done      1584.0     0.0 s       7.2 m        7.9%     0.0 s       0.0 s
-INFO  11:45:37,034 ProgressMeter - Total runtime 0.69 secs, 0.01 min, 0.00 hours
-------------------------------------------------------------------------------------------
-Done. There were no warn messages.
-------------------------------------------------------------------------------------------
+    WARN  11:45:36,993 Interpreter - ![0,14]: 'ReadPosRankSum < -20.0;' undefined variable ReadPosRankSum
+    INFO  11:45:37,034 ProgressMeter -            done      1584.0     0.0 s       7.2 m        7.9%     0.0 s       0.0 s
+    INFO  11:45:37,034 ProgressMeter - Total runtime 0.69 secs, 0.01 min, 0.00 hours
+    ------------------------------------------------------------------------------------------
+    Done. There were no warn messages.
+    ------------------------------------------------------------------------------------------
+```
+
+Check generated file.  
+`$ ls -hl combined_genotyped_filtered_indels.vcf`
+
+    -rw-r--r-- 1 mako 129K  7 24 11:45 combined_genotyped_filtered_indels.vcf
+
+`$ wc -l combined_genotyped_filtered_indels.vcf`
+
+    738 combined_genotyped_filtered_indels.vcf
 
 
-echo "combined_genotyped_filtered_indels.vcf の確認"
-$ ls -hl combined_genotyped_filtered_indels.vcf
--rw-r--r-- 1 mako 129K  7 24 11:45 combined_genotyped_filtered_indels.vcf
+### Combine SNV and INDEL variants into single .vcf file
 
-$ wc -l combined_genotyped_filtered_indels.vcf
-738 combined_genotyped_filtered_indels.vcf
-
-
-echo "CombineVariants"
-
+```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
                  -T CombineVariants -R human_g1k_v37_decoy.fasta \
@@ -853,54 +871,59 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -V:SNP combined_genotyped_filtered_snps.vcf \
                  -V:INDEL combined_genotyped_filtered_indels.vcf \
                  -o combined_genotyped_filtered_snps_indels_mixed.vcf
+```
 
-INFO  11:46:24,018 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
-INFO  11:46:24,018 ProgressMeter -                 | processed |    time |    per 1M |           |   total | remaining
-INFO  11:46:24,018 ProgressMeter -        Location |     sites | elapsed |     sites | completed | runtime |   runtime
-INFO  11:46:24,460 ProgressMeter -            done      6588.0     0.0 s      66.0 s        7.9%     0.0 s       0.0 s
-INFO  11:46:24,460 ProgressMeter - Total runtime 0.44 secs, 0.01 min, 0.00 hours
-------------------------------------------------------------------------------------------
-Done. There were no warn messages.
-------------------------------------------------------------------------------------------
+    INFO  11:46:24,018 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
+    INFO  11:46:24,018 ProgressMeter -                 | processed |    time |    per 1M |           |   total | remaining
+    INFO  11:46:24,018 ProgressMeter -        Location |     sites | elapsed |     sites | completed | runtime |   runtime
+    INFO  11:46:24,460 ProgressMeter -            done      6588.0     0.0 s      66.0 s        7.9%     0.0 s       0.0 s
+    INFO  11:46:24,460 ProgressMeter - Total runtime 0.44 secs, 0.01 min, 0.00 hours
+    ------------------------------------------------------------------------------------------
+    Done. There were no warn messages.
+    ------------------------------------------------------------------------------------------
 
-echo "combined_genotyped_filtered_snps_indels_mixed.vcf の確認"
-$ ls -hl combined_genotyped_filtered_snps_indels_mixed.vcf
--rw-r--r-- 1 mako 969K  7 24 11:46 combined_genotyped_filtered_snps_indels_mixed.vcf
+check generated file.  
+`$ ls -hl combined_genotyped_filtered_snps_indels_mixed.vcf`
 
-$ wc -l combined_genotyped_filtered_snps_indels_mixed.vcf
-5750 combined_genotyped_filtered_snps_indels_mixed.vcf
+    -rw-r--r-- 1 mako 969K  7 24 11:46 combined_genotyped_filtered_snps_indels_mixed.vcf
+
+`$ wc -l combined_genotyped_filtered_snps_indels_mixed.vcf`
+
+    5750 combined_genotyped_filtered_snps_indels_mixed.vcf
 
 
 echo "SelectVariants exclude MNP"
 
+```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
                  -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
                  -T SelectVariants -R human_g1k_v37_decoy.fasta \
                  -V combined_genotyped_filtered_snps_indels_mixed.vcf \
                  --excludeFiltered --excludeNonVariants \
                  -o combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
+```
 
-INFO  11:47:10,212 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
-INFO  11:47:10,213 ProgressMeter -                 | processed |    time |    per 1M |           |   total | remaining
-INFO  11:47:10,213 ProgressMeter -        Location |     sites | elapsed |     sites | completed | runtime |   runtime
-INFO  11:47:10,674 SelectVariants - 5612 records processed.
-INFO  11:47:10,710 ProgressMeter -            done      6588.0     0.0 s      75.0 s        7.9%     0.0 s       0.0 s
-INFO  11:47:10,711 ProgressMeter - Total runtime 0.50 secs, 0.01 min, 0.00 hours
-------------------------------------------------------------------------------------------
-Done. There were no warn messages.
-------------------------------------------------------------------------------------------
+    INFO  11:47:10,212 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
+    INFO  11:47:10,213 ProgressMeter -                 | processed |    time |    per 1M |           |   total | remaining
+    INFO  11:47:10,213 ProgressMeter -        Location |     sites | elapsed |     sites | completed | runtime |   runtime
+    INFO  11:47:10,674 SelectVariants - 5612 records processed.
+    INFO  11:47:10,710 ProgressMeter -            done      6588.0     0.0 s      75.0 s        7.9%     0.0 s       0.0 s
+    INFO  11:47:10,711 ProgressMeter - Total runtime 0.50 secs, 0.01 min, 0.00 hours
+    ------------------------------------------------------------------------------------------
+    Done. There were no warn messages.
+    ------------------------------------------------------------------------------------------
 
-echo "combined_genotyped_filtered_snps_indels_mixed.PASS.vcf の確認"
-$ ls -hl combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
--rw-r--r-- 1 mako 644K  7 24 11:47 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
+Check generated file.  
+`$ ls -hl combined_genotyped_filtered_snps_indels_mixed.PASS.vcf`
 
-$ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
-3826 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
+    -rw-r--r-- 1 mako 644K  7 24 11:47 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
+
+`$ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.vcf`  
+
+    3826 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
 
 
-###
-
-convert2annovar"
+### Convert vcf file to Annovar format
 
 ```
 $ ./annovar/convert2annovar.pl -format vcf4 --includeinfo --withzyg --allsample \
@@ -913,9 +936,8 @@ $ ./annovar/convert2annovar.pl -format vcf4 --includeinfo --withzyg --allsample 
     NOTICE: A total of 3687 locus in VCF file passed QC threshold, representing 3088 SNPs (2141 transitions and 947 transversions) and 605 indels/substitutions
     NOTICE: Finished writing 3088 SNP genotypes (2141 transitions and 947 transversions) and 605 indels/substitutions for 1 samples
 
-Check generated combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput file.
-
-`$ ls -hl combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput`
+Check generated combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput file.  
+`$ ls -hl combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput`  
 
     -rw-r--r-- 1 mako 761K  7 24 12:03 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput
 
@@ -923,13 +945,54 @@ Check generated combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput fil
 
     3693 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput
 
+Do you find almost same file? If so, go next.  
 
-Annotate variants using table_annovar which is the wrapper script of annotate_variants.pl.  
+### Annotate variants using Annovar scripts
+Annovar provides some useful functions to annotate variants.  
+Basic function script is annotate_variation.pl  
+
+example#1 (Gene annotation)  
+`$ ./annovar/annotate_variation.pl -build hg19 -geneanno -dbtype refGene  combined_genotyped_filtered_snps_indels_mixed.PASS.avinput annovar/humandb/`  
+
+You will get some files.
+
+    -rw-r--r--  1 mako  12K  7 26 14:17 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.variant_function
+    -rw-r--r--  1 mako  13K  7 26 14:17 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.exonic_variant_function
+
+Check the file content.  
+```
+$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.exonic_variant_function | less -S
+
+or
+
+$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.exonic_variant_function | ./tableview_darwin_amd64
+```
+
+example#2 (dbsnp annotation)  
+`$ ./annovar/annotate_variation.pl -build hg19 -filter   -dbtype avsnp150 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput annovar/humandb/`
+
+
+You will get some files.
+
+    -rw-r--r--  1 mako    0  7 26 14:38 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_filtered
+    -rw-r--r--  1 mako  12K  7 26 14:39 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_dropped
+
+Check the file content.  
+```
+$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_dropped | less -S
+
+or
+
+$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_dropped | ./tableview_darwin_amd64
+```
+
+I wish you got fine results. However, obtained results are far from ideal. They are separated, few annotation.  
+Next is combining some annotation using table_annovar.pl  
 ```
 $ for avinput in combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput; do
   ./annovar/table_annovar.pl ${avinput} annovar/humandb/ \
                              -buildver hg19 \
-                             -protocol refGeneWithVer,genomicSuperDups,exac03,avsnp150,clinvar_20170905,ljb26_all \
+                             -protocol refGeneWithVer,genomicSuperDups,exac03,avsnp150,clinvar_20180603,ljb26_all \
                              -operation g,r,f,f,f,f \
                              -nastring NA \
                              --otherinfo \
@@ -939,7 +1002,7 @@ $ for avinput in combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput; d
 done
 ```
 
-# https://qiita.com/muran001/items/8bb5530d79301b1b2b82
+Shell scripting cheat sheet (So sorry, I can't find nice English page) https://qiita.com/muran001/items/8bb5530d79301b1b2b82
 
     NOTICE: Processing next batch with 3693 unique variants in 3693 input lines
     NOTICE: Database index loaded. Total number of bins is 557362 and the number of bins to be scanned is 721
@@ -948,6 +1011,15 @@ done
     NOTICE: Multianno output file is written to  combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avoutput.hg19_multianno.txt
 
 
+You can know what databases are downloadable from Annovar web site.  
+Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
+
+*You need regist to use Annovar*  
+*This is very important. You have to know this.*  
+For database and software developer, their are researchers, total number of users are really important issue for appling grants. Because, the number of active users is the evidence of it's value.  
+To promote their scientific activities, please register.  
+ANNOVAR website http://www.openbioinformatics.org/annovar/annovar_download_form.php  
+ANNOVAR - Google グループ https://groups.google.com/forum/#!forum/annovar  
 
 ### 
 
@@ -968,7 +1040,9 @@ $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
               human_g1k_v37_decoy.fasta \
               DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz > DRR006760_chr1.aligned_reads.sam
+
 $ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam -o DRR006760_chr1.aligned_reads.bam
+
 $ samtools sort -@4  DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam
 ```  
 
