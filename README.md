@@ -385,8 +385,9 @@ This is the reason that you frequently see the screenshot of StarTrek in present
 
 ### Install GATK (< 3 min)
 GATK (**G**enome **A**nalysis **T**ool**k**it) is a tool for variant discovery in high-throughput sequencing data.  
-GATK | Home https://software.broadinstitute.org/gatk/
-Newest version is 4.0.6. But, we use version 3.8.1 in this hands-on. If you became familier with command lines, I strongly recommend to upgrade to latest version.  
+GATK | Home https://software.broadinstitute.org/gatk/  
+Newest version is 4.0.6. But, we use version 3.8.1 in this hands-on.  
+If you became familier with command lines, I strongly recommend to upgrade to latest version.  
 ```
 $ wget https://software.broadinstitute.org/gatk/download/auth\?package\=GATK-archive\&version\=3.8-1-0-gf15c1c3ef -O GATK-3.8-1-0-gf15c1c3ef.tar.gz
 $ tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
@@ -494,10 +495,11 @@ $ mv DRR006760_chr1.aligned_reads_sorted.bam.bai zzold/
 
 ## Let's step forward
 
-### fastq, sequence read data format
+### fastq, a sequence read data format
 
-There are two major sequence data formats, fasta and fastq.  
-fasta is the origin of sequence data format. It has description line (header) and sequence contents. Here, you can see by this command,  
+There are two major sequence data formats, fasta and fastq.
+
+**fasta** is the origin of sequence data format. It has description line (header) and sequence contents. Here, you can see by this command,  
 `$ less human_g1k_v37_decoy.fasta`
 
     >1 dna:chromosome chromosome:GRCh37:1:1:249250621:1
@@ -508,6 +510,7 @@ _Push Q key for quit_
 
 fast**q** is a extended format for sequence data.  
 It has both sequence letter and quality score, which is each encoded with a single ASCII character for brevity. Here, you can see,  
+(zless has almost same function with less, but it can work with compressed file.)  
 `$ zless DRR006760_chr1_1.fastq.gz`
 
     @DRR006760.35495851/1
@@ -519,12 +522,11 @@ It has both sequence letter and quality score, which is each encoded with a sing
     +
     CCCFFFFFFHDHFEHHHIJJJJJGJJIEHJHHIJIJJIIIJJIGIJJJCHGIIJIJJJEHIGJJIJGIIJJJIBHEHHFDFFDFFEEEFDDEDDDDDDCD
 
-zless has almost same function with less, but it can work with compressed file.
 
 fastq always uses four lines.
 - @DRR006760.35495851/1 => description line
 - TATGTCTG... => sequence line
-- + => most of cases, just "+". It can be used as description line. But, I have never seen.
+- \+ => most of cases, just "+". It can be used as description line. But, I have never seen.
 - CCCFFFFFHHHGHJJ => ASCII encoded quality scores
 
 If you were familiar with fastq data, you can get more information.
@@ -540,6 +542,7 @@ If you were familiar with fastq data, you can get more information.
 - ...
 
 Base quality scores
+![](images/fastq.png "")
 ![](images/phred_illimina.png "")
 https://www.illumina.com/documents/products/technotes/technote_Q-Scores.pdf
 
