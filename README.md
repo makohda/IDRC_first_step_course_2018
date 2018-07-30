@@ -635,9 +635,9 @@ Can you see two .paired.fastq.gz?
 ### Mapping sequence reads to the reference genome (< 1 min)
 ```
 $ bwa mem -t4 -M \
-            -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
-            human_g1k_v37_decoy.fasta \
-            ${id}_1.paired.fastq.gz ${id}_2.paired.fastq.gz > ${id}.aligned_reads.sam
+              -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
+              human_g1k_v37_decoy.fasta \
+              ${id}_1.paired.fastq.gz ${id}_2.paired.fastq.gz > ${id}.aligned_reads.sam
 
 $ samtools view -@4 -1 ${id}.aligned_reads.sam > ${id}.aligned_reads.bam
 
@@ -692,13 +692,14 @@ For detail information, see https://software.broadinstitute.org/gatk/documentati
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T BaseRecalibrator -R human_g1k_v37_decoy.fasta \
-                 -knownSites dbsnp_138.b37.vcf \
-                 -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf \
-                 -I ${id}.aligned_reads_dedup_sorted.bam \
-                 -L 1 \
-                 -o ${id}_recal.table
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T BaseRecalibrator \
+              -R human_g1k_v37_decoy.fasta \
+              -knownSites dbsnp_138.b37.vcf \
+              -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf \
+              -I ${id}.aligned_reads_dedup_sorted.bam \
+              -L 1 \
+              -o ${id}_recal.table
 ```
 
 -L is a option for specifying chromosome, or chromosomal location. e.g. -L chr1:123-123450  
@@ -740,11 +741,12 @@ See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum htt
 PrintReads is a tool to extract subset reads by genomic interval.
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T PrintReads -R human_g1k_v37_decoy.fasta \
-                 -I ${id}.aligned_reads_dedup_sorted.bam \
-                 -BQSR ${id}_recal.table \
-                 -o ${id}.aligned_reads_dedup_recal_sorted.bam
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T PrintReads \
+              -R human_g1k_v37_decoy.fasta \
+              -I ${id}.aligned_reads_dedup_sorted.bam \
+              -BQSR ${id}_recal.table \
+              -o ${id}.aligned_reads_dedup_recal_sorted.bam
 
 $ samtools index ${id}.aligned_reads_dedup_recal_sorted.bam
 ```
@@ -776,13 +778,14 @@ You will get following respond.
 Call germline SNPs and indels via local re-assembly of haplotypes.
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T HaplotypeCaller -R human_g1k_v37_decoy.fasta \
-                 -I ${id}.aligned_reads_dedup_recal_sorted.bam \
-                 --dbsnp dbsnp_138.b37.vcf \
-                 --emitRefConfidence GVCF \
-                 -L 1 \
-                 -o ${id}_raw_variants.g.vcf
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T HaplotypeCaller \
+              -R human_g1k_v37_decoy.fasta \
+              -I ${id}.aligned_reads_dedup_recal_sorted.bam \
+              --dbsnp dbsnp_138.b37.vcf \
+              --emitRefConfidence GVCF \
+              -L 1 \
+              -o ${id}_raw_variants.g.vcf
 ```
 
 You will get following respond.
@@ -822,22 +825,19 @@ For detail information, see https://software.broadinstitute.org/gatk/documentati
 ### Gather .g.vcf files
 This step have less meaning in this course, because this step is mainly for mutli sample processing.  
 But, in almost cases, you need to analyze multi samples at once. So, we should experience this way.  
-`$ ls -1 *_raw_variants.g.vcf > gVCF.list`
-
+`$ ls -1 *_raw_variants.g.vcf > gVCF.list`  
 ">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.  
-`$ ls -1 *_raw_variants.g.vcf > gVCF.list`
-
-
 
 ### GenotypeGVCFs (< 1 min)
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T GenotypeGVCFs -R human_g1k_v37_decoy.fasta \
-                 -V gVCF.list \
-                 -L 1 \
-                 -o combined_genotyped.vcf
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T GenotypeGVCFs \
+              -R human_g1k_v37_decoy.fasta \
+              -V gVCF.list \
+              -L 1 \
+              -o combined_genotyped.vcf
 ```
 
 You will get following respond.
@@ -868,11 +868,12 @@ Check generated combined_genotyped.vcf size.
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T SelectVariants -R human_g1k_v37_decoy.fasta \
-                 -V combined_genotyped.vcf \
-                 -selectType SNP \
-                 -o combined_genotyped_raw_snps.vcf
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T SelectVariants \
+              -R human_g1k_v37_decoy.fasta \
+              -V combined_genotyped.vcf \
+              -selectType SNP \
+              -o combined_genotyped_raw_snps.vcf
 ```
 
 
@@ -889,20 +890,22 @@ Check generated combined_genotyped_raw_snps.vcf size.
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T VariantFiltration -R human_g1k_v37_decoy.fasta \
-                 -V combined_genotyped_raw_snps.vcf \
-                 --clusterSize 3 --clusterWindowSize 10 \
-                 --filterExpression 'QD < 2.0' --filterName 'LowQD' \
-                 --filterExpression 'FS > 60.0' --filterName 'HighFisherStrand' \
-                 --filterExpression 'HaplotypeScore > 13.0' --filterName 'HighHaplotypeScore' \
-                 --filterExpression 'MQ < 40.0' --filterName 'lowRMSMappingQuality' \
-                 --filterExpression 'MQRankSum < -12.5' --filterName 'LowMQRankSum' \
-                 --filterExpression 'ReadPosRankSum < -8.0' --filterName 'LowReadPosRankSum' \
-                 --filterExpression 'MQ0 >= 4 && ((MQ0 / (1.0 * DP)) > 0.1)' --filterName 'HARD_TO_VALI' \
-                 --filterExpression 'QUAL < 30.0' --filterName 'VeryLowQual' \
-                 --filterExpression 'QUAL >= 30.0 && QUAL < 50.0' --filterName 'LowQual' \
-                 -o combined_genotyped_filtered_snps.vcf
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T VariantFiltration \
+              -R human_g1k_v37_decoy.fasta \
+              -V combined_genotyped_raw_snps.vcf \
+              --clusterSize 3 --clusterWindowSize 10 \
+              --filterExpression 'QD < 2.0'                               --filterName 'LowQD' \
+              --filterExpression 'FS > 60.0'                              --filterName 'HighFisherStrand' \
+              --filterExpression 'HaplotypeScore > 13.0'                  --filterName 'HighHaplotypeScore' \
+              --filterExpression 'MQ < 40.0'                              --filterName 'lowRMSMappingQuality' \
+              --filterExpression 'MQRankSum < -12.5'                      --filterName 'LowMQRankSum' \
+              --filterExpression 'ReadPosRankSum < -8.0'                  --filterName 'LowReadPosRankSum' \
+              --filterExpression 'MQ0 >= 4 && ((MQ0 / (1.0 * DP)) > 0.1)' --filterName 'HARD_TO_VALI' \
+              --filterExpression 'QUAL < 30.0'                            --filterName 'VeryLowQual' \
+              --filterExpression 'QUAL >= 30.0 && QUAL < 50.0'            --filterName 'LowQual' \
+              --genotypeFilterExpression 'DP < 10'                        --genotypeFilterName 'LowDP' \
+              -o combined_genotyped_filtered_snps.vcf
 ```
 
     INFO  11:43:18,269 ProgressMeter -            done      5004.0     5.0 s      18.6 m        7.9%    62.0 s      57.0 s
@@ -929,11 +932,12 @@ Check generated combined_genotyped_filtered_snps.vcf size.
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T SelectVariants -R human_g1k_v37_decoy.fasta \
-                 -V combined_genotyped.vcf \
-                 -selectType INDEL \
-                 -o combined_genotyped_raw_indels.vcf
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T SelectVariants \
+              -R human_g1k_v37_decoy.fasta \
+              -V combined_genotyped.vcf \
+              -selectType INDEL \
+              -o combined_genotyped_raw_indels.vcf
 ```
 
     INFO  11:45:05,416 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
@@ -959,13 +963,15 @@ Check generated file.
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T VariantFiltration -R human_g1k_v37_decoy.fasta \
-                 -V combined_genotyped_raw_indels.vcf \
-                 --filterExpression 'QD < 2.0' --filterName 'LowQD' \
-                 --filterExpression 'FS > 200.0' --filterName 'HighFisherStrand' \
-                 --filterExpression 'ReadPosRankSum < -20.0' --filterName 'LowReadPosRankSum' \
-                 -o combined_genotyped_filtered_indels.vcf
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T VariantFiltration \
+              -R human_g1k_v37_decoy.fasta \
+              -V combined_genotyped_raw_indels.vcf \
+              --filterExpression 'QD < 2.0'               --filterName 'LowQD' \
+              --filterExpression 'FS > 200.0'             --filterName 'HighFisherStrand' \
+              --filterExpression 'ReadPosRankSum < -20.0' --filterName 'LowReadPosRankSum' \
+              --genotypeFilterExpression 'DP < 10'        --genotypeFilterName 'LowDP' \
+              -o combined_genotyped_filtered_indels.vcf
 
     WARN  11:45:36,993 Interpreter - ![0,14]: 'ReadPosRankSum < -20.0;' undefined variable ReadPosRankSum
     INFO  11:45:37,034 ProgressMeter -            done      1584.0     0.0 s       7.2 m        7.9%     0.0 s       0.0 s
@@ -989,12 +995,13 @@ Check generated file.
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T CombineVariants -R human_g1k_v37_decoy.fasta \
-                 --assumeIdenticalSamples \
-                 -V:SNP combined_genotyped_filtered_snps.vcf \
-                 -V:INDEL combined_genotyped_filtered_indels.vcf \
-                 -o combined_genotyped_filtered_snps_indels_mixed.vcf
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T CombineVariants \
+              -R human_g1k_v37_decoy.fasta \
+              --assumeIdenticalSamples \
+              -V:SNP combined_genotyped_filtered_snps.vcf \
+              -V:INDEL combined_genotyped_filtered_indels.vcf \
+              -o combined_genotyped_filtered_snps_indels_mixed.vcf
 ```
 
     INFO  11:46:24,018 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
@@ -1020,11 +1027,12 @@ check generated file.
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
-                 -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
-                 -T SelectVariants -R human_g1k_v37_decoy.fasta \
-                 -V combined_genotyped_filtered_snps_indels_mixed.vcf \
-                 --excludeFiltered --excludeNonVariants \
-                 -o combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
+              -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
+              -T SelectVariants \
+              -R human_g1k_v37_decoy.fasta \
+              -V combined_genotyped_filtered_snps_indels_mixed.vcf \
+              --excludeFiltered --excludeNonVariants \
+              -o combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
 ```
 
     INFO  11:47:10,212 ProgressMeter - [INITIALIZATION COMPLETE; STARTING PROCESSING]
@@ -1050,9 +1058,12 @@ Check generated file.
 ### Convert vcf file to Annovar format
 
 ```
-$ ./annovar/convert2annovar.pl -format vcf4 --includeinfo --withzyg --allsample \
-                             combined_genotyped_filtered_snps_indels_mixed.PASS.vcf \
-                             --outfile combined_genotyped_filtered_snps_indels_mixed.PASS
+$ ./annovar/convert2annovar.pl -format vcf4 \
+                               --includeinfo \
+                               --withzyg \
+                               --allsample \
+                               combined_genotyped_filtered_snps_indels_mixed.PASS.vcf \
+                               --outfile combined_genotyped_filtered_snps_indels_mixed.PASS
 ```
 
     NOTICE: output files will be written to combined_genotyped_filtered_snps_indels_mixed.PASS.<samplename>.avinput
@@ -1078,39 +1089,37 @@ Annovar provides some useful functions to annotate variants.
 Basic function script is annotate_variation.pl  
 
 example#1 (Gene annotation)  
-`$ ./annovar/annotate_variation.pl -build hg19 -geneanno -dbtype refGene  combined_genotyped_filtered_snps_indels_mixed.PASS.avinput annovar/humandb/`  
-
+```
+$ ./annovar/annotate_variation.pl -build hg19 \
+                                  -geneanno \
+                                  -dbtype refGene \
+                                  combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput \
+                                  annovar/humandb/`  
+```
 You will get some files.
 
-    -rw-r--r--  1 mako  12K  7 26 14:17 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.variant_function
-    -rw-r--r--  1 mako  13K  7 26 14:17 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.exonic_variant_function
+    -rw-r--r--  1 mako  12K  7 26 14:17 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput.variant_function
+    -rw-r--r--  1 mako  13K  7 26 14:17 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput.exonic_variant_function
 
 Check the file content.  
-```
-$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.exonic_variant_function | less -S
-
-or
-
-$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.exonic_variant_function | ./tableview_darwin_amd64
-```
+`$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput.exonic_variant_function | ./tableview_darwin_amd64`
 
 example#2 (dbsnp annotation)  
-`$ ./annovar/annotate_variation.pl -build hg19 -filter   -dbtype avsnp150 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput annovar/humandb/`
-
+```
+$ ./annovar/annotate_variation.pl -build hg19 \
+                                  -filter \
+                                  -dbtype avsnp150 \
+                                  combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput \
+                                  annovar/humandb/`
+```
 
 You will get some files.
 
-    -rw-r--r--  1 mako    0  7 26 14:38 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_filtered
-    -rw-r--r--  1 mako  12K  7 26 14:39 combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_dropped
+    -rw-r--r--  1 mako    0  7 26 14:38 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput.hg19_avsnp150_filtered
+    -rw-r--r--  1 mako  12K  7 26 14:39 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput.hg19_avsnp150_dropped
 
 Check the file content.  
-```
-$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_dropped | less -S
-
-or
-
-$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.avinput.hg19_avsnp150_dropped | ./tableview_darwin_amd64
-```
+`$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput.hg19_avsnp150_dropped | ./tableview_darwin_amd64`
 
 I wish you got fine results. However, obtained results are far from ideal.  
 They are separated, few annotation.  
