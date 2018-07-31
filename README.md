@@ -31,6 +31,26 @@ Do not be afraid. If you failed something, nothing will happen. No sample lost. 
 - how to handle massive amount data using cluster computers (SSH, Grid Job Scheduler, memory usage, disk I/O)
 - deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in heystacks)
 
+## Prerequires
+
+- recent macOS machine (you should know administrator password)
+- you should try session 1-4 (From "Set up your mac" to "First step") by yourself
+- you minimally have to complete to download several files as listed here
+    - DRR006760_chr1_1.fastq.gz (See 4. First step > First analysis)
+    - DRR006760_chr1_2.fastq.gz
+    - human_g1k_v37_decoy.fasta (See 4. First step > First analysis)
+    - human_g1k_v37_decoy.fasta.amb
+    - human_g1k_v37_decoy.fasta.ann
+    - human_g1k_v37_decoy.fasta.bwt
+    - human_g1k_v37_decoy.fasta.fai
+    - human_g1k_v37_decoy.fasta.pac
+    - human_g1k_v37_decoy.fasta.sa
+    - human_g1k_v37_decoy.dict
+    - Mills_and_1000G_gold_standard.indels.b37.vcf.gz (See 5. Second step > Install GATK bundle resource)
+    - Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
+    - dbsnp_138.b37.vcf.gz
+    - dbsnp_138.b37.vcf.idx.gz
+
 ## Beyond this course
 For further advanced self studies, you already know there are so many pages in the internet :astonished:  
 I think these materials might be nice for the next step.  
@@ -49,10 +69,6 @@ I know this is a first barricade to step in learning informatic skills, but this
 - **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
 - `$ cd` cd means _**C**hange **D**irectory_
 - `$ mkdir new_diretory_name` mkdir means _**M**ake **D**irectory_
-- `$ cat cnvkit.${platform}.summary.out | cut -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' | sort -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
-- \t means TAB code. This is a kind of regular expression
-- \n means RETURN code. This is a kind of regular expression
-- Regular expression is frequently used in pattern matching like this. `$ echo Okazaki-sense` `$ echo Okazaki-sense | perl -pe 's/O.*i/Kohda/'`
 - GNU/Linux is a kind of OS (Operation Systems). Same as Windows and macOS. Most of servers are Linux
 - Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small/Mail/Web...too diverse to express
 - Linux is a open source copy of UNIX (not exactly)
@@ -94,6 +110,7 @@ Go to this page, https://brew.sh/ then, follow the install instruction.
 Open Terminal.app (is located on /Application/Utilities), then type this shell command  
 `$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`  
 _The administrator password will be required in this process_
+curl is a command line tool for getting or sending files using URL syntax. Here, curl downloads homebrew install script from github, then Ruby runs the install script to install homebrew into your macOS system.
 
 **In the process, you might be asked "Xcode command line tool installation" by computer. Please permit it. Xcode is a programming environment for macOS. It mainly used by software developer, but it also contains some necessary parts for running command line tools.**  
 
@@ -297,8 +314,10 @@ And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) 
 
 Making a tiny shell script for automatic proccessing.
 
+加筆するかも
+
 GATK workflow
-https://camo.githubusercontent.com/816beb9592258cb0b49fe4d33f0938484c111e8b/68747470733a2f2f736f6674776172652e62726f6164696e737469747574652e6f72672f6761746b2f696d672f42505f776f726b666c6f775f332e362e706e67
+![](images/GATK1_workflow.png "")
 
 ## Install softwares required for sequence analysis#2
 
@@ -502,6 +521,16 @@ $ mv DRR006760_chr1.aligned_reads_sorted.bam.bai zzold/
 
 ## Let's step forward
 
+### Prepare: 
+From now, we will use variables. One of shell functions. It memorise a value.  
+We will use this variable to have the sample name.
+```
+$ id=DRR006760_chr1
+$ echo ${id}
+```
+Here, **id** is the variable. **DRR006760_chr1** is the value.  
+You can call the value by typing $id or ${id}.  
+
 ### fastq, a sequence read data format
 
 There are two major sequence data formats, fasta and fastq.
@@ -556,19 +585,9 @@ https://www.illumina.com/documents/products/technotes/technote_Q-Scores.pdf
 FASTA format - Wikipedia https://en.wikipedia.org/wiki/FASTA_format  
 FASTQ format - Wikipedia https://en.wikipedia.org/wiki/FASTQ_format  
 
-### Prepare: 
-From now, we will use variables. One of shell functions. It memorise a value.  
-We will use this variable to have the sample name.
-```
-$ id=DRR006760_chr1
-$ echo ${id}
-```
-Here, **id** is the variable. **DRR006760_chr1** is the value.  
-You can call the value by typing $id or ${id}.  
-
 ### Visualize base qualities
 Using fastQC program, summarize and visualize data features.  
-`$ fastqc -t 4 #{id}_1.fastq.gz #{id}_2.fastq.gz`
+`$ fastqc -t 4 ${id}_1.fastq.gz ${id}_2.fastq.gz`
 
 -t 4?  
 This option means that we use four threads.  
@@ -607,13 +626,14 @@ $ java -Xmx4g -jar Trimmomatic-0.38/Trimmomatic-0.38.jar PE \
                  TRAILING:20 MINLEN:50
 ```
 From Trimmomatic web page,
-- TRAILING: Cut bases off the end of a read, if below a threshold quality
+- TRAILING: Cut bases off the end of a read, if below a threshold quality (here, it's 20)
 - MINLEN: Drop the read if it is below a specified length
 
 threads 4?  
 Thread means threads of execution. Roughly saying, dividing a single task to four parts to reduce the calculation time.  
-phred33??
-Phred score is originally developed for Sanger sequence. So, I expect you already know well.  
+phred33??  
+Phred score is originally developed for Sanger sequence. So, I expect you already know well. 
+More detail about options for Trimmomatic, see their page http://www.usadellab.org/cms/?page=trimmomatic 
 
 This fastq file encodes quality values with Sanger institute-style. It's offset is 33.  
 There is another option, phred64. It is for Solexa-style, Illumina 1.3+-style, Illumina 1.5+-style.  
@@ -646,20 +666,20 @@ $ samtools sort -@4 -m 2G ${id}.aligned_reads.bam -o ${id}.aligned_reads_sorted.
 $ samtools index ${id}.aligned_reads_sorted.bam
 ```
 These lines are almost same with previous bwa/samtools commands.
-
+っp
 Check the file size of generated .bam files.  
-`$ ls -vlhrt ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
-
+`$ ls -vlhrt ${id}っp.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
+っp
 ### (Optional) Tips: using memory, avoid using slow hard disk for speeding up
-This is another way. Connect bwa and samtools view/sort to speed up.
+This is another way. Conneっpct bwa and samtools view/sort to speed up.
 ```
 $ bwa mem -t4 -M \
-              -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
+              -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
               human_g1k_v37_decoy.fasta \
-              DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz | \
-              samtools view -@4 -1 - | samtools sort -@4 - -o - > DRR006760_chr1.aligned_reads_sorted.bam
+              ${id}_1.fastq.gz ${id}_2.fastq.gz | \
+              samtools view -@4 -1 - | samtools sort -@4 - -o - > ${id}.aligned_reads_sorted.bam
 
-$ samtools index -@ 4 DRR006760_chr1.aligned_reads_sorted.bam
+$ samtools index -@ 4 ${id}.aligned_reads_sorted.bam
 ```
 Here, as you can see, this command line is long, and includes bwa and samtools view/sort commands.  
 This is done by "|". **Pipe**. "|" connects two command. Here, it connected bwa and samtools. The result of bwa aligned data passed to samtools.  
@@ -684,12 +704,13 @@ PCR duplicated entires are removed from .bam contents. So, file size is reduced.
 
 For detail information, see https://broadinstitute.github.io/picard/picard-metric-definitions.html#DuplicationMetrics
 
+GATK Workshop
+https://drive.google.com/open?id=10WAZgT7bofZRaJ0xZK0oowjT_-rIONfo
+
+https://qcb.ucla.edu/wp-content/uploads/sites/14/2016/03/GATKwr12-2-Marking_duplicates.pdf
+
 ### BaseRecalibrator (< 2 min)
 Base quality score recalibration (BQSR) is a process to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls.   
-
-For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
-
-
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
@@ -722,9 +743,11 @@ You will get following respond.
     Done. There were no warn messages.
     ------------------------------------------------------------------------------------------
 
+For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
+
 ### (Optional) Plot recalibration data (< 5 min)
-Run BaseRecalibrator again with the generated table for base quality recalibration.  
-You can visualize the difference between before and after base quality recalibration.  
+You can visualize the difference between before/after base quality recalibration.  
+Run BaseRecalibrator again with the generated table by 1st BaseRecalibrator run.  
 ```
 $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T BaseRecalibrator -R human_g1k_v37_decoy.fasta -I ${id}.aligned_reads_dedup_sorted.bam -knownSites dbsnp_138.b37.vcf -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf -BQSR ${id}_recal.table -o post_${id}_recal.table
 
@@ -738,7 +761,7 @@ $ open ${id}_recalibration_plots.pdf
 See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
 
 ### PrintReads (< 3 min)
-PrintReads is a tool to extract subset reads by genomic interval.
+PrintReads is a tool to extract subset reads by genomic interval. Here, we use PrintRead combined with BQSR base recabrilation data to make the .bam file which have recabrilated sequence base quality scores.
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
@@ -775,7 +798,7 @@ You will get following respond.
     -rw-r--r-- 1 mako 183M  7 24 11:31 DRR006760_chr1.aligned_reads_dedup_recal_sorted.bam
 
 ### HaplotypeCaller (< 5 min)
-Call germline SNPs and indels via local re-assembly of haplotypes.
+Call germline SNVs and INDELs via local re-assembly of haplotypes.
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
@@ -822,6 +845,13 @@ Do you have similar result?
 
 For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_haplotypecaller_HaplotypeCaller.php
 
+GATK Workshop
+https://drive.google.com/open?id=10aOk37ymXEhP9uRzrpuWXqvmwCXZ7DFE
+
+HC overview: How the HaplotypeCaller works — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/4148/hc-overview-how-the-haplotypecaller-works
+de novo アセンブリー | de Bruijn graph によるゲノムアセンブリー https://bi.biopapyrus.jp/rnaseq/assembly/de-bruijn-graph-assembly.html
+de Bruijn Graph を使った de novo アセンブリの発想がすごい件 - ほくそ笑む http://hoxo-m.hatenablog.com/entry/20100930/p1
+
 ### Gather .g.vcf files
 This step have less meaning in this course, because this step is mainly for mutli sample processing.  
 But, in almost cases, you need to analyze multi samples at once. So, we should experience this way.  
@@ -863,6 +893,9 @@ Check generated combined_genotyped.vcf size.
 `$ wc -l combined_genotyped.vcf`
 
     5736 combined_genotyped.vcf
+
+
+https://drive.google.com/open?id=10auFLOIaCyetwnqX-Msb1LgjkZJiEUdj
 
 ### Select SNP (< few seconds)
 
@@ -973,6 +1006,8 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               --genotypeFilterExpression 'DP < 10'        --genotypeFilterName 'LowDP' \
               -o combined_genotyped_filtered_indels.vcf
 
+You will get following respond.
+
     WARN  11:45:36,993 Interpreter - ![0,14]: 'ReadPosRankSum < -20.0;' undefined variable ReadPosRankSum
     INFO  11:45:37,034 ProgressMeter -            done      1584.0     0.0 s       7.2 m        7.9%     0.0 s       0.0 s
     INFO  11:45:37,034 ProgressMeter - Total runtime 0.69 secs, 0.01 min, 0.00 hours
@@ -1023,7 +1058,7 @@ check generated file.
     5750 combined_genotyped_filtered_snps_indels_mixed.vcf
 
 
-### SelectVariants exclude MNP
+### SelectVariants exclude low quality variants
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -1031,7 +1066,8 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               -T SelectVariants \
               -R human_g1k_v37_decoy.fasta \
               -V combined_genotyped_filtered_snps_indels_mixed.vcf \
-              --excludeFiltered --excludeNonVariants \
+              --excludeFiltered \
+              --excludeNonVariants \
               -o combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
 ```
 
@@ -1148,6 +1184,9 @@ Shell scripting cheat sheet (So sorry, I can't find nice English page) https://q
     NOTICE: Multianno output file is written to  combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avoutput.hg19_multianno.txt
 
 
+`$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avoutput.hg19_multianno.txt | ./tableview_darwin_amd64 --header`
+       combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avoutput.hg19_multianno.txt
+
 You can know what databases are downloadable from Annovar web site.  
 Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
 
@@ -1193,3 +1232,22 @@ wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180701.vcf.gz
 sequence depth 取ってないなぁ
 
 bed file の部分どうするかな
+
+- `$ cat cnvkit.${platform}.summary.out | cut -f1,8 | perl -pe 's/\n/\t/; s/--/\n/; s/\nPt/Pt/' | perl -pe 's/^\tPt/Pt/' | cut -f4,6,8 | perl -F"\t" -lane 'next if $F[1] == 0 && $F[2] == 0; print join("\t", $F[0]/$F[1], $F[0])' | sort -k1,1g` _Don't be panic. No need to memorise today._ Just want to show you "|", Pipe. "|" connects two command. This is similar with pipetting twice, then centrifuge at 3,000 rpm, 10 min on ice...
+- \t means TAB code. This is a kind of regular expression
+- \n means RETURN code. This is a kind of regular expression
+- Regular expression is frequently used in pattern matching like this. `$ echo Okazaki-sense` `$ echo Okazaki-sense | perl -pe 's/O.*i/Kohda/'`
+
+
+https://www.dropbox.com/s/3qsqwb4lqcyy7gd/DRR001913_chr12_1.fastq.gz
+https://www.dropbox.com/s/9wenng8x0xwnp5g/DRR001913_chr12_2.fastq.gz
+
+
+HaplotypeCaller and detection of large indels — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/3932/haplotypecaller-and-detection-of-large-indels
+
+GATK | Doc #1247 | What should I use as known variants/sites for running tool X? https://software.broadinstitute.org/gatk/documentation/article.php?id=1247
+
+GATK | Workshop Materials https://software.broadinstitute.org/gatk/download/workshops
+presentations - Google ドライブ https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
+
+$ samtools index ${id}.aligned_reads_dedup_recal_sorted.bam いらないかも。GATK が .bai 作ってる気がする -> 作るね
