@@ -487,7 +487,7 @@ $ cat Mills_and_1000G_gold_standard.indels.b37.vcf.gz.md5
 ```
 You probably see the same hash values.
 
-Let's uncompress .gz files.
+Let's decompress .gz files.
 ```
 $ gunzip -d Mills_and_1000G_gold_standard.indels.b37.vcf.gz
 $ gunzip -d Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
@@ -497,6 +497,28 @@ $ gunzip -d dbsnp_138.b37.vcf.idx.gz
 
 More detail information of resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
 
+### Install Annovar
+*You need regist to use Annovar*  
+*This is very important. You have to know this.*  
+For database and software developer, their are researchers, same with you. Total number of active users are really important issue for appling grants. Because, the number of active users is the evidence of it's value.  
+To promote their scientific activities, please register.  
+ANNOVAR website http://www.openbioinformatics.org/annovar/annovar_download_form.php  
+ANNOVAR - Google グループ https://groups.google.com/forum/#!forum/annovar  
+
+The day of mini course, I will provide annotation files. So you only download annovar package.  
+You download annovar.latest.tar.gz from Annovar web site (I'm not sure the file name is correct or not.).  
+Please, put annovar.latest.tar.gz into exome_analysis directory, then decompressed it like this.  
+`$ tar zxvf annovar.latest.tar.gz`  
+tar (manipulate tape archives) command is used for packing many file into single archive.  
+Here, file extension is .tar.gz, so this tar archive is compressed using gzip (.gz means compressed using gzip).  
+When you met .tar.gz, you will chant "tar zxvf"! If you met other tar archives, like .tar.Z, you will chant "tar xvf".  
+Others? Google it.  
+
+After decompress annovar.latest.tar.gz, you will see annovar directory.  
+You will see help message by this command.  
+`$ ./annovar/annotate_variation.pl`
+
+___may add later___
 
 ***I know you are tired for downloading. To be honest, I'm too.***  
 Most part of molecular work are occupied by pipetting, most part of bioinformatic work are occupied by preparing and data cleaning. Please calm down :sob:  
@@ -518,6 +540,7 @@ $ fastqc --version
 $ java -jar Trimmomatic-0.38/trimmomatic-0.38.jar -version
 $ picard SortSam -h
 $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar --version
+$ ./annovar/annotate_variation.pl
 ```
 
 Then, check files.  
@@ -1232,18 +1255,13 @@ Shell scripting cheat sheet (So sorry, I can't find nice English page) https://q
 
 `$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avoutput.hg19_multianno.txt | ./tableview_darwin_amd64 --header`
 
-
 You can know what databases are downloadable from Annovar web site.  
 Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
 
-*You need regist to use Annovar*  
-*This is very important. You have to know this.*  
-For database and software developer, their are researchers, total number of users are really important issue for appling grants. Because, the number of active users is the evidence of it's value.  
-To promote their scientific activities, please register.  
-ANNOVAR website http://www.openbioinformatics.org/annovar/annovar_download_form.php  
-ANNOVAR - Google グループ https://groups.google.com/forum/#!forum/annovar  
 
-### 
+### fiter variants more
+
+
 
 # Third step (underconstruction)
 1. Reproduce second step by yourself. Prepaire all files by yourself.
