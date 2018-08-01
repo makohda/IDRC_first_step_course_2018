@@ -1261,6 +1261,13 @@ Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/e
 
 ### fiter variants more
 
+`$ grep -wF -e Func.refGene -e exonic -e splicing  combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avoutput.hg19_multianno.txt | grep -v -e "synonymous SNV" > ${id}.hg19_multianno.PASS.exonic.txt`
+
+
+`$ perl -F"\t" -lane 'print $_ if ($F[11] <= 0.001 && $F[19] <= 0.001 && $F[21] <= 0.001) || $. == 1' ${id}.hg19_multianno.PASS.exonic.txt > ${id}.hg19_multianno.PASS.exonic.filtered.txt`
+
+
+`grep -wF -e refGene -e hom ${id}.hg19_multianno.PASS.exonic.filtered.txt | ./tableview_darwin_amd64 --header`
 
 
 # Third step (underconstruction)
@@ -1272,7 +1279,7 @@ ___
 
 Under construction
 
-
+Insert R.txt here.
 
 
 あと base_dir のことが必要

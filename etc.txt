@@ -1,3 +1,84 @@
+----
+
+最初にスクリプトファイルを配って実行させてから、後追い説明でもいいかもね
+
+dbsnp_138.b37.vcf の最新版がほしいよね (ncbi配布が大元だから、それをとってくるか, broadにはないよね、もう)
+
+bioinfotools/resource_bundle.md at master · bahlolab/bioinfotools https://github.com/bahlolab/bioinfotools/blob/master/GATK/resource_bundle.md
+
+
+
+#brew install pigz
+
+ResourceBundleはコピーして渡す
+
+Annovar
+これはコピーして渡す
+
+
+ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz
+ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz.md5
+ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.idx.gz
+ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.idx.gz.md5
+
+ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.gz
+ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.gz.md5
+ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
+ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz.md5
+
+省エネルギー設定
+
+shell scripting
+
+どうやって、そのオプションにたどり着いているか
+Workshop Presentation とかをみてるが、それはどうやって調べているか Google? サイトの document を読むしかない
+BioStars
+
+dictやfaiの説明ほしいな https://docs.sevenbridges.com/page/secondary-files
+
+echo "ARHSP start"
+$ echo -e "AP4B1\nAP4E1\nAP4M1\nAP4S1\nAP5Z1\nC12orf65\nC19orf12\nCYP2U1\nCYP7B1\nDDHD1\nDDHD2\nERLIN2\nFA2H\nGAD1\nGBA2\nGJC2\nKIF1A\nPNPLA6\nSPG11\nSPG20\nSPG21\nSPG7\nTECPR2\nVPS37A\nZFYVE26" > ARHSP_known_genes.txt
+
+cat ARHSP_known_genes.txt # cat コマンドはファイルの中身を表示する
+
+echo "Make dbsnp_138.b37.ARHSP.vcf"
+
+$ grep -wFf ARHSP_known_genes.txt dbsnp_138.b37.vcf > dbsnp_138.b37.ARHSP.vcf # takes 1-2 mins.
+
+echo "Make dbsnp_138.b37.ARHSP.OM.vcf"
+
+$ grep -wF "OM" dbsnp_138.b37.ARHSP.vcf > dbsnp_138.b37.ARHSP.OM.vcf
+
+
+echo "convert2annovar"
+
+$ ./annovar/convert2annovar.pl -format vcf4 dbsnp_138.b37.ARHSP.OM.vcf > dbsnp_138.b37.ARHSP.OM.avinput
+
+echo "table_annovar"
+
+$ ./annovar/table_annovar.pl dbsnp_138.b37.ARHSP.OM.avinput annovar/humandb/ \
+                             -buildver hg19 \
+                             -protocol refGeneWithVer,genomicSuperDups,exac03,avsnp150,clinvar_20180603,ljb26_all \
+                             -operation g,r,f,f,f,f \
+                             -nastring NA \
+                             --otherinfo \
+                             --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,, \
+                             --remove \
+                             -out dbsnp_138.b37.ARHSP.OM
+
+NOTICE: Processing next batch with 47 unique variants in 47 input lines
+NOTICE: Database index loaded. Total number of bins is 557362 and the number of bins to be scanned is 34
+NOTICE: Scanning filter database annovar/humandb/hg19_ljb26_all.txt...Done
+-----------------------------------------------------------------
+NOTICE: Multianno output file is written to dbsnp_138.b37.ARHSP.OM.hg19_multianno.txt
+
+#cat dbsnp_138.b37.ARHSP.OM.hg19_multianno.txt | ggrep -vwF -e intronic -e "synonymous SNV" | less -S
+#もしくは csvlook のインストールが必要だが
+# cat dbsnp_138.b37.ARHSP.OM.hg19_multianno.txt | ggrep -vwF -e intronic -e "synonymous SNV" | csvlook -t | less -S
+
+echo "ARHSP end"
+
+----
 When you met an error, please tell me
 1. what you did (e.g. bwa mem -M human_g1k_v37_decoy.fasta 1.paired.fastq.gz 2.paired.fastq.gz > 3.aligned_reads.sam)
 2. what you got (e.g. [E::main_mem] fail to open file 1.paired.fastq.gz.)
@@ -15,3 +96,9 @@ $ transvar canno --refseq -i 'NM_001040613:c.138delG'
 https://bitbucket.org/wanding/transvar
 
 TransVar http://bioinformatics.mdanderson.org/transvarweb/
+
+____
+
+今更ながら抑えておきたいシェルスクリプト用チートシート - Qiita https://qiita.com/muran001/items/8bb5530d79301b1b2b82
+
+最初のデータ準備.txt (DRA download, bwa, extract from bam)
