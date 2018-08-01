@@ -927,14 +927,15 @@ Check generated combined_genotyped.vcf size.
 
     5736 combined_genotyped.vcf
 
-
+Better understanding what GenotypeGVCFs step do, read this slides first.  
 https://drive.google.com/open?id=10auFLOIaCyetwnqX-Msb1LgjkZJiEUdj
+Historically, there was joint calling for multi-samples. But, it have N+1 problem for huge samples. This is very famous problem from microarray era. To solve this, joint genotyping was developed. Now, it can do joint calling via two steps.
 
 ### Select SNP (< few seconds)
 In coming several steps, we treat two seprated data, SNVs and INDELs.  
 Firstly, divide data, then filtering variant solely. Finally, filtered data will be combined to single vcf file.  
 ![](images/variant_filtration.png "")
-https://drive.google.com/drive/folders/1PTEV_h2gWyOQpqztqCGQsH_OMbI6_oNE
+ref: https://drive.google.com/drive/folders/1PTEV_h2gWyOQpqztqCGQsH_OMbI6_oNE
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -1159,6 +1160,12 @@ If succeeded, you will get following response
 
 Do you find almost same file? If so, go next.  
 
+#### tips: deeper understading of What GATK do
+Broad institute shares their workshop materials and slides.  
+https://drive.google.com/drive/folders/1y7q0gJ-ohNDhKG85UTRTwW1Jkq4HJ5M3
+This is latest (shared 2018/07/13).
+https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
+
 ### Annotate variants using Annovar scripts
 Annovar provides some useful functions to annotate variants.  
 Basic function script is annotate_variation.pl  
@@ -1224,7 +1231,7 @@ Shell scripting cheat sheet (So sorry, I can't find nice English page) https://q
 
 
 `$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avoutput.hg19_multianno.txt | ./tableview_darwin_amd64 --header`
-       combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avoutput.hg19_multianno.txt
+
 
 You can know what databases are downloadable from Annovar web site.  
 Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
@@ -1238,8 +1245,9 @@ ANNOVAR - Google グループ https://groups.google.com/forum/#!forum/annovar
 
 ### 
 
-# Third step
-Exam. In other words, homework. But, don't move data to your home!  
+# Third step (underconstruction)
+1. Reproduce second step by yourself. Prepaire all files by yourself.
+1. Exam. In other words, homework. But, don't move data to your home!  
 Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint. Most of cases are easy. Some cases are quit difficult. I solved all the cases. Happy to see your excellent result :satisfied:
 
 ___
