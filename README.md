@@ -150,7 +150,7 @@ $ less -S test_variant_data.concatenated.tsv
 ```
 _Push Q key for quit_  
 
-">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.  
+">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file. We call this function as "redict".  
 -S is a option of less command. It change less behavior to chop-long-lines.  
 Commands have their specific options. You can see like this.  
 ```
