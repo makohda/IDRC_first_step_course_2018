@@ -275,9 +275,9 @@ Secondary, align paired sequence reads to the 1000 genomes project-customised hu
 Alignment.  
 ```
 $ bwa mem -t4 -M \
-            -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
-            human_g1k_v37_decoy.fasta \
-            DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz > DRR006760_chr1.aligned_reads.sam
+              -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
+              human_g1k_v37_decoy.fasta \
+              DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz > DRR006760_chr1.aligned_reads.sam
 ```
 Backslash \, this is a special character which could supresses RETURN character.  
 We use this for separating single command line to multi lines for easy viewing.  
@@ -691,17 +691,17 @@ $ samtools sort -@4 -m 2G ${id}.aligned_reads.bam -o ${id}.aligned_reads_sorted.
 $ samtools index ${id}.aligned_reads_sorted.bam
 ```
 These lines are almost same with previous bwa/samtools commands.
-っp
+
 Check the file size of generated .bam files.  
-`$ ls -vlhrt ${id}っp.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
-っp
+`$ ls -vlhrt ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
+
 ### (Optional) Tips: using memory, avoid using slow hard disk for speeding up
-This is another way. Conneっpct bwa and samtools view/sort to speed up.
+This is another way. Connect bwa and samtools view/sort to speed up.
 ```
 $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
               human_g1k_v37_decoy.fasta \
-              ${id}_1.fastq.gz ${id}_2.fastq.gz | \
+              ${id}_1.paired.fastq.gz ${id}_2.paired.fastq.gz | \
               samtools view -@4 -1 - | samtools sort -@4 - -o - > ${id}.aligned_reads_sorted.bam
 
 $ samtools index -@ 4 ${id}.aligned_reads_sorted.bam
@@ -715,11 +715,11 @@ This is very important. Why? If we used "|", we can use memory space instead of 
 Remove (or just add mark) PCR duplicates entries in .bam file.  
 ```
 $ picard MarkDuplicates \
-       INPUT=${id}.aligned_reads_sorted.bam \
-       OUTPUT=${id}.aligned_reads_dedup_sorted.bam \
-       METRICS_FILE=${id}.duplicate.metrics \
-       VALIDATION_STRINGENCY=LENIENT \
-       ASSUME_SORTED=true REMOVE_DUPLICATES=true
+         INPUT=${id}.aligned_reads_sorted.bam \
+         OUTPUT=${id}.aligned_reads_dedup_sorted.bam \
+         METRICS_FILE=${id}.duplicate.metrics \
+         VALIDATION_STRINGENCY=LENIENT \
+         ASSUME_SORTED=true REMOVE_DUPLICATES=true
 $ samtools index ${id}.aligned_reads_dedup_sorted.bam
 ```
 
