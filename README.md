@@ -264,7 +264,7 @@ Alignment.
 $ bwa mem -t4 -M \
             -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
             human_g1k_v37_decoy.fasta \
-            DRR006760_chr1_1.paired.fastq.gz DRR006760_chr1_2.paired.fastq.gz > DRR006760_chr1.aligned_reads.sam
+            DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz > DRR006760_chr1.aligned_reads.sam
 ```
 Backslash \, this is a special character which could supresses RETURN character.  
 We use this for separating single command line to multi lines for easy viewing.
