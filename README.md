@@ -410,6 +410,8 @@ If succeeded, you will get following response
     PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
     ...
 
+___added 180801: now, trimmomatic can be installed via brew. $ brew install trimmomatic___
+
 ### Install Picard (< 3 min)
 Similar with SAMtools, Picard is a multi-purpose program for NGS analyses.  
 Picard Tools - By Broad Institute https://broadinstitute.github.io/picard/  
@@ -639,7 +641,6 @@ To see the results, type like this. **open** is a special command of macOS. It o
 
 ![](images/fastqc1.png "")
 
-
 ### Fastq trimming (< 1 min)
 ```
 $ java -Xmx4g -jar Trimmomatic-0.38/Trimmomatic-0.38.jar PE \
@@ -653,6 +654,8 @@ $ java -Xmx4g -jar Trimmomatic-0.38/Trimmomatic-0.38.jar PE \
 From Trimmomatic web page,
 - TRAILING: Cut bases off the end of a read, if below a threshold quality (here, it's 20)
 - MINLEN: Drop the read if it is below a specified length
+You may consider using ILLUMINACLIP option for this process. It depends on experiment condition and/or you idea, but in most of cases, nice to use. It's harmless.  
+http://www.usadellab.org/cms/?page=trimmomatic
 
 threads 4?  
 Thread means threads of execution. Roughly saying, dividing a single task to four parts to reduce the calculation time.  
@@ -678,6 +681,8 @@ Check file size of all fastq.gz
 Can you see two .paired.fastq.gz?
 
 ### Mapping sequence reads to the reference genome (< 1 min)
+![](images/GATK1_workflow.png "")
+
 ```
 $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
@@ -926,6 +931,10 @@ Check generated combined_genotyped.vcf size.
 https://drive.google.com/open?id=10auFLOIaCyetwnqX-Msb1LgjkZJiEUdj
 
 ### Select SNP (< few seconds)
+In coming several steps, we treat two seprated data, SNVs and INDELs.  
+Firstly, divide data, then filtering variant solely. Finally, filtered data will be combined to single vcf file.  
+![](images/variant_filtration.png "")
+https://drive.google.com/drive/folders/1PTEV_h2gWyOQpqztqCGQsH_OMbI6_oNE
 
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
@@ -974,6 +983,8 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
     Done. There were no warn messages.
     ------------------------------------------------------------------------------------------
+
+
 
 https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_filters_VariantFiltration.php
 
