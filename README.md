@@ -269,20 +269,26 @@ $ bwa mem -t4 -M \
 Backslash \, this is a special character which could supresses RETURN character.  
 We use this for separating single command line to multi lines for easy viewing.
 
-Convert .sam file to .bam format.  
-`$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam`  
-Sort .bam contents.  
-`$ samtools sort -@4 -m 2G DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam`  
-Make .bam index file to make search.  
-`$ samtools index DRR006760_chr1.aligned_reads_sorted.bam`
-
-You will get following response. It will take about few min by my MacBookPro 2014 (2.2GHz).  
+You will get following response. BWA MEM alignment will take about few min by my MacBookPro 2014 (2.2GHz).  
 
     [M::bwa_idx_load_from_disk] read 0 ALT contigs
     [M::process] read 396040 sequences (40000040 bp)...
     [M::process] read 396040 sequences (40000040 bp)...
     [M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 142256, 0, 0)
     ...snip
+
+
+Convert .sam file to .bam format.  
+`$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam`  
+Sort .bam contents.  
+`$ samtools sort -@4 -m 2G DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam`  
+If succeeded, you will get following response
+
+    [bam_sort_core] merging from 0 files and 4 in-memory blocks...
+
+Make .bam index file to make search.  
+`$ samtools index DRR006760_chr1.aligned_reads_sorted.bam`  
+If succeeded, you will get no response here. Some of commands give us no response when they succeeded. It's linux culture (no response means no warn/error). Adjust you to this.
 
 Check generated files.  
 `$ ls -vlhrt DRR006760*`
