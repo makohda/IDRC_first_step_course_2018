@@ -276,7 +276,10 @@ You will get following response. BWA MEM alignment will take about few min by my
     [M::process] read 396040 sequences (40000040 bp)...
     [M::mem_pestat] # candidate unique pairs for (FF, FR, RF, RR): (0, 142256, 0, 0)
     ...snip
-
+    [M::mem_process_seqs] Processed 136540 reads in 17.513 CPU sec, 4.203 real sec
+    [main] Version: 0.7.17-r1188
+    [main] CMD: bwa mem -t4 -M -R @RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1 human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz
+    [main] Real time: 73.078 sec; CPU: 257.598 sec
 
 Convert .sam file to .bam format.  
 `$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam`  
