@@ -150,6 +150,7 @@ $ less -S test_variant_data.concatenated.tsv
 ```
 _Push Q key for quit_  
 
+">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.  
 -S is a option of less command. It change less behavior to chop-long-lines.  
 Commands have their specific options. You can see like this.  
 ```
@@ -208,6 +209,18 @@ Or
 $ wget http://data.broadinstitute.org/igv/projects/downloads/2.4/IGV_Win_2.4.13.zip
 $ unzip IGV_2.4.13.zip
 ```
+Make sure directories. Now, I expect "~/exome_analysis/IGV_2.4.13".  
+Can you see following results by this command?  
+`$ ls -vlht ~/exome_analysis/IGV_2.4.13`
+
+    total 69760
+    -rw-r--r--@ 1 mako  staff    30M  7 12 03:30 igv.jar
+    -rw-r--r--@ 1 mako  staff   1.6M  7 12 03:30 log4j-core-2.11.0.jar
+    -rw-r--r--@ 1 mako  staff   119K  7 12 03:30 batik-codec-1.10.jar
+    -rw-r--r--@ 1 mako  staff   1.9M  7 12 03:30 goby-io-igv-1.1.jar
+    -rw-r--r--@ 1 mako  staff   253B  7 12 03:30 igv.bat
+    -rwxr-xr-x@ 1 mako  staff   639B  7 12 03:30 igv.command
+    -rwxr-xr-x@ 1 mako  staff   436B  7 12 03:30 igv.sh
 
 To start up IGV, type  
 `$ sh IGV_2.4.13/igv.sh -g 1kg_v37`  
@@ -267,7 +280,8 @@ $ bwa mem -t4 -M \
             DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz > DRR006760_chr1.aligned_reads.sam
 ```
 Backslash \, this is a special character which could supresses RETURN character.  
-We use this for separating single command line to multi lines for easy viewing.
+We use this for separating single command line to multi lines for easy viewing.  
+">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.
 
 You will get following response. BWA MEM alignment will take about few min by my MacBookPro 2014 (2.2GHz).  
 
