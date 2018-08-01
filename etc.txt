@@ -1,0 +1,4 @@
+When you met an error, please tell me
+1. what you did (e.g. bwa mem -M human_g1k_v37_decoy.fasta 1.paired.fastq.gz 2.paired.fastq.gz > 3.aligned_reads.sam)
+2. what you got (e.g. [E::main_mem] fail to open file 1.paired.fastq.gz.)
+3. If you could, add some more information. The command " ls -vlhrt " gives us file names you have. It sort files as time order (recent are bottom)
