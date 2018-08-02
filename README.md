@@ -1266,10 +1266,12 @@ Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/e
 
 `$ perl -F"\t" -lane 'print $_ if ($F[11] <= 0.001 && $F[19] <= 0.001 && $F[21] <= 0.001) || $. == 1' ${id}.hg19_multianno.PASS.exonic.txt > ${id}.hg19_multianno.PASS.exonic.filtered.txt`
 
+`$ grep -wF -e refGene -e hom ${id}.hg19_multianno.PASS.exonic.filtered.txt | ./tableview_darwin_amd64 --header`
 
-`grep -wF -e refGene -e hom ${id}.hg19_multianno.PASS.exonic.filtered.txt | ./tableview_darwin_amd64 --header`
 
-代田先生
+***`$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avoutput.hg19_multianno.txt | grep -wF -e Chr -e exonic -e splicing | grep -vwF -e "synonymous SNV" -e nonframeshift | perl -F"\t" -lane 'print if $. == 1 || ($F[11] < 0.0001 && $F[14] < 0.0001)' | grep -wF -e Chr -e hom | grep -vwF LowDP | less -R`***
+
+### 代田先生
 ```
 time ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
                          -buildver hg19 \
