@@ -1273,7 +1273,7 @@ Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/e
 ```
 time ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
                          -buildver hg19 \
-                         --thread ${thread} \
+                         --thread 4 \
                          --protocol refGene,genomicSuperDups,exac03,gnomad_exome,gnomad_genome,clinvar_20180603,esp6500siv2_all,avsnp150,intervar_20170202,generic,generic,generic,generic,generic,generic,gff3,gff3,gff3,gff3,gff3,gff3,ljb26_all,dbnsfp33a,dbnsfp31a_interpro \
                          --genericdbfile DBexome20170802.n700.hgvd2annovar.tab,tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb,tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb,clinvar_20170905.OMIM.genericdb,clinvar_20170905.genericdb,HGMD_PRO_2017.2_hg19.genericdb \
                          --gff3dbfile LIST_281_known_genesLyndsey_etal.170609.gff3,mitocarta2.gff3,uniprot.keyword_mitochondrion0496_9606.all_symbols.hgnc.gff3,proteinatlas.mito.symbol.hgnc.gff3,clinvar_20170905.OMIM.gene.gff3,omim_gene_inheritance_disease.combined.hg19.gff3 \
