@@ -1199,7 +1199,7 @@ $ ./annovar/annotate_variation.pl -build hg19 \
                                   -geneanno \
                                   -dbtype refGene \
                                   combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput \
-                                  annovar/humandb/`  
+                                  annovar/humandb/  
 ```
 You will get some files.
 
@@ -1215,7 +1215,7 @@ $ ./annovar/annotate_variation.pl -build hg19 \
                                   -filter \
                                   -dbtype avsnp150 \
                                   combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput \
-                                  annovar/humandb/`
+                                  annovar/humandb/
 ```
 
 You will get some files.
