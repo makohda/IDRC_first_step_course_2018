@@ -1185,8 +1185,8 @@ Do you find almost same file? If so, go next.
 
 #### tips: deeper understading of What GATK do
 Broad institute shares their workshop materials and slides.  
-https://drive.google.com/drive/folders/1y7q0gJ-ohNDhKG85UTRTwW1Jkq4HJ5M3
-This is latest (shared 2018/07/13).
+https://drive.google.com/drive/folders/1y7q0gJ-ohNDhKG85UTRTwW1Jkq4HJ5M3  
+This is latest (shared 2018/07/13).  
 https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
 
 ### Annotate variants using Annovar scripts
@@ -1269,6 +1269,35 @@ Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/e
 
 `grep -wF -e refGene -e hom ${id}.hg19_multianno.PASS.exonic.filtered.txt | ./tableview_darwin_amd64 --header`
 
+代田先生
+```
+time ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
+                         -buildver hg19 \
+                         --thread ${thread} \
+                         --protocol refGene,genomicSuperDups,exac03,gnomad_exome,gnomad_genome,clinvar_20180603,esp6500siv2_all,avsnp150,intervar_20170202,generic,generic,generic,generic,generic,generic,gff3,gff3,gff3,gff3,gff3,gff3,ljb26_all,dbnsfp33a,dbnsfp31a_interpro \
+                         --genericdbfile DBexome20170802.n700.hgvd2annovar.tab,tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb,tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb,clinvar_20170905.OMIM.genericdb,clinvar_20170905.genericdb,HGMD_PRO_2017.2_hg19.genericdb \
+                         --gff3dbfile LIST_281_known_genesLyndsey_etal.170609.gff3,mitocarta2.gff3,uniprot.keyword_mitochondrion0496_9606.all_symbols.hgnc.gff3,proteinatlas.mito.symbol.hgnc.gff3,clinvar_20170905.OMIM.gene.gff3,omim_gene_inheritance_disease.combined.hg19.gff3 \
+                         --operation g,r,f,f,f,f,f,f,f,f,f,f,f,f,f,r,r,r,r,r,r,f,f,f \
+                         --argument ' --hgvs --exonicsplicing --splicing_threshold 5',,,,,,,,,,,,,,,,,,,,,,, \
+                         --nastring NA \
+                         --otherinfo \
+                         --remove \
+                         --outfile ${id}.PASS.avoutput
+
+perl -i -pe 's/generic/DBexome20170802.n700/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic2/3.5KJPNv2.20180625.MAF/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic3/3.5KJPNv2.20180625.INFO/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic4/clinvar_20170905.OMIM/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic5/clinvar_20170905/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic6/HGMD_PRO_2017.2/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff3/LIST_281_known_genesLyndsey_etal/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff32/mitocarta2/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff33/uniprot.keyword_mitochondrion/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff34/proteinatlas.mitochondria/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff35/clinvar_20170905.OMIM.gene_symbol/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff36/omim.info/' ${id}.PASS.avoutput.hg19_multianno.txt
+grep -wF -e Func.refGene -e exonic -e splicing  ${id}.PASS.avoutput.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.PASS.avoutput.hg19_multianno.exonic.txt
+```
 
 # Third step (underconstruction)
 1. Reproduce second step by yourself. Prepaire all files by yourself.
@@ -1281,6 +1310,7 @@ Under construction
 
 Insert R.txt here.
 
+bwa index, Annovar download 周りが自分で0からするには必要だ
 
 あと base_dir のことが必要
 
