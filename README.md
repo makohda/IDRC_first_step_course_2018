@@ -518,7 +518,7 @@ To promote their scientific activities, please register.
 ANNOVAR website http://www.openbioinformatics.org/annovar/annovar_download_form.php  
 ANNOVAR - Google グループ https://groups.google.com/forum/#!forum/annovar  
 
-The day of mini course, I will provide annotation files. Because of it's huge size. So you only download annovar package.  
+***The day of mini course, I will provide annotation files. Because of it's huge size.*** So you only download annovar package.  
 You download annovar.latest.tar.gz from Annovar web site (I'm not sure the file name is correct or not.)  
 Please, put annovar.latest.tar.gz into exome_analysis directory, then decompressed it like this.  
 `$ tar zxvf annovar.latest.tar.gz`
@@ -532,7 +532,8 @@ After decompress annovar.latest.tar.gz, you will see annovar directory.
 You will see help message by this command.  
 `$ ./annovar/annotate_variation.pl`
 
-___may add later___
+You can know what databases are downloadable from Annovar web site. ***Today, I will distribute annovar resource files***  
+Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
 
 ***I know you are tired for downloading. To be honest, I'm too.***  
 Most part of molecular work are occupied by pipetting, most part of bioinformatic work are occupied by preparing and data cleaning. Please calm down :sob:  
@@ -1264,30 +1265,68 @@ Shell scripting cheat sheet (So sorry, I can't find nice English page) https://q
     -----------------------------------------------------------------
     NOTICE: Multianno output file is written to  DRR006760_chr1.avoutput.hg19_multianno.txt
 
-
+Let's see the generated file contents :+1:   
 `$ cat ${id}.avoutput.hg19_multianno.txt | ./tableview_darwin_amd64 --header`
 
-You can know what databases are downloadable from Annovar web site.  
-Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
+`$ wc -l ${id}.avoutput.hg19_multianno.txt`
+
+    3736 DRR006760_chr1.avoutput.hg19_multianno.txt
+
 
 
 ### Fiter variants more
-Now, we have ${id}.avoutput.hg19_multianno.txt that contains all variant obtained from exome sequencing.  
-We will remove unnecessary variant information using some command lines.  
-`$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput.hg19_multianno.exonic.txt`
+Now, we have ${id}.avoutput.hg19_multianno.txt.  
+This file contains all variant obtained from exome sequencing.  
+From now, we will remove unnecessary variant information using some command lines.  
+`$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput.hg19_multianno.txt | grep -vwF -e synonymous > ${id}.avoutput.hg19_multianno.exonic.txt`
 
+grep is a command-line utility for searching plain-text data sets for lines.  
+To be a friend with grep, do some practices.
 
-`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.001 || $. == 1' > ${id}.avoutput.hg19_multianno.exonic.filtered_1.txt`  
+Extract lines that contain splicing.  
+`$ grep splicing ${id}.avoutput.hg19_multianno.txt | less -S`
 
-`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt`
+Extract lines that contain synonymous or splicing.  
+`$ grep -e splicing -e synonymous ${id}.avoutput.hg19_multianno.txt | less -S`
 
-`$ cat ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt | ./tableview_darwin_amd64 --header`
+I want to see nonsynonymous, not synonymous.  
+`$ grep -e splicing -e synonymous ${id}.avoutput.hg19_multianno.txt | grep -vwF synonymous less -S`
 
-- 12 ExAC_ALL
-- 15 ExAC_EAS (this remove IGFN1 variant)
+"-v" changes grep's behaviour to opposite.
+"-wF" fix given query as a word.  
+hmmm... :confused:  
+Don't Think. Try.  
+`$ echo nonsynonymous | grep synonymous`  
+`$ echo nonsynonymous | grep -wF synonymous`
+
+Now, ${id}.avoutput.hg19_multianno.exonic.txt has header line, splicing line and exonic lines without synonymous.  
+Next is filtering by allele frequencies.  
+`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | ./tableview_darwin_amd64 --header`
+
+You can find ExAC_ALL at column 12th. We use this.  
+`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.001 || $. == 1' > ${id}.avoutput.hg19_multianno.exonic.filtered_1.txt`
+
+Let's check the file.  
+`$ cat ${id}.avoutput.hg19_multianno.exonic.filtered_1.txt | ./tableview_darwin_amd64 --header`
+
+You may find that first entry has relatively higher allele frequency at ExAC_EAS (15 columns).  
+Let's filter it out.  
+`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' > ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt`
+
+See the result.  
+`$ cat ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt | ./tableview_darwin_amd64 --header`  
+Now, we have 7 entries.
+
+Count the number of lines.  
+`$ wc -l ${id}.avoutput.hg19_multianno*txt`
+
+       10 DRR006760_chr1.avoutput.hg19_multianno.exonic.filtered_1.txt
+        8 DRR006760_chr1.avoutput.hg19_multianno.exonic.filtered_2.txt
+      194 DRR006760_chr1.avoutput.hg19_multianno.exonic.txt
+     3736 DRR006760_chr1.avoutput.hg19_multianno.txt
 
 Let's add other resources for better fitering.  
-Here, we add gnomAD.  
+Here, we add gnomAD http://gnomad.broadinstitute.org/  
 ```
 ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
                            -buildver hg19 \
@@ -1300,6 +1339,7 @@ Here, we add gnomAD.
                            --remove \
                            -out ${id}.avoutput2
 ```
+
 `$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput2.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput2.hg19_multianno.exonic.txt`
 
 
