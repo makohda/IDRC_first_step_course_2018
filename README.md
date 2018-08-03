@@ -165,8 +165,8 @@ At first, type this, to tell homebrew much more scientific programs
 
 ### Install bwa (< 3 min)
 bwa for aligning reads to the reference genome (version 0.7.17)  
-Burrows-Wheeler Aligner http://bio-bwa.sourceforge.net/  
-Manual Reference Pages  - bwa (1) http://bio-bwa.sourceforge.net/bwa.shtml  
+- Burrows-Wheeler Aligner http://bio-bwa.sourceforge.net/  
+- Manual Reference Pages  - bwa (1) http://bio-bwa.sourceforge.net/bwa.shtml  
 
 ```
 $ brew search bwa
@@ -350,8 +350,10 @@ Using same fastq, but add quality check, trimming, data cleaning for variant cal
 
 **加筆するかも**
 
-GATK workflow
+## Workflow of today
+This picture shows you the flowchart of today. We add fastq quality check and trimming to this.  
 ![](images/GATK1_workflow.png "")
+https://software.broadinstitute.org/gatk/documentation/article.php?id=7870
 
 ## Install softwares required for sequence analysis#2
 
@@ -482,7 +484,8 @@ Download following files, and expand them.
 
 Totally, 1.4G. It takes about 10 mins.
 
-You notice .md5 files. MD5 stands for Message Digest Algorithm 5, and is a hash value.  
+You notice .md5 files.  
+MD5 stands for Message Digest Algorithm 5, and is a hash value.  
 A hash value is a something like a fingerprint, unique identifier of the file.  
 Large files, such as 2G size, are sometime failed to download or copy. So, you should compare hash values of the original file and copied one. You can create the hash value of your copy, like this.  
 ```
@@ -507,21 +510,23 @@ $ gunzip -d dbsnp_138.b37.vcf.idx.gz
 More detail information of resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
 
 ### Install Annovar
-*You need regist to use Annovar*  
-*This is very important. You have to know this.*  
+***You need regist to use Annovar***  
+***This is very important. You have to know this.***  
+
 For database and software developer, their are researchers, same with you. Total number of active users are really important issue for appling grants. Because, the number of active users is the evidence of it's value.  
 To promote their scientific activities, please register.  
 ANNOVAR website http://www.openbioinformatics.org/annovar/annovar_download_form.php  
 ANNOVAR - Google グループ https://groups.google.com/forum/#!forum/annovar  
 
-The day of mini course, I will provide annotation files. So you only download annovar package.  
-You download annovar.latest.tar.gz from Annovar web site (I'm not sure the file name is correct or not.).  
+The day of mini course, I will provide annotation files. Because of it's huge size. So you only download annovar package.  
+You download annovar.latest.tar.gz from Annovar web site (I'm not sure the file name is correct or not.)  
 Please, put annovar.latest.tar.gz into exome_analysis directory, then decompressed it like this.  
-`$ tar zxvf annovar.latest.tar.gz`  
+`$ tar zxvf annovar.latest.tar.gz`
+
 tar (manipulate tape archives) command is used for packing many file into single archive.  
 Here, file extension is .tar.gz, so this tar archive is compressed using gzip (.gz means compressed using gzip).  
 When you met .tar.gz, you will chant "tar zxvf"! If you met other tar archives, like .tar.Z, you will chant "tar xvf".  
-Others? Google it.  
+If you met other simir file extension, google it.  
 
 After decompress annovar.latest.tar.gz, you will see annovar directory.  
 You will see help message by this command.  
@@ -580,7 +585,7 @@ $ mv DRR006760_chr1.aligned_reads_sorted.bam.bai zzold/
 
 ## Let's step forward
 
-### Prepare: 
+### Preparation: set the variable
 From now, we will use variables. One of shell functions. It memorise a value.  
 We will use this variable to have the sample name.
 ```
@@ -713,6 +718,7 @@ Check file size of all fastq.gz
 Can you see two .paired.fastq.gz?
 
 ### Mapping sequence reads to the reference genome (< 1 min)
+Remember today's flowchart.  
 ![](images/GATK1_workflow.png "")
 
 ```
@@ -805,11 +811,13 @@ You will get following respond.
     Done. There were no warn messages.
     ------------------------------------------------------------------------------------------
 
-For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
+For detail information, see  
+- https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
 
 ### (Optional) Plot recalibration data (< 5 min)
 You can visualize the difference between before/after base quality recalibration.  
 Run BaseRecalibrator again with the generated table by 1st BaseRecalibrator run.  
+![](images/BSQR3.png "")
 ```
 $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T BaseRecalibrator -R human_g1k_v37_decoy.fasta -I ${id}.aligned_reads_dedup_sorted.bam -knownSites dbsnp_138.b37.vcf -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf -BQSR ${id}_recal.table -o post_${id}_recal.table
 
@@ -817,8 +825,7 @@ $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T AnalyzeC
 
 $ open ${id}_recalibration_plots.pdf
 ```
-
-![](images/BSQR3.png "")
+_sorry, I forgot to take a note of R libraries required of this step. _
 
 See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
 
@@ -850,7 +857,8 @@ You will get following respond.
     ------------------------------------------------------------------------------------------
 
 _PrintRead is replaced with ApplyBQSR at GATK4._  
-For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.0.0/org_broadinstitute_hellbender_tools_walkers_bqsr_ApplyBQSR.php
+For detail information, see  
+- https://software.broadinstitute.org/gatk/documentation/tooldocs/4.0.0.0/org_broadinstitute_hellbender_tools_walkers_bqsr_ApplyBQSR.php
 
 Check the file size of generated .bam files.  
 `$ ls -vlhrt ${id}.aligned_reads_dedup_recal_sorted.bam`  
@@ -905,17 +913,14 @@ You will find .g.vcf is generated by this process.
 
 Do you have similar result?
 
-
 ___ここで .g.vcf の中身をみる余裕がほしいね (もしくは .vcf の時でもいいか)___
 
-For detail information, see https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_haplotypecaller_HaplotypeCaller.php
-
-GATK Workshop
-https://drive.google.com/open?id=10aOk37ymXEhP9uRzrpuWXqvmwCXZ7DFE
-
-HC overview: How the HaplotypeCaller works — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/4148/hc-overview-how-the-haplotypecaller-works
-de novo アセンブリー | de Bruijn graph によるゲノムアセンブリー https://bi.biopapyrus.jp/rnaseq/assembly/de-bruijn-graph-assembly.html
-de Bruijn Graph を使った de novo アセンブリの発想がすごい件 - ほくそ笑む http://hoxo-m.hatenablog.com/entry/20100930/p1
+For detail information, see 
+- HaplotypeCaller (GATK Workshop slide) https://drive.google.com/open?id=10aOk37ymXEhP9uRzrpuWXqvmwCXZ7DFE
+- GATK site https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_haplotypecaller_HaplotypeCaller.php
+- HC overview: How the HaplotypeCaller works — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/4148/hc-overview-how-the-haplotypecaller-works
+- de novo アセンブリー | de Bruijn graph によるゲノムアセンブリー https://bi.biopapyrus.jp/rnaseq/assembly/de-bruijn-graph-assembly.html
+- de Bruijn Graph を使った de novo アセンブリの発想がすごい件 - ほくそ笑む http://hoxo-m.hatenablog.com/entry/20100930/p1
 
 ### Gather .g.vcf files
 This step have less meaning in this course, because this step is mainly for mutli sample processing.  
@@ -1018,8 +1023,8 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
 
 
-
-https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_filters_VariantFiltration.php
+For detail information, see 
+- https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_filters_VariantFiltration.php
 
 これの Broad workshop スライドどこにあるかな fitering threshold
 
@@ -1249,7 +1254,7 @@ $ for avinput in combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput; d
                              --otherinfo \
                              --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,, \
                              --remove \
-                             -out ${avinput/.avinput/.avoutput}
+                             -out ${id}.avoutput
 done
 ```
 
@@ -1262,7 +1267,7 @@ Shell scripting cheat sheet (So sorry, I can't find nice English page) https://q
     NOTICE: Multianno output file is written to  combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avoutput.hg19_multianno.txt
 
 
-`$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avoutput.hg19_multianno.txt | ./tableview_darwin_amd64 --header`
+`$ cat ${id}.avoutput.hg19_multianno.txt | ./tableview_darwin_amd64 --header`
 
 You can know what databases are downloadable from Annovar web site.  
 Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
@@ -1270,45 +1275,15 @@ Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/e
 
 ### fiter variants more
 
-`$ grep -wF -e Func.refGene -e exonic -e splicing  combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avoutput.hg19_multianno.txt | grep -v -e "synonymous SNV" > ${id}.hg19_multianno.PASS.exonic.txt`
+`$ grep -wF -e Func.refGene -e exonic -e splicing ${id}.avoutput.hg19_multianno.txt | grep -v -e "synonymous SNV" > ${id}.hg19_multianno.exonic.txt`
 
 
-`$ perl -F"\t" -lane 'print $_ if ($F[11] <= 0.001 && $F[19] <= 0.001 && $F[21] <= 0.001) || $. == 1' ${id}.hg19_multianno.PASS.exonic.txt > ${id}.hg19_multianno.PASS.exonic.filtered.txt`
+`$ perl -F"\t" -lane 'print $_ if ($F[11] <= 0.001 && $F[19] <= 0.001 && $F[21] <= 0.001) || $. == 1' ${id}.hg19_multianno.exonic.txt > ${id}.hg19_multianno.exonic.filtered.txt`
 
-`$ grep -wF -e refGene -e hom ${id}.hg19_multianno.PASS.exonic.filtered.txt | ./tableview_darwin_amd64 --header`
+`$ grep -wF -e refGene -e hom ${id}.hg19_multianno.exonic.filtered.txt | ./tableview_darwin_amd64 --header`
 
 
-***`$ cat combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avoutput.hg19_multianno.txt | grep -wF -e Chr -e exonic -e splicing | grep -vwF -e "synonymous SNV" -e nonframeshift | perl -F"\t" -lane 'print if $. == 1 || ($F[11] < 0.0001 && $F[14] < 0.0001)' | grep -wF -e Chr -e hom | grep -vwF LowDP | less -R`***
-
-### 代田先生
-```
-time ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
-                         -buildver hg19 \
-                         --thread 4 \
-                         --protocol refGene,genomicSuperDups,exac03,gnomad_exome,gnomad_genome,clinvar_20180603,esp6500siv2_all,avsnp150,intervar_20170202,generic,generic,generic,generic,generic,generic,gff3,gff3,gff3,gff3,gff3,gff3,ljb26_all,dbnsfp33a,dbnsfp31a_interpro \
-                         --genericdbfile DBexome20170802.n700.hgvd2annovar.tab,tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb,tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb,clinvar_20170905.OMIM.genericdb,clinvar_20170905.genericdb,HGMD_PRO_2017.2_hg19.genericdb \
-                         --gff3dbfile LIST_281_known_genesLyndsey_etal.170609.gff3,mitocarta2.gff3,uniprot.keyword_mitochondrion0496_9606.all_symbols.hgnc.gff3,proteinatlas.mito.symbol.hgnc.gff3,clinvar_20170905.OMIM.gene.gff3,omim_gene_inheritance_disease.combined.hg19.gff3 \
-                         --operation g,r,f,f,f,f,f,f,f,f,f,f,f,f,f,r,r,r,r,r,r,f,f,f \
-                         --argument ' --hgvs --exonicsplicing --splicing_threshold 5',,,,,,,,,,,,,,,,,,,,,,, \
-                         --nastring NA \
-                         --otherinfo \
-                         --remove \
-                         --outfile ${id}.PASS.avoutput
-
-perl -i -pe 's/generic/DBexome20170802.n700/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/generic2/3.5KJPNv2.20180625.MAF/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/generic3/3.5KJPNv2.20180625.INFO/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/generic4/clinvar_20170905.OMIM/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/generic5/clinvar_20170905/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/generic6/HGMD_PRO_2017.2/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/gff3/LIST_281_known_genesLyndsey_etal/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/gff32/mitocarta2/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/gff33/uniprot.keyword_mitochondrion/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/gff34/proteinatlas.mitochondria/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/gff35/clinvar_20170905.OMIM.gene_symbol/' ${id}.PASS.avoutput.hg19_multianno.txt
-perl -i -pe 's/gff36/omim.info/' ${id}.PASS.avoutput.hg19_multianno.txt
-grep -wF -e Func.refGene -e exonic -e splicing  ${id}.PASS.avoutput.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.PASS.avoutput.hg19_multianno.exonic.txt
-```
+***`$ cat ${id}.avoutput.hg19_multianno.txt | grep -wF -e Chr -e exonic -e splicing | grep -vwF -e "synonymous SNV" -e nonframeshift | perl -F"\t" -lane 'print if $. == 1 || ($F[11] < 0.0001 && $F[14] < 0.0001)' | grep -wF -e Chr -e hom | grep -vwF LowDP | less -R`***
 
 # Third step (underconstruction)
 1. Reproduce second step by yourself. Prepaire all files by yourself.
@@ -1318,6 +1293,10 @@ Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint
 ___
 
 Under construction
+
+
+GATK | Workshop Materials https://software.broadinstitute.org/gatk/download/workshops
+presentations - Google ドライブ https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
 
 bwa index
 
@@ -1329,6 +1308,8 @@ bwa index, Annovar download 周りが自分で0からするには必要だ
 
 あと base_dir のことが必要
 
+
+    echo "`grep \"^X\" combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760.avoutput.hg19_multianno.txt | grep -wF het | wc -l`\t`grep \"^X\" combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760.avoutput.hg19_multianno.txt | wc -l`" | perl -F"\t" -lane 'print $F[0]/$F[1]'
 
 Human Variation Sets in VCF Format https://www.ncbi.nlm.nih.gov/variation/docs/human_variation_vcf/
 
@@ -1364,7 +1345,35 @@ HaplotypeCaller and detection of large indels — GATK-Forum https://gatkforums.
 
 GATK | Doc #1247 | What should I use as known variants/sites for running tool X? https://software.broadinstitute.org/gatk/documentation/article.php?id=1247
 
-GATK | Workshop Materials https://software.broadinstitute.org/gatk/download/workshops
-presentations - Google ドライブ https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
 
 $ samtools index ${id}.aligned_reads_dedup_recal_sorted.bam いらないかも。GATK が .bai 作ってる気がする -> 作るね
+
+### 代田先生
+```
+time ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
+                         -buildver hg19 \
+                         --thread 4 \
+                         --protocol refGene,genomicSuperDups,exac03,gnomad_exome,gnomad_genome,clinvar_20180603,esp6500siv2_all,avsnp150,intervar_20170202,generic,generic,generic,generic,generic,generic,gff3,gff3,gff3,gff3,gff3,gff3,ljb26_all,dbnsfp33a,dbnsfp31a_interpro \
+                         --genericdbfile DBexome20170802.n700.hgvd2annovar.tab,tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb,tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb,clinvar_20170905.OMIM.genericdb,clinvar_20170905.genericdb,HGMD_PRO_2017.2_hg19.genericdb \
+                         --gff3dbfile LIST_281_known_genesLyndsey_etal.170609.gff3,mitocarta2.gff3,uniprot.keyword_mitochondrion0496_9606.all_symbols.hgnc.gff3,proteinatlas.mito.symbol.hgnc.gff3,clinvar_20170905.OMIM.gene.gff3,omim_gene_inheritance_disease.combined.hg19.gff3 \
+                         --operation g,r,f,f,f,f,f,f,f,f,f,f,f,f,f,r,r,r,r,r,r,f,f,f \
+                         --argument ' --hgvs --exonicsplicing --splicing_threshold 5',,,,,,,,,,,,,,,,,,,,,,, \
+                         --nastring NA \
+                         --otherinfo \
+                         --remove \
+                         --outfile ${id}.PASS.avoutput
+
+perl -i -pe 's/generic/DBexome20170802.n700/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic2/3.5KJPNv2.20180625.MAF/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic3/3.5KJPNv2.20180625.INFO/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic4/clinvar_20170905.OMIM/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic5/clinvar_20170905/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/generic6/HGMD_PRO_2017.2/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff3/LIST_281_known_genesLyndsey_etal/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff32/mitocarta2/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff33/uniprot.keyword_mitochondrion/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff34/proteinatlas.mitochondria/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff35/clinvar_20170905.OMIM.gene_symbol/' ${id}.PASS.avoutput.hg19_multianno.txt
+perl -i -pe 's/gff36/omim.info/' ${id}.PASS.avoutput.hg19_multianno.txt
+grep -wF -e Func.refGene -e exonic -e splicing  ${id}.PASS.avoutput.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.PASS.avoutput.hg19_multianno.exonic.txt
+```
