@@ -1277,9 +1277,9 @@ We will remove unnecessary variant information using some command lines.
 `$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput.hg19_multianno.exonic.txt`
 
 
-`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.0001 || $. == 1' > ${id}.avoutput.hg19_multianno.exonic.filtered_1.txt`  
+`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.001 || $. == 1' > ${id}.avoutput.hg19_multianno.exonic.filtered_1.txt`  
 
-`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.0001 && $F[14] <= 0.0001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt`
+`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt`
 
 `$ cat ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt | ./tableview_darwin_amd64 --header`
 
@@ -1291,32 +1291,74 @@ Here, we add gnomAD.
 ```
 ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
                            -buildver hg19 \
-                           -protocol refGeneWithVer,genomicSuperDups,exac03,gnomad_genome,avsnp150,clinvar_20180603,ljb26_all \
-                           -operation g,r,f,f,f,f,f \
+                           -protocol refGeneWithVer,genomicSuperDups,exac03,gnomad_genome,generic,avsnp150,clinvar_20180603,ljb26_all \
+                           -genericdb tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb \
+                           -operation g,r,f,f,f,f,f,f \
                            -nastring NA \
                            --otherinfo \
-                           --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,,, \
+                           --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,,,, \
                            --remove \
                            -out ${id}.avoutput2
 ```
 `$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput2.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput2.hg19_multianno.exonic.txt`
 
 
-`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.0001 || $. == 1' > ${id}.avoutput2.hg19_multianno.exonic.filtered_1.txt`  
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.001 || $. == 1' > ${id}.avoutput2.hg19_multianno.exonic.filtered_1.txt`  
 
-`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.0001 && $F[14] <= 0.0001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt`
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt`
+
+- Column 12 ExAC_ALL
+- column 15 ExAC_EAS (this remove IGFN1 variant)
+
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt | ./tableview_darwin_amd64`
+
+Probably, you can see relatively higher allele frequencies in gnomAD_genome_AMR (column position 22).  
+Add filter of gnomAD_genome_AMR, and change output file name to filtered_3.  
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[21] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_3.txt`
+
+You can see again. Relatively higher allele frequencies in gnomAD_genome_AFR (column position 21).  
+Add filter of gnomAD_genome_AFR, and change output file name to filtered_4.  
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_4.txt`
+
+We can also use Japanese data.  
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001 && $F[27] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt`
+
+- column 28 generic
 
 
+53207583 is popular allele
+
+### How can we estiamte pathogenic allele frequencies? How do we archive it? :disappointed_relieved:
+In previous filtering steps, we used MAF 0.001 (0.01%) as the threshold. Is this appropriate?  
+
+head -1 ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt | perl -pe 's/\t/\n/g' | less -N
+     21 gnomAD_genome_AFR
+     22 gnomAD_genome_AMR
+     24 gnomAD_genome_EAS
+
+https://www.dropbox.com/s/mjj1q0gvxp989pa/clinvar_20180701.ARHSP_OMIM.hg19_multianno.txt?dl=0
+
+
+Frequently Asked Questions ExAC Browser http://exac.broadinstitute.org/faq
 
 # Third step (underconstruction)
-1. Reproduce second step by yourself. Prepaire all files by yourself.
+1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
+1. Solve DRR006760, DRR001913 by yourself
+1. Ruby array hash case
 1. Exam. In other words, homework. But, don't move data to your home!  
 Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint. Most of cases are easy. Some cases are quit difficult. I solved all the cases. Happy to see your excellent result :satisfied:
 
 ___
 
-Under construction
+Homework
 
+get latest dbsnp.vcf to increase the number of known mutations. It will increase the accuracy for estimating novel pathogenic allele frequencies.
+
+Under construction :no_entry_sign:
+
+combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760.avinput も配ってみよう
+
+difff
 
 GATK | Workshop Materials https://software.broadinstitute.org/gatk/download/workshops
 presentations - Google ドライブ https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
