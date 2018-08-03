@@ -79,7 +79,8 @@ I know this is a first barricade to step in learning informatic skills, but this
 - may add later (frequently asked words or something)
 
 ## Make and move into your working directory
-`$ cd ~/` go to your home directory (e.g. /Users/okazaki, /Users/kohda)  
+This step is very important to avoid bad slippings. 
+`$ cd ~/` go to your home directory (e.g. /Users/okazaki or /Users/kohda in macOS, /home/borna or /home/chern in Linux)  
 `$ mkdir ~/exome_analysis` make directory named as exome_analysis under your home directory  
 `$ cd ~/exome_analysis` move to ~/exome_analysis and use it as our basecamp directory  
 All data should be gathered here.
@@ -228,12 +229,12 @@ Java language will run IGV program. We will use IGV after sequece data alignment
 1kg_v37 specify the human genome version. If this is the first time IGV wake up, it will start downloading automatically.  
 You can download the specific version of reference human genome (Human 1kg, b37 + decoy), it can be found in Menu bar "Genomes > Load Genome From Server"  
 
-#### Tips: 1kg? b37?? decoy???
+### Tips: 1kg? b37?? decoy???
 - 1kg means 1000 genomes project http://www.internationalgenome.org/  
 - b37 is a version of human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
 - decoy is a sequence derived from HuRef, human BAC and Fosmid clones, and NA12878.
--- Scientific Notes/human genome - DNAnexus Wiki https://wiki.dnanexus.com/scientific-notes/human-genome
--- hs37d5.slides.pdfftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.slides.pdf
+  - Scientific Notes/human genome - DNAnexus Wiki https://wiki.dnanexus.com/scientific-notes/human-genome
+  - hs37d5.slides.pdfftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.slides.pdf
 
 
 # 4. First step
@@ -272,15 +273,14 @@ $ wget -c https://www.dropbox.com/s/drit0y6xu6dnpg7/human_g1k_v37_decoy.dict
 ```
 
 Secondary, align paired sequence reads to the 1000 genomes project-customised human reference genome build 37 (human_g1k_v37_decoy).  
-Alignment.  
 ```
 $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
               human_g1k_v37_decoy.fasta \
               DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz > DRR006760_chr1.aligned_reads.sam
 ```
-Backslash \, this is a special character which could supresses RETURN character.  
-We use this for separating single command line to multi lines for easy viewing.  
+Backslash "\", this is a special character which could supresses RETURN character.  
+We use "\" for separating single command line to multi lines for easy viewing.  
 ">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.
 
 You will get following response. BWA MEM alignment will take about few min by my MacBookPro 2014 (2.2GHz).  
@@ -295,9 +295,18 @@ You will get following response. BWA MEM alignment will take about few min by my
     [main] CMD: bwa mem -t4 -M -R @RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1 human_g1k_v37_decoy.fasta DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz
     [main] Real time: 73.078 sec; CPU: 257.598 sec
 
-___ここで.samの中身をみる余裕がほしいね___
+sam (Sequence Alignment Map) format is a text based format that stores alignment data.  
+
+sam file is a kind of plain text format. So, you can see using less command like this.  
+`$ less -S DRR006760_chr1.aligned_reads.sam`  
+_Push Q key for quit_
+
+Minimally, you can know about sam format in Wikipedia.  
+SAM (file format) - Wikipedia https://en.wikipedia.org/wiki/SAM_(file_format)  
+Explain SAM Flags https://broadinstitute.github.io/picard/explain-flags.html
 
 Convert .sam file to .bam format.  
+bam (Binary Alignment Map) format is the binary version of sam.  
 `$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam`  
 Sort .bam contents.  
 `$ samtools sort -@4 -m 2G DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam`  
@@ -322,7 +331,7 @@ You will see like this.
     -rw-r--r-- 1 mako 1.5M  7 25 13:54 DRR006760_chr1.aligned_reads_sorted.bam.bai
 
 Thirdly, see this aligned sequence reads,  
-`$ sh IGV_2.4.13/igv.sh DRR006760_chr1.aligned_reads_sorted.bam`  
+`$ sh IGV_2.4.13/igv.sh -g 1kg_v37 DRR006760_chr1.aligned_reads_sorted.bam`  
 
 Confirm your selected genome is "Human (1kg, b37+decoy)".  
 Go to 1:235,955,287-235,955,418 to see the mutation.
@@ -335,11 +344,11 @@ Can you find this? Genomic position of LYST:c.4189T>G:p.F1397V is 1:235955298-23
 More similar with real analysis.  
 Using same fastq, but add quality check, trimming, data cleaning for variant call, variant call, annotate variants, interpretation steps.  
 
-And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) for specific disease.
+**And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) for specific disease. (still progress)**
 
-Making a tiny shell script for automatic proccessing.
+**Making a tiny shell script for automatic proccessing. (still progress)**
 
-加筆するかも
+**加筆するかも**
 
 GATK workflow
 ![](images/GATK1_workflow.png "")
@@ -523,7 +532,7 @@ ___may add later___
 ***I know you are tired for downloading. To be honest, I'm too.***  
 Most part of molecular work are occupied by pipetting, most part of bioinformatic work are occupied by preparing and data cleaning. Please calm down :sob:  
 
-Before starting analysis, we have to check your directory and files. To avoid to take a bad slipping.  
+Before starting analysis, we have to check your directory and files. To avoid bad slippings.  
 `$ pwd`  
 Are you in the working directory (exome_analysis)? If not, change directory by type this command.  
 `$ cd ~/exome_analysis`  
@@ -1183,7 +1192,7 @@ If succeeded, you will get following response
 
 Do you find almost same file? If so, go next.  
 
-#### tips: deeper understading of What GATK do
+### Tips: deeper understading of What GATK do
 Broad institute shares their workshop materials and slides.  
 https://drive.google.com/drive/folders/1y7q0gJ-ohNDhKG85UTRTwW1Jkq4HJ5M3  
 This is latest (shared 2018/07/13).  
@@ -1309,6 +1318,10 @@ Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint
 ___
 
 Under construction
+
+bwa index
+
+human.fasta と dict ダウンロードのこと
 
 Insert R.txt here.
 
