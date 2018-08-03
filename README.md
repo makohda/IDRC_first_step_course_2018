@@ -1245,17 +1245,15 @@ They are separated, few annotation.
 
 Next step realizes combining some annotation using table_annovar.pl  
 ```
-$ for avinput in combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput; do
-  ./annovar/table_annovar.pl ${avinput} annovar/humandb/ \
-                             -buildver hg19 \
-                             -protocol refGeneWithVer,genomicSuperDups,exac03,avsnp150,clinvar_20180603,ljb26_all \
-                             -operation g,r,f,f,f,f \
-                             -nastring NA \
-                             --otherinfo \
-                             --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,, \
-                             --remove \
-                             -out ${id}.avoutput
-done
+./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
+                           -buildver hg19 \
+                           -protocol refGeneWithVer,genomicSuperDups,exac03,avsnp150,clinvar_20180603,ljb26_all \
+                           -operation g,r,f,f,f,f \
+                           -nastring NA \
+                           --otherinfo \
+                           --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,, \
+                           --remove \
+                           -out ${id}.avoutput
 ```
 
 Shell scripting cheat sheet (So sorry, I can't find nice English page) https://qiita.com/muran001/items/8bb5530d79301b1b2b82
@@ -1264,7 +1262,7 @@ Shell scripting cheat sheet (So sorry, I can't find nice English page) https://q
     NOTICE: Database index loaded. Total number of bins is 557362 and the number of bins to be scanned is 721
     NOTICE: Scanning filter database annovar/humandb/hg19_ljb26_all.txt...Done
     -----------------------------------------------------------------
-    NOTICE: Multianno output file is written to  combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avoutput.hg19_multianno.txt
+    NOTICE: Multianno output file is written to  DRR006760_chr1.avoutput.hg19_multianno.txt
 
 
 `$ cat ${id}.avoutput.hg19_multianno.txt | ./tableview_darwin_amd64 --header`
@@ -1273,17 +1271,42 @@ You can know what databases are downloadable from Annovar web site.
 Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
 
 
-### fiter variants more
-
-`$ grep -wF -e Func.refGene -e exonic -e splicing ${id}.avoutput.hg19_multianno.txt | grep -v -e "synonymous SNV" > ${id}.hg19_multianno.exonic.txt`
-
-
-`$ perl -F"\t" -lane 'print $_ if ($F[11] <= 0.001 && $F[19] <= 0.001 && $F[21] <= 0.001) || $. == 1' ${id}.hg19_multianno.exonic.txt > ${id}.hg19_multianno.exonic.filtered.txt`
-
-`$ grep -wF -e refGene -e hom ${id}.hg19_multianno.exonic.filtered.txt | ./tableview_darwin_amd64 --header`
+### Fiter variants more
+Now, we have ${id}.avoutput.hg19_multianno.txt that contains all variant obtained from exome sequencing.  
+We will remove unnecessary variant information using some command lines.  
+`$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput.hg19_multianno.exonic.txt`
 
 
-***`$ cat ${id}.avoutput.hg19_multianno.txt | grep -wF -e Chr -e exonic -e splicing | grep -vwF -e "synonymous SNV" -e nonframeshift | perl -F"\t" -lane 'print if $. == 1 || ($F[11] < 0.0001 && $F[14] < 0.0001)' | grep -wF -e Chr -e hom | grep -vwF LowDP | less -R`***
+`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.0001 || $. == 1' > ${id}.avoutput.hg19_multianno.exonic.filtered_1.txt`  
+
+`$ cat ${id}.avoutput.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.0001 && $F[14] <= 0.0001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt`
+
+`$ cat ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt | ./tableview_darwin_amd64 --header`
+
+- 12 ExAC_ALL
+- 15 ExAC_EAS (this remove IGFN1 variant)
+
+Let's add other resources for better fitering.  
+Here, we add gnomAD.  
+```
+./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
+                           -buildver hg19 \
+                           -protocol refGeneWithVer,genomicSuperDups,exac03,gnomad_genome,avsnp150,clinvar_20180603,ljb26_all \
+                           -operation g,r,f,f,f,f,f \
+                           -nastring NA \
+                           --otherinfo \
+                           --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,,, \
+                           --remove \
+                           -out ${id}.avoutput2
+```
+`$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput2.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput2.hg19_multianno.exonic.txt`
+
+
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.0001 || $. == 1' > ${id}.avoutput2.hg19_multianno.exonic.filtered_1.txt`  
+
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.0001 && $F[14] <= 0.0001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt`
+
+
 
 # Third step (underconstruction)
 1. Reproduce second step by yourself. Prepaire all files by yourself.
@@ -1309,7 +1332,7 @@ bwa index, Annovar download 周りが自分で0からするには必要だ
 あと base_dir のことが必要
 
 
-    echo "`grep \"^X\" combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760.avoutput.hg19_multianno.txt | grep -wF het | wc -l`\t`grep \"^X\" combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760.avoutput.hg19_multianno.txt | wc -l`" | perl -F"\t" -lane 'print $F[0]/$F[1]'
+    echo "`grep \"^X\" DRR006760.avoutput.hg19_multianno.txt | grep -wF het | wc -l`\t`grep \"^X\" DRR006760.avoutput.hg19_multianno.txt | wc -l`" | perl -F"\t" -lane 'print $F[0]/$F[1]'
 
 Human Variation Sets in VCF Format https://www.ncbi.nlm.nih.gov/variation/docs/human_variation_vcf/
 
@@ -1377,3 +1400,6 @@ perl -i -pe 's/gff35/clinvar_20170905.OMIM.gene_symbol/' ${id}.PASS.avoutput.hg1
 perl -i -pe 's/gff36/omim.info/' ${id}.PASS.avoutput.hg19_multianno.txt
 grep -wF -e Func.refGene -e exonic -e splicing  ${id}.PASS.avoutput.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.PASS.avoutput.hg19_multianno.exonic.txt
 ```
+
+
+
