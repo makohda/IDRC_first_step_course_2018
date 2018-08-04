@@ -1062,12 +1062,13 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
 
 Check generated file.  
-`$ ls -vlhrt combined_genotyped_raw_indels.vcf`
+```
+$ ls -vlhrt combined_genotyped_raw_indels.vcf
+$ wc -l combined_genotyped_raw_indels.vcf
+```
+If succeeded, you will get following response
 
     -rw-r--r-- 1 mako 125K  7 24 11:45 combined_genotyped_raw_indels.vcf
-
-`$ wc -l combined_genotyped_raw_indels.vcf`
-
     734 combined_genotyped_raw_indels.vcf
 
 ### Filter INDELs
@@ -1095,12 +1096,13 @@ You will get following respond.
 ```
 
 Check generated file.  
-`$ ls -vlhrt combined_genotyped_filtered_indels.vcf`
+```
+$ ls -vlhrt combined_genotyped_filtered_indels.vcf
+$ wc -l combined_genotyped_filtered_indels.vcf
+```
+If succeeded, you will get following response
 
     -rw-r--r-- 1 mako 129K  7 24 11:45 combined_genotyped_filtered_indels.vcf
-
-`$ wc -l combined_genotyped_filtered_indels.vcf`
-
     738 combined_genotyped_filtered_indels.vcf
 
 
@@ -1127,12 +1129,13 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
 
 check generated file.  
-`$ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.vcf`
+```
+$ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.vcf
+$ wc -l combined_genotyped_filtered_snps_indels_mixed.vcf
+```
+If succeeded, you will get following response
 
     -rw-r--r-- 1 mako 969K  7 24 11:46 combined_genotyped_filtered_snps_indels_mixed.vcf
-
-`$ wc -l combined_genotyped_filtered_snps_indels_mixed.vcf`
-
     5750 combined_genotyped_filtered_snps_indels_mixed.vcf
 
 
@@ -1160,12 +1163,13 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
     ------------------------------------------------------------------------------------------
 
 Check generated file.  
-`$ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.PASS.vcf`
+```
+$ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
+$ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
+```
+If succeeded, you will get following response
 
     -rw-r--r-- 1 mako 644K  7 24 11:47 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
-
-`$ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.vcf`  
-
     3826 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
 
 
@@ -1190,7 +1194,6 @@ Check generated file.
 $ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
 $ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
 ```
-
 If succeeded, you will get following response
 
     -rw-r--r-- 1 mako 761K  7 24 12:03 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput
@@ -1245,6 +1248,7 @@ I wish you got fine results. However, obtained results are far from ideal.
 They are separated, few annotation.  
 
 Next step realizes combining some annotation using table_annovar.pl  
+table_annovar.pl is a wrapper script of annotate_variation.pl. It runs annotate_variation.pl repeatedly to annotate variants from many sources.  
 ```
 ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
                            -buildver hg19 \
@@ -1272,7 +1276,7 @@ Let's see the generated file contents :+1:
 
     3736 DRR006760_chr1.avoutput.hg19_multianno.txt
 
-
+Too much...but you got annotated variant by yourself :tada:
 
 ### Fiter variants more
 Now, we have ${id}.avoutput.hg19_multianno.txt.  
@@ -1376,7 +1380,7 @@ head -1 ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt | perl -pe 's/\t/\n
      22 gnomAD_genome_AMR
      24 gnomAD_genome_EAS
 
-https://www.dropbox.com/s/mjj1q0gvxp989pa/clinvar_20180701.ARHSP_OMIM.hg19_multianno.txt?dl=0
+https://www.dropbox.com/s/mjj1q0gvxp989pa/clinvar_20180701.ARHSP_OMIM.hg19_multianno.txt
 
 
 Frequently Asked Questions ExAC Browser http://exac.broadinstitute.org/faq
