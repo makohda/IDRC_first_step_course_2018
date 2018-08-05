@@ -79,7 +79,7 @@ I know this is a first barricade to step in learning informatic skills, but this
 - may add later (frequently asked words or something)
 
 ## Make and move into your working directory
-This step is very important to avoid bad slippings. 
+**This step is very important to avoid bad slippings.** 
 `$ cd ~/` go to your home directory (e.g. /Users/okazaki or /Users/kohda in macOS, /home/borna or /home/chern in Linux)  
 `$ mkdir ~/exome_analysis` make directory named as exome_analysis under your home directory  
 `$ cd ~/exome_analysis` move to ~/exome_analysis and use it as our basecamp directory  
