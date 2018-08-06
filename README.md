@@ -63,6 +63,7 @@ You have to set up your macintosh environment for informatic analyses.
 I know this is a first barricade to step in learning informatic skills, but this shold be done. I tried to make it as easy as possible.
 
 ## Minimal knowledge
+- copy/paste shortcut keys in macOS: copy is Cmd + C, paste is Cmd + V
 - Terminal.app is a application to tell what you want to your computer via command lines
 - `$ ` means command line in this page. $ is a prompt, so you don't need type $. Just type following characters
 - `$ pwd` pwd means _**P**rint **W**orking **D**irectory_
