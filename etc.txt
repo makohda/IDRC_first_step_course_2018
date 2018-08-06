@@ -1,12 +1,21 @@
 ----
 
-Explanation of BWA index files - SEQanswers http://seqanswers.com/forums/showthread.php?t=25553
+省エネルギー設定
 
-Secondary files https://docs.sevenbridges.com/page/secondary-files
+Annovar
+これはコピーして渡す
 
+shell scripting
 最初にスクリプトファイルを配って実行させてから、後追い説明でもいいかもね
 
-dbsnp_138.b37.vcf の最新版がほしいよね (ncbi配布が大元だから、それをとってくるか, broadにはないよね、もう)
+.bai とか
+dictやfaiの説明ほしいな https://docs.sevenbridges.com/page/secondary-files
+Explanation of BWA index files - SEQanswers http://seqanswers.com/forums/showthread.php?t=25553
+Secondary files https://docs.sevenbridges.com/page/secondary-files
+
+どうやって、そのオプションにたどり着いているか
+Workshop Presentation とかをみてるが、それはどうやって調べているか Google? サイトの document を読むしかない
+BioStars
 
 bioinfotools/resource_bundle.md at master · bahlolab/bioinfotools https://github.com/bahlolab/bioinfotools/blob/master/GATK/resource_bundle.md
 
@@ -14,8 +23,7 @@ bioinfotools/resource_bundle.md at master · bahlolab/bioinfotools https://githu
 
 ResourceBundleはコピーして渡す
 
-Annovar
-これはコピーして渡す
+
 
 
 ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/dbsnp_138.b37.vcf.gz
@@ -28,63 +36,25 @@ ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold
 ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
 ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz.md5
 
-省エネルギー設定
-
-shell scripting
-
-どうやって、そのオプションにたどり着いているか
-Workshop Presentation とかをみてるが、それはどうやって調べているか Google? サイトの document を読むしかない
-BioStars
-
-dictやfaiの説明ほしいな https://docs.sevenbridges.com/page/secondary-files
 
 
-最新版の clinvar_20180701.vcf.gz をダウンロードしたいな
-- go to ClinVar https://www.ncbi.nlm.nih.gov/clinvar/
-- go to Overview to understand ClinVar data files https://www.ncbi.nlm.nih.gov/clinvar/docs/ftp_primer/
-- go to ftp download site ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/ > vcf_GRCh37 > to download clinvar data
-- get clinvar_20180729.vcf.gz (probably, this is latest, now)
 
 
-echo "ARHSP start"
-$ echo -e "AP4B1\nAP4E1\nAP4M1\nAP4S1\nAP5Z1\nC12orf65\nC19orf12\nCYP2U1\nCYP7B1\nDDHD1\nDDHD2\nERLIN2\nFA2H\nGAD1\nGBA2\nGJC2\nKIF1A\nPNPLA6\nSPG11\nSPG20\nSPG21\nSPG7\nTECPR2\nVPS37A\nZFYVE26" > ARHSP_known_genes.txt
 
-cat ARHSP_known_genes.txt # cat コマンドはファイルの中身を表示する
-
-echo "Make dbsnp_138.b37.ARHSP.vcf"
-
-$ grep -wFf ARHSP_known_genes.txt dbsnp_138.b37.vcf > dbsnp_138.b37.ARHSP.vcf # takes 1-2 mins.
-
-echo "Make dbsnp_138.b37.ARHSP.OM.vcf"
-
-$ grep -wF "OM" dbsnp_138.b37.ARHSP.vcf > dbsnp_138.b37.ARHSP.OM.vcf
+Do not give up thinking. You always consider any bias. Especially, published biases are popular pitfall. Do not trust old publications. In thesedays, data is being bigger and bigger.
 
 
-echo "convert2annovar"
 
-$ ./annovar/convert2annovar.pl -format vcf4 dbsnp_138.b37.ARHSP.OM.vcf > dbsnp_138.b37.ARHSP.OM.avinput
 
-echo "table_annovar"
+`$ head -1 ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt | perl -pe 's/\t/\n/g' | less -N`
 
-$ ./annovar/table_annovar.pl dbsnp_138.b37.ARHSP.OM.avinput annovar/humandb/ \
-                             -buildver hg19 \
-                             -protocol refGeneWithVer,genomicSuperDups,exac03,avsnp150,clinvar_20180603,ljb26_all \
-                             -operation g,r,f,f,f,f \
-                             -nastring NA \
-                             --otherinfo \
-                             --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,, \
-                             --remove \
-                             -out dbsnp_138.b37.ARHSP.OM
+     21 gnomAD_genome_AFR
+     22 gnomAD_genome_AMR
+     24 gnomAD_genome_EAS
 
-NOTICE: Processing next batch with 47 unique variants in 47 input lines
-NOTICE: Database index loaded. Total number of bins is 557362 and the number of bins to be scanned is 34
-NOTICE: Scanning filter database annovar/humandb/hg19_ljb26_all.txt...Done
------------------------------------------------------------------
-NOTICE: Multianno output file is written to dbsnp_138.b37.ARHSP.OM.hg19_multianno.txt
 
-#cat dbsnp_138.b37.ARHSP.OM.hg19_multianno.txt | ggrep -vwF -e intronic -e "synonymous SNV" | less -S
-#もしくは csvlook のインストールが必要だが
-# cat dbsnp_138.b37.ARHSP.OM.hg19_multianno.txt | ggrep -vwF -e intronic -e "synonymous SNV" | csvlook -t | less -S
+
+
 
 echo "ARHSP end"
 
