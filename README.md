@@ -309,7 +309,7 @@ Convert .sam file to .bam format.
 bam (Binary Alignment Map) format is the binary version of sam.  
 `$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam`  
 Sort .bam contents.  
-`$ samtools sort -@4 -m 2G DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam`  
+`$ samtools sort -@4 DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam`  
 If succeeded, you will get following response
 
     [bam_sort_core] merging from 0 files and 4 in-memory blocks...
@@ -730,7 +730,7 @@ $ bwa mem -t4 -M \
 
 $ samtools view -@4 -1 ${id}.aligned_reads.sam > ${id}.aligned_reads.bam
 
-$ samtools sort -@4 -m 2G ${id}.aligned_reads.bam -o ${id}.aligned_reads_sorted.bam
+$ samtools sort -@4 ${id}.aligned_reads.bam -o ${id}.aligned_reads_sorted.bam
 
 $ samtools index ${id}.aligned_reads_sorted.bam
 ```
