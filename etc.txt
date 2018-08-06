@@ -1,12 +1,14 @@
 ----
 
+Explanation of BWA index files - SEQanswers http://seqanswers.com/forums/showthread.php?t=25553
+
+Secondary files https://docs.sevenbridges.com/page/secondary-files
+
 最初にスクリプトファイルを配って実行させてから、後追い説明でもいいかもね
 
 dbsnp_138.b37.vcf の最新版がほしいよね (ncbi配布が大元だから、それをとってくるか, broadにはないよね、もう)
 
 bioinfotools/resource_bundle.md at master · bahlolab/bioinfotools https://github.com/bahlolab/bioinfotools/blob/master/GATK/resource_bundle.md
-
-
 
 #brew install pigz
 
@@ -35,6 +37,14 @@ Workshop Presentation とかをみてるが、それはどうやって調べて�
 BioStars
 
 dictやfaiの説明ほしいな https://docs.sevenbridges.com/page/secondary-files
+
+
+最新版の clinvar_20180701.vcf.gz をダウンロードしたいな
+- go to ClinVar https://www.ncbi.nlm.nih.gov/clinvar/
+- go to Overview to understand ClinVar data files https://www.ncbi.nlm.nih.gov/clinvar/docs/ftp_primer/
+- go to ftp download site ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/ > vcf_GRCh37 > to download clinvar data
+- get clinvar_20180729.vcf.gz (probably, this is latest, now)
+
 
 echo "ARHSP start"
 $ echo -e "AP4B1\nAP4E1\nAP4M1\nAP4S1\nAP5Z1\nC12orf65\nC19orf12\nCYP2U1\nCYP7B1\nDDHD1\nDDHD2\nERLIN2\nFA2H\nGAD1\nGBA2\nGJC2\nKIF1A\nPNPLA6\nSPG11\nSPG20\nSPG21\nSPG7\nTECPR2\nVPS37A\nZFYVE26" > ARHSP_known_genes.txt

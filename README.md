@@ -207,7 +207,7 @@ Go to https://software.broadinstitute.org/software/igv/download and click 'Downl
 Then, double click downloaded item to expand. you will find IGV_2.4.13 directory.  
 Or  
 ```
-$ wget http://data.broadinstitute.org/igv/projects/downloads/2.4/IGV_Win_2.4.13.zip
+$ wget http://data.broadinstitute.org/igv/projects/downloads/2.4/IGV_2.4.13.zip
 $ unzip IGV_2.4.13.zip
 ```
 Make sure directories. Now, I expect "~/exome_analysis/IGV_2.4.13".  
@@ -318,6 +318,13 @@ Make .bam index file to make search.
 `$ samtools index DRR006760_chr1.aligned_reads_sorted.bam`  
 If succeeded, you will get no response here. Some of commands give us no response when they succeeded. It's linux culture (no response means no warn/error). Adjust you to this.
 
+You can see helpful messages like this.  
+```
+$ samtools
+$ samtools sort
+$ samtools index
+```
+
 Check generated files.  
 `$ ls -vlhrt DRR006760*`
 
@@ -329,6 +336,8 @@ You will see like this.
     -rw-r--r-- 1 mako 158M  7 25 13:54 DRR006760_chr1.aligned_reads.bam
     -rw-r--r-- 1 mako 141M  7 25 13:54 DRR006760_chr1.aligned_reads_sorted.bam
     -rw-r--r-- 1 mako 1.5M  7 25 13:54 DRR006760_chr1.aligned_reads_sorted.bam.bai
+
+.sam file is huge, because it is not compressed.
 
 Thirdly, see this aligned sequence reads,  
 `$ sh IGV_2.4.13/igv.sh -g 1kg_v37 DRR006760_chr1.aligned_reads_sorted.bam`  
