@@ -1548,7 +1548,7 @@ Let's compare with previous version using http://difff.jp/en/
 ![](images/difff.png "")
 
 ***#Modified: 180808***
-Now, we will use annotated variant file named as "DRR006760.avoutput2.hg19_multianno.txt", insted of "DRR006760_chr1.avoutput2.hg19_multianno.txt".  
+Now, we will use annotated variant file named as "DRR006760.avoutput2.hg19_multianno.txt", instead of "DRR006760_chr1.avoutput2.hg19_multianno.txt".  
 This file is generated from full exome data of DRR006760.  
 
 Download this file DRR006760.avoutput2.hg19_multianno.txt  
@@ -1563,24 +1563,24 @@ $ wc -l     DRR006760.avoutput2.hg19_multianno.txt
 ```
 
 Do you get similar results?
+
     -rw-r--r-- 1 mako 93M  8  3 16:20 DRR006760.avoutput2.hg19_multianno.txt
     199695 DRR006760.avoutput2.hg19_multianno.txt
 
 `$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput2.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput2.hg19_multianno.exonic.txt`
 
-- Column 12 ExAC_ALL
+- Column 12 ExAC_ALL  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || $F[11] <= 0.001' > ${id}.avoutput2.hg19_multianno.exonic.filtered_1.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt | ./tableview_darwin_amd64`
 
-- Column 15 ExAC_EAS (this remove IGFN1 variant)
+- Column 15 ExAC_EAS (this remove IGFN1 variant)  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt`
 
 Probably, you can see relatively higher allele frequencies in gnomAD_genome_AMR (column position 22).  
 Add filter of gnomAD_genome_AMR, and change output file name to filtered_3.  
 
-- Column 21 gnomAD_genome_AFR
-
+- Column 21 gnomAD_genome_AFR  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[21] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_3.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_3.txt | ./tableview_darwin_amd64`
@@ -1588,8 +1588,7 @@ Add filter of gnomAD_genome_AMR, and change output file name to filtered_3.
 You can see again. Relatively higher allele frequencies in gnomAD_genome_AFR (column position 21).  
 Add filter of gnomAD_genome_AFR, and change output file name to filtered_4.  
 
-- Column 22 gnomAD_genome_AMR
-
+- Column 22 gnomAD_genome_AMR  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_4.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_4.txt | ./tableview_darwin_amd64`
@@ -1597,8 +1596,7 @@ Add filter of gnomAD_genome_AFR, and change output file name to filtered_4.
 We can also use Japanese data.  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001 && $F[27] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt`
 
-- Column 28 generic (3.5KJPN)
-
+- Column 28 generic (3.5KJPN)  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001 && $F[27] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt | ./tableview_darwin_amd64`
