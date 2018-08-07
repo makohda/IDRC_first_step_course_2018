@@ -788,28 +788,31 @@ I assume that you
 and, I want to ask you checking your files in ~/exome_analysis/annovar/humandb by typing `$ ls -1 annovar/humandb`.  
 Do you already have these files? If not, call me.  
 
-    hg19_refGene.txt
-    hg19_refGeneMrna.fa
-    hg19_refGeneVersion.txt
-    hg19_refGeneWithVer.txt
-    hg19_refGeneWithVerMrna.fa
+    hg19_refGene.txt #18M
+    hg19_refGeneMrna.fa #200M
+    hg19_refGeneVersion.txt #808K
+    hg19_refGeneWithVer.txt #18M
+    hg19_refGeneWithVerMrna.fa #200M
     
-    hg19_genomicSuperDups.txt
+    hg19_genomicSuperDups.txt #11M
     
-    hg19_exac03.txt
-    hg19_exac03.txt.idx
+    hg19_exac03.txt #601M
+    hg19_exac03.txt.idx #23M
     
-    hg19_gnomad_genome.txt
-    hg19_gnomad_genome.txt.idx
+    hg19_gnomad_genome.txt #16G
+    hg19_gnomad_genome.txt.idx #922M
     
-    hg19_avsnp150.txt
-    hg19_avsnp150.txt.idx
+    hg19_avsnp150.txt #13G
+    hg19_avsnp150.txt.idx #916M
     
-    hg19_clinvar_20180603.txt
-    hg19_clinvar_20180603.txt.idx
+    hg19_clinvar_20180603.txt #72M
+    hg19_clinvar_20180603.txt.idx #1.3M
     
-    hg19_ljb26_all.txt
-    hg19_ljb26_all.txt.idx
+    hg19_ljb26_all.txt #11G
+    hg19_ljb26_all.txt.idx #18M
+    
+    tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb #1.6G
+    tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb.idx #88M
 
 ### Be familiar with command lines.  
 macOS style  
