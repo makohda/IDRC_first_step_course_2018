@@ -346,7 +346,7 @@ Thirdly, see this aligned sequence reads,
 Confirm your selected genome is "Human (1kg, b37+decoy)".  
 Go to 1:235955253-235955453 to see the mutation.
 
-Can you find this? Genomic position of LYST:c.4189T>G:p.F1397V is 1:235955353 (build 37). #Fixed:180807
+Can you find this? Genomic position of LYST:c.4189T>G:p.F1397V is 1:235955353 (build 37). ***#Fixed: 180807***
 ![](images/IGV_LYST.png "")
 
 
@@ -707,6 +707,7 @@ http://www.usadellab.org/cms/?page=trimmomatic
 
 threads 4?  
 Thread means threads of execution. Roughly saying, dividing a single task to four parts to reduce the calculation time.  
+
 phred33??  
 Phred score is originally developed for Sanger sequence. So, I expect you already know well. 
 More detail about options for Trimmomatic, see their page http://www.usadellab.org/cms/?page=trimmomatic 
@@ -760,43 +761,45 @@ $ bwa mem -t4 -M \
 
 $ samtools index -@ 4 ${id}.aligned_reads_sorted.bam
 ```
+***#Modified: 180807***
+
 Here, as you can see, this command line is long, and includes bwa and samtools view/sort commands.  
 This is done by "|". **Pipe**. "|" connects two command. Here, it connected bwa and samtools. The result of bwa aligned data passed to samtools.  
 This is very important. Why? If we used "|", we can use memory space instead of writing data to the very slow hard disk. Memory speed is faster than SSD, at least 10x. SSD is faster than HDD, at least 10x.  
 
-(Update)  
-You may wonder that what "-" mean in samtools command line. This is stdin, a file descriptor. If you want to know more, follow these.  
+***#Added: 180807***
+You may wonder that what "-" means in previous bwa/samtools command lines. This is named as STDIN, a file descriptor. If you want to know more, follow these.  
 - Working with Pipe http://samtools.sourceforge.net/pipe.shtml
 - Piping With Samtools, Bwa And Bedtools https://www.biostars.org/p/43677/
 
-# To be continued :clap: (finished here at 1st day)
+# To be continued... :clap: (We finished here at 1st day 180806)
 Who is a candidate for next certified repeater? :repeat: :ng: :accept: :smiling_imp: :sweat_smile: :cold_sweat: :fearful: :scream: :bow: :fire: :congratulations:
 
 # We will start from here at 2nd day :triumph:
 
 Before continuing
-#
-Cmd+Tab: Swtich applications
-Cmd+C: Copy
-Cmd+V: Paste
-Cmd+N: Make new directory (Finder.app), new window (Browser, etc), new documents (text editor, etc)
-Cmd+Q: Quit the application
+#macOS style
+- Cmd+Tab: Swtich applications
+- Cmd+C: Copy
+- Cmd+V: Paste
+- Cmd+N: Make new directory (Finder.app), new window (Browser, etc), new documents (text editor, etc)
+- Cmd+Q: Quit the application
 
 In Terminal.app
 #Moving
-Ctr+A: Move the cursor to the beginning (Ahead)
-Ctr+E: Move the cursor to the End
-Ctr+F: Move the cursor forward
-Ctr+B: Move the cursor backward
+- Ctr+A: Move the cursor to the beginning (Ahead)
+- Ctr+E: Move the cursor to the End
+- Ctr+F: Move the cursor forward
+- Ctr+B: Move the cursor backward
 #Editing
-Ctr+D: Delete (call this as forward delete in Windows?)
-Ctr+H: Backspace; you may have seen such kind of joke in SNS "Be nice to this fool^H^H^H^Hgentleman"
-Ctr+W: Delete previous single word
-Ctr+K: Yank (not Yankees). Yank is similar with Paste. Use with Ctr+K or Ctr+W (similar with Cut)
+- Ctr+D: Delete (call this as forward delete in Windows?)
+- Ctr+H: Backspace; you may have seen such kind of joke in SNS "Be nice to this fool^H^H^H^Hgentleman"
+- Ctr+W: Delete previous single word
+- Ctr+K: Yank (not Yankees). Yank is similar with Paste. Use with Ctr+K or Ctr+W (similar with Cut)
 #Command line history
-Ctr+P (or Up arrow): Previous command in the history
-Ctr+N (or Down arrow): Next command in the history
-Ctr+R: Search your query in the history
+- Ctr+P (or Up arrow): Previous command in the history
+- Ctr+N (or Down arrow): Next command in the history
+- Ctr+R: Search your query in the history
 
 
 See .sam file contents
