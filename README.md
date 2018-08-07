@@ -779,7 +779,14 @@ Who is a candidate for next certified repeater? :repeat: :ng: :accept: :smiling_
 
 ## Before continuing  
 
-Be familiar with command lines.  
+### Check your current directory, created variable, generated file
+I assume that you
+- are in ~/exome_analysis directory, now
+- have the variable named as "id". Call it by typing `$ echo ${id}` or `$ echo $id`
+- have ${id}.aligned_reads_sorted.bam, the file size is about 139M. Check it by typing `$ ls -vlhrt ${id}.aligned_reads_sorted.bam` or `$ du -csh ${id}.aligned_reads_sorted.bam`
+
+
+### Be familiar with command lines.  
 macOS style  
 - Cmd+Tab: Swtich applications
 - Cmd+C: Copy
@@ -787,27 +794,47 @@ macOS style
 - Cmd+N: Make new directory (Finder.app), new window (Browser, etc), new documents (text editor, etc)
 - Cmd+Q: Quit the application
 
-In Terminal.app  
+In Terminal.app,  
+
 Moving  
 - Ctr+A: Move the cursor to the beginning (Ahead)
 - Ctr+E: Move the cursor to the End
 - Ctr+F: Move the cursor forward
-- Ctr+B: Move the cursor backward  
+- Ctr+B: Move the cursor backward
+
 Editing  
 - Ctr+D: Delete (call this as forward delete in Windows?)
 - Ctr+H: Backspace; you may have seen such kind of joke in SNS "Be nice to this fool^H^H^H^Hgentleman"
 - Ctr+W: Delete previous single word
-- Ctr+K: Yank (not Yankees). Yank is similar with Paste. Use with Ctr+K or Ctr+W (similar with Cut)  
+- Ctr+K: Yank (not Yankees). Yank is similar with Paste. Use with Ctr+K or Ctr+W (similar with Cut)
+
 Command line history  
 - Ctr+P (or Up arrow): Previous command in the history
 - Ctr+N (or Down arrow): Next command in the history
 - Ctr+R: Search your query in the history
 
-Shell?
+### Shell?
+> Simply put, the shell is a program that takes commands from the keyboard and gives them to the operating system to perform. In the old days, it was the only user interface available on a Unix-like system such as Linux. Nowadays, we have graphical user interfaces (GUIs) in addition to command line interfaces (CLIs) such as the shell.
+Learning the shell - Lesson 1: What is the shell? http://linuxcommand.org/lc3_lts0010.php
 
-See .sam file contents.
+### See .sam file contents
+SAM (file format) - Wikipedia https://en.wikipedia.org/wiki/SAM_(file_format)  
+Explain SAM Flags https://broadinstitute.github.io/picard/explain-flags.html
+
+### Shell scripting
+Now, time to consider that you may learn a little about shell scripting techniques.  
+You may be tired to type or copy & paste command lines repeatedly.  
+Imagine, you will analyze other samples. Would you copy & paste all command lines for each analysis? I think nobody want to do.  
 
 
+
+Ref. Shell scripting cheat sheet (So sorry, I can't find nice English page. plz google it) https://qiita.com/muran001/items/8bb5530d79301b1b2b82
+
+LAZINESS (怠惰) is the first great virtue of programmers.
+>The quality that makes you go to great effort to reduce overall energy expenditure. It makes you write labor-saving programs that other people will find useful, and document what you wrote so you don't have to answer so many questions about it. Hence, the first great virtue of a programmer.
+> Larry Wall, Father of Perl programming launguage
+
+By the way, virtue#2 is Impatience (短気), and virtue#3 is Hubris (傲慢)
 
 ### MarkDuplicates (< 1 min)
 Remove (or just add mark) PCR duplicates entries in .bam file.  
@@ -1315,7 +1342,7 @@ table_annovar.pl is a wrapper script of annotate_variation.pl. It runs annotate_
                            -out ${id}.avoutput
 ```
 
-Shell scripting cheat sheet (So sorry, I can't find nice English page) https://qiita.com/muran001/items/8bb5530d79301b1b2b82
+If succeeded, you will get following response
 
     NOTICE: Processing next batch with 3693 unique variants in 3693 input lines
     NOTICE: Database index loaded. Total number of bins is 557362 and the number of bins to be scanned is 721
