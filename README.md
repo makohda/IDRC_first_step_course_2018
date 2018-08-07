@@ -1577,16 +1577,10 @@ Column 12 ExAC_ALL
 Column 15 ExAC_EAS (this remove IGFN1 variant)  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt`
 
-Probably, you can see relatively higher allele frequencies in gnomAD_genome_AMR (column position 22).  
-Add filter of gnomAD_genome_AMR, and change output file name to filtered_3.  
-
 Column 21 gnomAD_genome_AFR  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[21] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_3.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_3.txt | ./tableview_darwin_amd64`
-
-You can see again. Relatively higher allele frequencies in gnomAD_genome_AFR (column position 21).  
-Add filter of gnomAD_genome_AFR, and change output file name to filtered_4.  
 
 Column 22 gnomAD_genome_AMR  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_4.txt`
@@ -1594,8 +1588,6 @@ Column 22 gnomAD_genome_AMR
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_4.txt | ./tableview_darwin_amd64`
 
 We can also use Japanese data.  
-`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001 && $F[27] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt`
-
 Column 28 generic (3.5KJPN)  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001 && $F[27] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt`
 
@@ -1620,7 +1612,10 @@ It seems that we have 10 candidate genes in DRR006760.avoutput2.hg19_multianno.e
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_6.txt | ./tableview_darwin_amd64`
 
 Based on observing our internal data, chr8:10467589 RP1L1 nonframeshift and chr12:53207583 KRT4 nonframeshift are popular alleles. So we can ignore them.  
-CFAP47 and SSX3 genes are located on chromosome X. Do not match inherited pattern. So we can remove them, too.
+CFAP47 and SSX3 genes are located on chromosome X. Do not match inherited pattern. So we can remove them, too.  
+`$ cat DRR006760.avoutput2.hg19_multianno.exonic.filtered_6.txt G -vwF -e RP1L1 -e KRT4 -e CFAP47 -e SSX3 | ./tableview_darwin_amd64`
+
+:tada::tada::tada::tada::tada::tada::tada::tada::tada::tada:
 
 
 # Extrasession: How can we estiamte pathogenic allele frequencies? How do we archive it? :disappointed_relieved:
@@ -1697,6 +1692,7 @@ If succeeded, you will get following response
 AMR? ASJ? See FAQ of ExAC/gnomAD  
 - Frequently Asked Questions ExAC Browser http://exac.broadinstitute.org/faq
 - Frequently Asked Questions gnomAD browser http://gnomad.broadinstitute.org/faq
+
 
 # Extrasession: Facing prediction scores (underconstruction :no_entry_sign:)
 
