@@ -814,6 +814,10 @@ Do you already have these files? If not, call me.
     tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb #1.6G
     tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb.idx #88M
 
+One more, do you have DRR001913_chr12? (both are 41M). We will use later.  
+- https://www.dropbox.com/s/3qsqwb4lqcyy7gd/DRR001913_chr12_1.fastq.gz
+- https://www.dropbox.com/s/9wenng8x0xwnp5g/DRR001913_chr12_2.fastq.gz
+
 ### Be familiar with command lines.  
 macOS style  
 - Cmd+Tab: Swtich applications
@@ -841,26 +845,6 @@ Command line history
 - Ctr+N (or Down arrow): Next command in the history
 - Ctr+R: Search your query in the history
 
-### Shell?
-> Simply put, the shell is a program that takes commands from the keyboard and gives them to the operating system to perform. In the old days, it was the only user interface available on a Unix-like system such as Linux. Nowadays, we have graphical user interfaces (GUIs) in addition to command line interfaces (CLIs) such as the shell.
-
-Learning the shell - Lesson 1: What is the shell? http://linuxcommand.org/lc3_lts0010.php
-
-### Shell scripting
-Now, time to consider that you may learn a little about shell scripting techniques.  
-You may be tired to type or copy & paste command lines repeatedly.  
-Imagine, you will analyze other 100 samples. Would you copy & paste all command lines for each analysis? I think nobody want to do.  
-
-
-
-LAZINESS (怠惰) is the first great virtue of programmers.
->The quality that makes you go to great effort to reduce overall energy expenditure. It makes you write labor-saving programs that other people will find useful, and document what you wrote so you don't have to answer so many questions about it. Hence, the first great virtue of a programmer.
-> Larry Wall, Father of Perl programming launguage
-
-By the way, virtue#2 is Impatience (短気), and virtue#3 is Hubris (傲慢). So, I believe that i can become a good programmer. How about you?
-
-Ref. Shell scripting cheat sheet (So sorry, I can't find nice English page. plz google it) https://qiita.com/muran001/items/8bb5530d79301b1b2b82
-
 ### See .sam file contents
 Yesterday, we generated a .sam file by sequence alignment using bwa, fastq (NGS reads) and fasta (reference human genome sequence).  
 I forgot to tell .sam format.  
@@ -882,6 +866,71 @@ I'd like to show you this using IGV
 
 SAM (file format) - Wikipedia https://en.wikipedia.org/wiki/SAM_(file_format)  
 Explain SAM Flags https://broadinstitute.github.io/picard/explain-flags.html
+
+### Shell?
+> Simply put, the shell is a program that takes commands from the keyboard and gives them to the operating system to perform. In the old days, it was the only user interface available on a Unix-like system such as Linux. Nowadays, we have graphical user interfaces (GUIs) in addition to command line interfaces (CLIs) such as the shell.
+
+Learning the shell - Lesson 1: What is the shell? http://linuxcommand.org/lc3_lts0010.php
+
+### Shell scripting
+Now, time to consider that you may learn a little about shell scripting techniques.  
+You may be tired to type or copy & paste command lines repeatedly.  
+Imagine, you will analyze other 100 samples. Would you copy & paste all command lines for each analysis? I think nobody want to do.  
+
+I prepared example script.  
+`$ wget https://www.dropbox.com/s/fxy8zxllpr0nism/run_tools_01.sh`  
+This one runs some steps that we have exprienced, instead of you.
+
+See the file contents.  
+`$ less -S run_tools_01.sh`  
+Or
+`$ open -a CotEditor run_tools_01.sh` # macOS user
+
+To run this script, give the permission for excution to the script.  
+`$ chmod +x ./run_tools_01.sh`
+
+OK. Run it.  
+`$ ./run_tools_01.sh`
+
+If succeeded, you will see response that you saw yesterday.  
+
+Let's try (very small, but surely) advance script.  
+`$ wget https://www.dropbox.com/s/leahpo9si7c1kv6/run_tools_02.sh`  
+
+See the file contents and find the differences.  
+`$ less -S run_tools_02.sh`  
+Or
+`$ open -a CotEditor run_tools_02.sh` # macOS user
+
+OK. Run it.  
+`$ ./run_tools_02.sh`
+
+What's happed?  
+Now, we will learn about $1.
+
+OK. Now, you have two samples (DRR001913_chr12,DRR006760_chr1).  
+I believe that all of us want to avoid typing a keybord as possible as we can.  
+`$ https://www.dropbox.com/s/3u4wfw5ecz5nrgr/run_tools_03.sh`
+
+See the file contents and find the differences.  
+`$ less -S run_tools_03.sh`  
+Or
+`$ open -a CotEditor run_tools_03.sh` # macOS user
+
+OK. Run it.  
+`$ ./run_tools_03.sh`
+
+Great?  
+The next thing that you should do is saying to your PI like this, "Yes, yes. Now, I am working hard with more than 100 samples. (...In other words, my scripts are working hard :smiling_imp:)"
+
+LAZINESS (怠惰) is the first great virtue of programmers.
+>The quality that makes you go to great effort to reduce overall energy expenditure. It makes you write labor-saving programs that other people will find useful, and document what you wrote so you don't have to answer so many questions about it. Hence, the first great virtue of a programmer.
+> Larry Wall, Father of Perl programming launguage
+
+By the way, virtue#2 is Impatience (短気), and virtue#3 is Hubris (傲慢). So, I believe that i can become a good programmer. How about you?
+
+Ref. Shell scripting cheat sheet (So sorry, I can't find nice English page. plz google it) https://qiita.com/muran001/items/8bb5530d79301b1b2b82
+
 
 ### MarkDuplicates (< 1 min)
 Remove (or just add mark) PCR duplicates entries in .bam file.  
@@ -905,6 +954,7 @@ GATK Workshop
 https://drive.google.com/open?id=10WAZgT7bofZRaJ0xZK0oowjT_-rIONfo
 
 https://qcb.ucla.edu/wp-content/uploads/sites/14/2016/03/GATKwr12-2-Marking_duplicates.pdf
+
 
 ### BaseRecalibrator (< 2 min)
 Base quality score recalibration (BQSR) is a process to model these errors empirically and adjust the quality scores accordingly. This allows us to get more accurate base qualities, which in turn improves the accuracy of our variant calls.   
@@ -943,10 +993,13 @@ You will get following respond.
 For detail information, see  
 - https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_bqsr_BaseRecalibrator.php
 
+
 ### (Optional) Plot recalibration data (< 5 min)
 You can visualize the difference between before/after base quality recalibration.  
 Run BaseRecalibrator again with the generated table by 1st BaseRecalibrator run.  
 ![](images/BSQR3.png "")
+
+***For this task, you have to install some libraries for GNU R***
 ```
 $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T BaseRecalibrator -R human_g1k_v37_decoy.fasta -I ${id}.aligned_reads_dedup_sorted.bam -knownSites dbsnp_138.b37.vcf -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf -BQSR ${id}_recal.table -o post_${id}_recal.table
 
@@ -957,6 +1010,7 @@ $ open ${id}_recalibration_plots.pdf
 _sorry, I forgot to take a note of R libraries required of this step. _
 
 See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/44/base-quality-score-recalibration-bqsr
+
 
 ### PrintReads (< 3 min)
 PrintReads is a tool to extract subset reads by genomic interval. Here, we use PrintRead combined with BQSR base recabrilation data to make the .bam file which have recabrilated sequence base quality scores.
@@ -995,6 +1049,7 @@ Check the file size of generated .bam files.
 You will get following respond.
 
     -rw-r--r-- 1 mako 183M  7 24 11:31 DRR006760_chr1.aligned_reads_dedup_recal_sorted.bam
+
 
 ### HaplotypeCaller (< 5 min)
 Call germline SNVs and INDELs via local re-assembly of haplotypes.
@@ -1051,11 +1106,13 @@ For detail information, see
 - de novo アセンブリー | de Bruijn graph によるゲノムアセンブリー https://bi.biopapyrus.jp/rnaseq/assembly/de-bruijn-graph-assembly.html
 - de Bruijn Graph を使った de novo アセンブリの発想がすごい件 - ほくそ笑む http://hoxo-m.hatenablog.com/entry/20100930/p1
 
+
 ### Gather .g.vcf files
 This step have less meaning in this course, because this step is mainly for mutli sample processing.  
 But, in almost cases, you need to analyze multi samples at once. So, we should experience this way.  
 `$ ls -1 *_raw_variants.g.vcf > gVCF.list`  
 ">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.  
+
 
 ### GenotypeGVCFs (< 1 min)
 
@@ -1097,6 +1154,7 @@ Better understanding what GenotypeGVCFs step do, read this slides first.
 https://drive.google.com/open?id=10auFLOIaCyetwnqX-Msb1LgjkZJiEUdj
 Historically, there was joint calling for multi-samples. But, it have N+1 problem for huge samples. This is very famous problem from microarray era. To solve this, joint genotyping was developed. Now, it can do joint calling via two steps.
 
+
 ### Select SNP (< few seconds)
 In coming several steps, we treat two seprated data, SNVs and INDELs.  
 Firstly, divide data, then filtering variant solely. Finally, filtered data will be combined to single vcf file.  
@@ -1122,6 +1180,7 @@ Check generated combined_genotyped_raw_snps.vcf size.
 `$ wc -l combined_genotyped_raw_snps.vcf`
 
     5130 combined_genotyped_raw_snps.vcf
+
 
 ### Filter SNVs
 
@@ -1329,11 +1388,13 @@ If succeeded, you will get following response
 
 Do you find almost same file? If so, go next.  
 
+
 ### Tips: deeper understading of What GATK do
 Broad institute shares their workshop materials and slides.  
 https://drive.google.com/drive/folders/1y7q0gJ-ohNDhKG85UTRTwW1Jkq4HJ5M3  
 This is latest (shared 2018/07/13).  
 https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
+
 
 ### Annotate variants using Annovar scripts
 Annovar provides some useful functions to annotate variants.  
@@ -1405,6 +1466,7 @@ Let's see the generated file contents :+1:
     3736 DRR006760_chr1.avoutput.hg19_multianno.txt
 
 Too much...but you got annotated variant by yourself :tada:
+
 
 ### Fiter variants more
 Now, we have ${id}.avoutput.hg19_multianno.txt.  
@@ -1515,10 +1577,10 @@ In previous filtering steps, we used MAF 0.001 (0.1%) as the threshold. *Is this
 Do not stop thinking. Confirm the evidence by yourself.  
 
 I prepared a similar annotated variant file which contains known pathogenic mutations for ARHSP. It can be downloaded here.  
-https://www.dropbox.com/s/ak3d4csigaj5d3h/clinvar_20180701.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt
+https://www.dropbox.com/s/3wdmbrdmupd4rlc/clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt
 
 Let's check allele frequencies of known mutations.  
-`$ cat clinvar_20180701.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt | ./tableview_darwin_amd64`
+`$ cat clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt | ./tableview_darwin_amd64`
 
 As you can see, most of known pathogenic mutations are less frequent than 0.001 (0.1%). So, I used this threshold in previous steps.  
 Minor Allele Frequency is the only one data which generated by observing mass populations, not by predicting. This is important fact for filtering steps.  
@@ -1532,6 +1594,8 @@ We want to get the latest data of clinvar.
 - go to ftp download site ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/ > vcf_GRCh37 > to download clinvar data
 - get clinvar_20180729.vcf.gz (probably, this is latest, now)
 
+_If downloading was slow, I will distribute this file._
+
 On the other hand, we should make known genes of ARHSP file.  
 You can survey known genes of ARHSP using OMIM or GeneReview (skip today).  
 `$ echo -e "AP4B1\nAP4E1\nAP4M1\nAP4S1\nAP5Z1\nC12orf65\nC19orf12\nCYP2U1\nCYP7B1\nDDHD1\nDDHD2\nERLIN2\nFA2H\nGAD1\nGBA2\nGJC2\nKIF1A\nPNPLA6\nSPG11\nSPG20\nSPG21\nSPG7\nTECPR2\nVPS37A\nZFYVE26" > ARHSP_known_genes.txt`
@@ -1539,15 +1603,14 @@ You can survey known genes of ARHSP using OMIM or GeneReview (skip today).
 Check the generated file.  
 `$ cat ARHSP_known_genes.txt`
 
-
+Using zgrep (grep for .gz gnu-zip file format), extract specific lines which contains OMIM_Allelic_Variant from clinvar data.  
+Then, piping, extract lines contains interested gene symbols using grep -wFf  
 `$ zgrep -wF OMIM_Allelic_Variant clinvar_20180729.vcf.gz | grep -wFf ARHSP_known_genes.txt > clinvar_20180729.ARHSP_OMIM.vcf`
 
-echo "convert2annovar"
+Convert to annovar input format.  
+`$ ./annovar/convert2annovar.pl -format vcf4 clinvar_20180729.ARHSP_OMIM.vcf > clinvar_20180729.ARHSP_OMIM.avinput`
 
-$ ./annovar/convert2annovar.pl -format vcf4 clinvar_20180729.ARHSP_OMIM.vcf > clinvar_20180729.ARHSP_OMIM.avinput
-
-echo "table_annovar"
-
+```
 $ ./annovar/table_annovar.pl clinvar_20180729.ARHSP_OMIM.avinput annovar/humandb/ \
                            -buildver hg19 \
                            -protocol refGeneWithVer,genomicSuperDups,exac03,gnomad_genome,generic,avsnp150,clinvar_20180603,ljb26_all \
@@ -1558,28 +1621,31 @@ $ ./annovar/table_annovar.pl clinvar_20180729.ARHSP_OMIM.avinput annovar/humandb
                            --argument '--hgvs --exonicsplicing --splicing_threshold 2',,,,,,, \
                            --remove \
                            -out clinvar_20180729.ARHSP_OMIM.avoutput2
+```
+
+If succeeded, you will get following response
 
     -----------------------------------------------------------------
     NOTICE: Processing operation=g protocol=refGeneWithVer
     
-    NOTICE: Running with system command <annotate_variation.pl -geneanno -buildver hg19 -dbtype refGeneWithVer -outfile clinvar_20180701.ARHSP_OMIM.avoutput2.refGeneWithVer -exonsort clinvar_20180701.ARHSP_OMIM.avinput annovar/humandb/ --hgvs --exonicsplicing --splicing_threshold 2>
+    NOTICE: Running with system command <annotate_variation.pl -geneanno -buildver hg19 -dbtype refGeneWithVer -outfile clinvar_20180729.ARHSP_OMIM.avoutput2.refGeneWithVer -exonsort clinvar_20180729.ARHSP_OMIM.avinput annovar/humandb/ --hgvs --exonicsplicing --splicing_threshold 2>
     ..snip..
-    NOTICE: Running system command <annotate_variation.pl -filter -dbtype ljb26_all -buildver hg19 -outfile clinvar_20180701.ARHSP_OMIM.avoutput2 clinvar_20180701.ARHSP_OMIM.avinput annovar/humandb/ -otherinfo>
+    NOTICE: Running system command <annotate_variation.pl -filter -dbtype ljb26_all -buildver hg19 -outfile clinvar_20180729.ARHSP_OMIM.avoutput2 clinvar_20180729.ARHSP_OMIM.avinput annovar/humandb/ -otherinfo>
     NOTICE: the --dbtype ljb26_all is assumed to be in generic ANNOVAR database format
-    NOTICE: Variants matching filtering criteria are written to clinvar_20180701.ARHSP_OMIM.avoutput2.hg19_ljb26_all_dropped, other variants are written to clinvar_20180701.ARHSP_OMIM.avoutput2.hg19_ljb26_all_filtered
+    NOTICE: Variants matching filtering criteria are written to clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_ljb26_all_dropped, other variants are written to clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_ljb26_all_filtered
     NOTICE: Processing next batch with 128 unique variants in 128 input lines
     NOTICE: Database index loaded. Total number of bins is 557362 and the number of bins to be scanned is 106
     NOTICE: Scanning filter database annovar/humandb/hg19_ljb26_all.txt...Done
     -----------------------------------------------------------------
-    NOTICE: Multianno output file is written to clinvar_20180701.ARHSP_OMIM.avoutput2.hg19_multianno.txt
+    NOTICE: Multianno output file is written to clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.txt
 
+`$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt`
 
-`$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing clinvar_20180701.ARHSP_OMIM.avoutput2.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > clinvar_20180701.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt`
+`$ cat clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt | ruby -F"\t" -lane 'puts $F.join("\t") if $F.values_at(12,13,14,15,16,18,20,21,22,23,24,25).map{|e| e.to_f}.max > 0.001 || $. == 1' | ./tableview_darwin_amd64`
 
-
-
-
-Frequently Asked Questions ExAC Browser http://exac.broadinstitute.org/faq
+AMR? ASJ? See FAQ of ExAC/gnomAD  
+- Frequently Asked Questions ExAC Browser http://exac.broadinstitute.org/faq
+- Frequently Asked Questions gnomAD browser http://gnomad.broadinstitute.org/faq
 
 # Third step (underconstruction)
 1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
@@ -1628,9 +1694,9 @@ ClinVar Variations in VCF Format https://www.ncbi.nlm.nih.gov/variation/docs/Cli
 ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/
 
 Download
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180701.vcf.gz
+wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180729.vcf.gz
 
- zgrep -wF OMIM_Allelic_Variant clinvar_20180701.vcf.gz | grep -wFf ARHSP_known_genes.txt > clinvar_20180701.ARHSP_OMIM.vcf                                                                                                                            18-07-26 - 16:36:21
+ zgrep -wF OMIM_Allelic_Variant clinvar_20180729.vcf.gz | grep -wFf ARHSP_known_genes.txt > clinvar_20180729.ARHSP_OMIM.vcf                                                                                                                            18-07-26 - 16:36:21
 
 --------
 
