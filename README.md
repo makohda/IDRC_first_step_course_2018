@@ -878,6 +878,7 @@ I forgot to tell .sam format.
 
 I'd like to show you this using IGV  
 `$ sh ./IGV_2.4.13/igv.sh -g 1kg_v37 small_sorted.bam` then, go to 1:199,999,935-200,000,182 # _only for me_
+![](images/IGV3.png "")
 
 SAM (file format) - Wikipedia https://en.wikipedia.org/wiki/SAM_(file_format)  
 Explain SAM Flags https://broadinstitute.github.io/picard/explain-flags.html
