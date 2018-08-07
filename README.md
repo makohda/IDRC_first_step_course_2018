@@ -751,7 +751,8 @@ Check the file size of generated .bam files.
 `$ ls -vlhrt ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
 
 ### (Optional) Tips: using memory, avoid using slow hard disk for speeding up
-This is another way. Connect bwa and samtools view/sort to speed up.
+This is another way. Connect bwa and samtools view/sort to speed up.  
+***#Slightly Modified: 180807***  
 ```
 $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:${id}\tPL:illumina\tLB:${id}_library_1" \
@@ -761,7 +762,6 @@ $ bwa mem -t4 -M \
 
 $ samtools index -@ 4 ${id}.aligned_reads_sorted.bam
 ```
-***#Modified: 180807***
 
 Here, as you can see, this command line is long, and includes bwa and samtools view/sort commands.  
 This is done by "|". **Pipe**. "|" connects two command. Here, it connected bwa and samtools. The result of bwa aligned data passed to samtools.  
@@ -777,32 +777,37 @@ Who is a candidate for next certified repeater? :repeat: :ng: :accept: :smiling_
 
 # We will start from here at 2nd day :triumph:
 
-Before continuing
-#macOS style
+## Before continuing  
+
+Be familiar with command lines.  
+macOS style  
 - Cmd+Tab: Swtich applications
 - Cmd+C: Copy
 - Cmd+V: Paste
 - Cmd+N: Make new directory (Finder.app), new window (Browser, etc), new documents (text editor, etc)
 - Cmd+Q: Quit the application
 
-In Terminal.app
-#Moving
+In Terminal.app  
+Moving  
 - Ctr+A: Move the cursor to the beginning (Ahead)
 - Ctr+E: Move the cursor to the End
 - Ctr+F: Move the cursor forward
-- Ctr+B: Move the cursor backward
-#Editing
+- Ctr+B: Move the cursor backward  
+Editing  
 - Ctr+D: Delete (call this as forward delete in Windows?)
 - Ctr+H: Backspace; you may have seen such kind of joke in SNS "Be nice to this fool^H^H^H^Hgentleman"
 - Ctr+W: Delete previous single word
-- Ctr+K: Yank (not Yankees). Yank is similar with Paste. Use with Ctr+K or Ctr+W (similar with Cut)
-#Command line history
+- Ctr+K: Yank (not Yankees). Yank is similar with Paste. Use with Ctr+K or Ctr+W (similar with Cut)  
+Command line history  
 - Ctr+P (or Up arrow): Previous command in the history
 - Ctr+N (or Down arrow): Next command in the history
 - Ctr+R: Search your query in the history
 
+Shell?
 
-See .sam file contents
+See .sam file contents.
+
+
 
 ### MarkDuplicates (< 1 min)
 Remove (or just add mark) PCR duplicates entries in .bam file.  
