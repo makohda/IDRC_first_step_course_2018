@@ -1520,11 +1520,16 @@ Count the number of lines.
      3736 DRR006760_chr1.avoutput.hg19_multianno.txt
 
 By the way, you feel difficulty counting column positions. Isn't it?  
-`$ head -1 ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt | perl -pe 's/\t/\n/g' | less -N`
+`$ head -1 ${id}.avoutput.hg19_multianno.exonic.filtered_2.txt | perl -pe 's/\t/\n/g' | less -N`
+
+
+# To be continued... :clap: :clap: (We finished here at 2nd day 180807)
+Who is a candidate for next certified repeater? :repeat: :ng: :accept: :smiling_imp: :sweat_smile: :cold_sweat: :fearful: :scream: :bow: :fire: :congratulations:
+
+# We will start an extrasession from here :triumph:
 
 Let's add other resources for better fitering.  
 Here, we add gnomAD http://gnomad.broadinstitute.org/ and 3.5KJPN (Japanese)  
-***files will be distributed in the course***
 
 ```
 ./annovar/table_annovar.pl combined_genotyped_filtered_snps_indels_mixed.PASS.${id}.avinput annovar/humandb/ \
@@ -1539,26 +1544,53 @@ Here, we add gnomAD http://gnomad.broadinstitute.org/ and 3.5KJPN (Japanese)
                            -out ${id}.avoutput2
 ```
 
+Let's compare with previous version using http://difff.jp/en/
+![](images/difff.png "")
+
+***#Modified: 180808***
+Now, we will use annotated variant file named as "DRR006760.avoutput2.hg19_multianno.txt", insted of "DRR006760_chr1.avoutput2.hg19_multianno.txt".  
+This file is generated from full exome data of DRR006760.  
+
+Download this file DRR006760.avoutput2.hg19_multianno.txt  
+`$ wget -c https://www.dropbox.com/s/14va6q9s52cze0o/DRR006760.avoutput2.hg19_multianno.txt.gz`  
+Decompress it.  
+`$ gunzip DRR006760.avoutput2.hg19_multianno.txt.gz`
+
+Check the generated file.  
+```
+$ ls -vlhrt DRR006760.avoutput2.hg19_multianno.txt
+$ wc -l     DRR006760.avoutput2.hg19_multianno.txt
+```
+
+Do you get similar results?
+    -rw-r--r-- 1 mako 93M  8  3 16:20 DRR006760.avoutput2.hg19_multianno.txt
+    199695 DRR006760.avoutput2.hg19_multianno.txt
+
 `$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput2.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput2.hg19_multianno.exonic.txt`
 
-`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $F[11] <= 0.001 || $. == 1' > ${id}.avoutput2.hg19_multianno.exonic.filtered_1.txt`  
-
-`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt`
-
 - Column 12 ExAC_ALL
-- column 15 ExAC_EAS (this remove IGFN1 variant)
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || $F[11] <= 0.001' > ${id}.avoutput2.hg19_multianno.exonic.filtered_1.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt | ./tableview_darwin_amd64`
 
+- Column 15 ExAC_EAS (this remove IGFN1 variant)
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt`
+
 Probably, you can see relatively higher allele frequencies in gnomAD_genome_AMR (column position 22).  
 Add filter of gnomAD_genome_AMR, and change output file name to filtered_3.  
-`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[21] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_3.txt`
+
+- Column 21 gnomAD_genome_AFR
+
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[21] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_3.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_3.txt | ./tableview_darwin_amd64`
 
 You can see again. Relatively higher allele frequencies in gnomAD_genome_AFR (column position 21).  
 Add filter of gnomAD_genome_AFR, and change output file name to filtered_4.  
-`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001)' | grep -wF -e Chr -e hom | grep -vwF LowDP > ${id}.avoutput2.hg19_multianno.exonic.filtered_4.txt`
+
+- Column 22 gnomAD_genome_AMR
+
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_4.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_4.txt | ./tableview_darwin_amd64`
 
@@ -1567,20 +1599,41 @@ We can also use Japanese data.
 
 - Column 28 generic (3.5KJPN)
 
-Position:53207583 is popular allele
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001 && $F[20] <= 0.001 && $F[21] <= 0.001 && $F[27] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt`
 
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt | ./tableview_darwin_amd64`
 
+- Due to consanginuity, the mutation is probably homozygous,  
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_5.txt | grep -wF -e Chr -e hom > ${id}.avoutput2.hg19_multianno.exonic.filtered_6.txt`
 
-### How can we estiamte pathogenic allele frequencies? How do we archive it? :disappointed_relieved:
+Check line numbers. How many candidates are remained?
+`$ wc -l ${id}.avoutput2.hg19_multianno*.txt`
+
+    199695 DRR006760.avoutput2.hg19_multianno.txt
+     10207 DRR006760.avoutput2.hg19_multianno.exonic.txt
+       538 DRR006760.avoutput2.hg19_multianno.exonic.filtered_1.txt
+       353 DRR006760.avoutput2.hg19_multianno.exonic.filtered_2.txt
+       221 DRR006760.avoutput2.hg19_multianno.exonic.filtered_3.txt
+       214 DRR006760.avoutput2.hg19_multianno.exonic.filtered_4.txt
+       144 DRR006760.avoutput2.hg19_multianno.exonic.filtered_5.txt # after 3.5KJPN
+        11 DRR006760.avoutput2.hg19_multianno.exonic.filtered_6.txt
+
+It seems that we have 10 candidate genes in DRR006760.avoutput2.hg19_multianno.exonic.filtered_6.txt. Check it.  
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_6.txt | ./tableview_darwin_amd64`
+
+Based on observing our internal data, chr8:10467589 RP1L1 nonframeshift and chr12:53207583 KRT4 nonframeshift are popular alleles. So we can ignore them.  
+CFAP47 and SSX3 genes are located on chromosome X. Do not match inherited pattern. So we can remove them, too.
+
+
+# Extrasession: How can we estiamte pathogenic allele frequencies? How do we archive it? :disappointed_relieved:
 In previous filtering steps, we used MAF 0.001 (0.1%) as the threshold. *Is this really appropriate?*  
 Do not stop thinking. Confirm the evidence by yourself.  
 
 I prepared a similar annotated variant file which contains known pathogenic mutations for ARHSP. It can be downloaded here.  
-https://www.dropbox.com/s/3wdmbrdmupd4rlc/clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt
+`$ wget -c https://www.dropbox.com/s/3wdmbrdmupd4rlc/clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt`
 
 Let's check allele frequencies of known mutations.  
-`$ cat clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt | ./tableview_darwin_amd64`
+`$ cat clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt | ./tableview_darwin_amd64 --header`
 
 As you can see, most of known pathogenic mutations are less frequent than 0.001 (0.1%). So, I used this threshold in previous steps.  
 Minor Allele Frequency is the only one data which generated by observing mass populations, not by predicting. This is important fact for filtering steps.  
@@ -1647,7 +1700,7 @@ AMR? ASJ? See FAQ of ExAC/gnomAD
 - Frequently Asked Questions ExAC Browser http://exac.broadinstitute.org/faq
 - Frequently Asked Questions gnomAD browser http://gnomad.broadinstitute.org/faq
 
-# 6. Facing prediction scores (underconstruction)
+# Extrasession: Facing prediction scores (underconstruction :no_entry_sign:)
 
 https://www.dropbox.com/s/u06avi5o5z02yd6/MutationTaster.merge.tab
 
@@ -1682,8 +1735,8 @@ In R,
     
     g = ggplot(data=d, aes(score, colour = type))
     g = g + geom_density()
-#    g = g + geom_vline(xintercept = 0.05, color="gray") # SIFT
-#    g = g + geom_vline(xintercept = 0.909, color="gray") # PolyPhen2
+    #g = g + geom_vline(xintercept = 0.05, color="gray") # SIFT
+    #g = g + geom_vline(xintercept = 0.909, color="gray") # PolyPhen2
     g = g + geom_vline(xintercept = 0.65, color="gray") # Mut. Taster
     plot(g)
     
