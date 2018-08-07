@@ -1618,7 +1618,7 @@ CFAP47 and SSX3 genes are located on chromosome X. Do not match inherited patter
 :tada::tada::tada::tada::tada::tada::tada::tada::tada::tada:
 
 
-# Extrasession: How can we estiamte pathogenic allele frequencies? How do we archive it? :disappointed_relieved:
+# Extrasession: How can we estimate pathogenic allele frequencies? How do we archive it? :disappointed_relieved:
 In previous filtering steps, we used MAF 0.001 (0.1%) as the threshold. *Is this really appropriate?*  
 Do not stop thinking. Confirm the evidence by yourself.  
 
@@ -1698,7 +1698,7 @@ AMR? ASJ? See FAQ of ExAC/gnomAD
 
 https://www.dropbox.com/s/u06avi5o5z02yd6/MutationTaster.merge.tab
 
-`$ cat MutationTaster.merge.tab C -f1 U -c`
+`$ cat MutationTaster.merge.tab | cut -f1 | sort | uniq -c`
 
      113 known
      140 mitocarta
