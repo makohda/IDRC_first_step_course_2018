@@ -344,9 +344,9 @@ Thirdly, see this aligned sequence reads,
 `$ sh IGV_2.4.13/igv.sh -g 1kg_v37 DRR006760_chr1.aligned_reads_sorted.bam`  
 
 Confirm your selected genome is "Human (1kg, b37+decoy)".  
-Go to 1:235,955,287-235,955,418 to see the mutation.
+Go to 1:235955253-235955453 to see the mutation.
 
-Can you find this? Genomic position of LYST:c.4189T>G:p.F1397V is 1:235955298-235955423 (build 37).
+Can you find this? Genomic position of LYST:c.4189T>G:p.F1397V is 1:235955353 (build 37). #Fixed:180807
 ![](images/IGV_LYST.png "")
 
 
