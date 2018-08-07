@@ -1647,6 +1647,72 @@ AMR? ASJ? See FAQ of ExAC/gnomAD
 - Frequently Asked Questions ExAC Browser http://exac.broadinstitute.org/faq
 - Frequently Asked Questions gnomAD browser http://gnomad.broadinstitute.org/faq
 
+# 6. Facing prediction scores (underconstruction)
+
+https://www.dropbox.com/s/u06avi5o5z02yd6/MutationTaster.merge.tab
+
+`$ cat MutationTaster.merge.tab C -f1 U -c`
+
+     113 known
+     140 mitocarta
+    5104 other
+       1 type
+
+In R,
+
+    library(data.table)
+    library(ggplot2)
+    library(dplyr)
+    
+    setwd("~/exome_analysis")
+    getwd()
+    
+    
+    #d = fread("SIFT.merge.tab") # >= 0.05 damaging
+    #d = fread("PP2HVAR.merge.tab") # >= 0.909 damaging
+    d = fread("MutationTaster.merge.tab") # >= 0.65 damaging
+    
+    is(d$score)
+    d$score = as.numeric(d$score)
+    
+    g = ggplot(data=d, aes(x=type, y=score))
+    g = g + geom_boxplot()
+    g = g + geom_point(alpha = 0.1) + geom_jitter(width = 0.3)
+    plot(g)
+    
+    g = ggplot(data=d, aes(score, colour = type))
+    g = g + geom_density()
+#    g = g + geom_vline(xintercept = 0.05, color="gray") # SIFT
+#    g = g + geom_vline(xintercept = 0.909, color="gray") # PolyPhen2
+    g = g + geom_vline(xintercept = 0.65, color="gray") # Mut. Taster
+    plot(g)
+    
+    d.2 = d %>% filter(type == "known" | type =="mitocarta")
+    g = ggplot(data=d.2, aes(score, colour = type))
+    g = g + geom_density()
+    g = g + geom_vline(xintercept = 0.65, color="gray")
+    plot(g)
+
+    d.3 = d %>% filter(type == "known" | type =="other")
+    g = ggplot(data=d.3, aes(score, colour = type))
+    g = g + geom_density()
+    g = g + geom_vline(xintercept = 0.65, color="gray")
+    plot(g)
+
+When you see numbers, such as 0, 0.1, 0.9, and 1.  
+You have to imagine it's distribution. You have to.  
+Do not start thinking with only number you just see.  
+
+> “Preoccupied with a single leaf…you won’t see the tree.
+> Preoccupied with a single tree…you ‘ll miss the entire forest.
+> Don’t be preoccupied with a single spot.
+> See everything in the entirety….effortlessly
+> That is what it means…to truly SEE”
+
+So, we need some computational skills for handling and exploring data.  
+The first step of data analysis is becoming familiar with your data.  
+
+
 # Third step (underconstruction)
 1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
 1. Solve DRR006760, DRR001913 by yourself
@@ -1654,19 +1720,19 @@ AMR? ASJ? See FAQ of ExAC/gnomAD
 1. Exam. In other words, homework. But, don't move data to your home!  
 Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint. Most of cases are easy. Some cases are quit difficult. I solved all the cases. Happy to see your excellent result :satisfied:
 
+# You have to learn
+- bwa index command
+- Where you can download required files (human_g1k_v37_decoy.fasta, etc)
+- How to set up annovar
+After these steps, you probably reproduce this course. Congrats :laughing:
+
 ___
 
 
-
-Homework
+# Under construction :no_entry_sign:
 
 get latest dbsnp.vcf to increase the number of known mutations. It will increase the accuracy for estimating novel pathogenic allele frequencies.
 
-Under construction :no_entry_sign:
-
-combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760.avinput も配ってみよう
-
-difff
 
 GATK | Workshop Materials https://software.broadinstitute.org/gatk/download/workshops
 presentations - Google ドライブ https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
@@ -1684,19 +1750,7 @@ bwa index, Annovar download 周りが自分で0からするには必要だ
 
     echo "`grep \"^X\" DRR006760.avoutput.hg19_multianno.txt | grep -wF het | wc -l`\t`grep \"^X\" DRR006760.avoutput.hg19_multianno.txt | wc -l`" | perl -F"\t" -lane 'print $F[0]/$F[1]'
 
-Human Variation Sets in VCF Format https://www.ncbi.nlm.nih.gov/variation/docs/human_variation_vcf/
 
-Human variations without clinical assertions that have been mapped to assemblies GRCh37 and GRCh38, are provided by dbSNP at their FTP repository ftp://ftp.ncbi.nih.gov/snp/organisms/human_9606/VCF/.
-Human variations with clinical assertions that have been mapped to assemblies GRCh37 and GRCh38, are provided by ClinVar at their FTP repository ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/. 
-
-ClinVar Variations in VCF Format https://www.ncbi.nlm.nih.gov/variation/docs/ClinVar_vcf_files/
-
-ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/
-
-Download
-wget ftp://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh37/clinvar_20180729.vcf.gz
-
- zgrep -wF OMIM_Allelic_Variant clinvar_20180729.vcf.gz | grep -wFf ARHSP_known_genes.txt > clinvar_20180729.ARHSP_OMIM.vcf                                                                                                                            18-07-26 - 16:36:21
 
 --------
 
@@ -1710,8 +1764,6 @@ bed file の部分どうするかな
 - Regular expression is frequently used in pattern matching like this. `$ echo Okazaki-sense` `$ echo Okazaki-sense | perl -pe 's/O.*i/Kohda/'`
 
 
-https://www.dropbox.com/s/3qsqwb4lqcyy7gd/DRR001913_chr12_1.fastq.gz
-https://www.dropbox.com/s/9wenng8x0xwnp5g/DRR001913_chr12_2.fastq.gz
 
 
 HaplotypeCaller and detection of large indels — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/3932/haplotypecaller-and-detection-of-large-indels
