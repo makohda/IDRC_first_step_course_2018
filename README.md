@@ -785,6 +785,31 @@ I assume that you
 - have the variable named as "id". Call it by typing `$ echo ${id}` or `$ echo $id`
 - have ${id}.aligned_reads_sorted.bam, the file size is about 139M. Check it by typing `$ ls -vlhrt ${id}.aligned_reads_sorted.bam` or `$ du -csh ${id}.aligned_reads_sorted.bam`
 
+and, I want to ask you checking your files in ~/exome_analysis/annovar/humandb by typing `$ ls -1 annovar/humandb`.  
+Do you already have these files? If not, call me.  
+
+    hg19_refGene.txt
+    hg19_refGeneMrna.fa
+    hg19_refGeneVersion.txt
+    hg19_refGeneWithVer.txt
+    hg19_refGeneWithVerMrna.fa
+    
+    hg19_genomicSuperDups.txt
+    
+    hg19_exac03.txt
+    hg19_exac03.txt.idx
+    
+    hg19_gnomad_genome.txt
+    hg19_gnomad_genome.txt.idx
+    
+    hg19_avsnp150.txt
+    hg19_avsnp150.txt.idx
+    
+    hg19_clinvar_20180603.txt
+    hg19_clinvar_20180603.txt.idx
+    
+    hg19_ljb26_all.txt
+    hg19_ljb26_all.txt.idx
 
 ### Be familiar with command lines.  
 macOS style  
