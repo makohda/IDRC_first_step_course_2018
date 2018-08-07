@@ -843,26 +843,27 @@ Command line history
 
 ### Shell?
 > Simply put, the shell is a program that takes commands from the keyboard and gives them to the operating system to perform. In the old days, it was the only user interface available on a Unix-like system such as Linux. Nowadays, we have graphical user interfaces (GUIs) in addition to command line interfaces (CLIs) such as the shell.
+
 Learning the shell - Lesson 1: What is the shell? http://linuxcommand.org/lc3_lts0010.php
 
 ### Shell scripting
 Now, time to consider that you may learn a little about shell scripting techniques.  
 You may be tired to type or copy & paste command lines repeatedly.  
-Imagine, you will analyze other samples. Would you copy & paste all command lines for each analysis? I think nobody want to do.  
+Imagine, you will analyze other 100 samples. Would you copy & paste all command lines for each analysis? I think nobody want to do.  
 
 
-
-Ref. Shell scripting cheat sheet (So sorry, I can't find nice English page. plz google it) https://qiita.com/muran001/items/8bb5530d79301b1b2b82
 
 LAZINESS (怠惰) is the first great virtue of programmers.
 >The quality that makes you go to great effort to reduce overall energy expenditure. It makes you write labor-saving programs that other people will find useful, and document what you wrote so you don't have to answer so many questions about it. Hence, the first great virtue of a programmer.
 > Larry Wall, Father of Perl programming launguage
 
-By the way, virtue#2 is Impatience (短気), and virtue#3 is Hubris (傲慢)
+By the way, virtue#2 is Impatience (短気), and virtue#3 is Hubris (傲慢). So, I believe that i can become a good programmer. How about you?
+
+Ref. Shell scripting cheat sheet (So sorry, I can't find nice English page. plz google it) https://qiita.com/muran001/items/8bb5530d79301b1b2b82
 
 ### See .sam file contents
 Yesterday, we generated a .sam file by sequence alignment using bwa, fastq (NGS reads) and fasta (reference human genome sequence).  
-I forgot to walk through .sam format. So, let's see.  
+I forgot to tell .sam format.  
 `$ less -S ${id}.aligned_reads.sam`
 
     ...
@@ -874,6 +875,9 @@ I forgot to walk through .sam format. So, let's see.
     DRR006760.21924942  99  1   200001062   60  100M    =   200001078   118 GAGGCTTGTTAATGCTTCTCTCCTTTACTTGACCCCTCTACCAGACACAATGTCTAGGATTATCTTGGATTCAGCCTTGAGCATAAGTTGAGCTAGAGAA    CCCFFFFFFHDHFEHHHIJJJJJGJJIEHJHHIJIJJIIIJJIGIJJJCHGIIJIJJJEHIGJJIJGIIJJJIBHEHHFDFFDFFEEEFDDEDDDDDDCD    NM:i:0  MD:Z:100    MC:Z:102M   AS:i:100    XS:i:0  RG:Z:FLOWCELLID
     DRR006760.21924942  147 1   200001078   60  102M    =   200001062   -118    TCTCTCCTTTACTTGACCCCTCTACCAGACACAATGTCTAGGATTATCTTGGATTCAGCCTTGAGCATAAGTTGAGCTAGAGAAGGGCACATTGTCAGACTC  ?BBBACCDCC;DECA8FFHHHECDJJIGIHEJJJJJJJJJJJIJJJJJIGFIFJIJJJJJIJJJJIJIJJJJJJJJJJJJIJJJJJIIGHHHHFFFFFCCCD  NM:i:1  MD:Z:101T0  MC:Z:100M   AS:i:101    XS:i:0  RG:Z:FLOWCELLID
     DRR006760.2806872   83  1   200001149   60  100M    =   200001107   -142    TTGAGCTAGAGAAGGGCACATTGTCAGACTTCCACCTACAGGCCCAACCCAATCCCCACCCCCAGGGATGCACTAGGCAGGCAAGACAACTTCACTCCGC    CDDDDCDCCCCCDDCADCDDCCC@>@:(9DB?A@DCC@B?A?DBDDACFEFD=HHBFAIIJJJJJJIIGEGIHHIGIHEJHCEJIHGDFBDCB;DDFC@@    NM:i:0  MD:Z:100    MC:Z:102M   AS:i:100    XS:i:0  RG:Z:FLOWCELLID
+
+I'd like to show you this using IGV  
+`$ sh ./IGV_2.4.13/igv.sh -g 1kg_v37 small_sorted.bam` then, go to 1:199,999,935-200,000,182 # _only for me_
 
 SAM (file format) - Wikipedia https://en.wikipedia.org/wiki/SAM_(file_format)  
 Explain SAM Flags https://broadinstitute.github.io/picard/explain-flags.html
