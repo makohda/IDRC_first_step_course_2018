@@ -1813,6 +1813,16 @@ Load libraries, change working diretory, import data into R environments, conver
 When you see and think about some numbers, such as 0, 0.1, 0.9, and 1.  
 I believe You have to think about it's distribution at the same time.
 
+# Extra materials
+Example script (enhanced version of run_tools_01.sh)  
+```
+$ wget -c https://www.dropbox.com/s/z4zl6b3yhzyodt0/IDRC_first_step_run_full_fastq.sh
+# give a permission
+$ chmod +x IDRC_first_step_run_full_fastq.sh
+# run with message logging
+$ ./IDRC_first_step_run_full_fastq.sh 2>&1 | tee IDRC_first_step_run_full_fastq.log
+```
+
 # Under construction :no_entry_sign:
 1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
 1. Solve DRR006760, DRR001913 by yourself
