@@ -1771,8 +1771,8 @@ Load libraries, change working diretory, import data into R environments, conver
 
 # Number sign is used for Comment out. R ignore lines beginning with #
 > d = fread("PP2HVAR.merge.tab")        # >= 0.909 damaging
-#> d = fread("SIFT.merge.tab")           # >= 0.05 damaging
-#> d = fread("MutationTaster.merge.tab") # >= 0.65 damaging
+> #d = fread("SIFT.merge.tab")           # >= 0.05 damaging
+> #d = fread("MutationTaster.merge.tab") # >= 0.65 damaging
 
 > is(d$score)
 > d$score = as.numeric(d$score)
@@ -1785,8 +1785,8 @@ Load libraries, change working diretory, import data into R environments, conver
 > g = ggplot(data=d, aes(score, colour = type))
 > g = g + geom_density()
 > g = g + geom_vline(xintercept = 0.909, color="gray") # PolyPhen2
-#> g = g + geom_vline(xintercept = 0.05, color="gray")  # SIFT
-#> g = g + geom_vline(xintercept = 0.65, color="gray")  # Mut. Taster
+> #g = g + geom_vline(xintercept = 0.05, color="gray")  # SIFT
+> #g = g + geom_vline(xintercept = 0.65, color="gray")  # Mut. Taster
 > plot(g)
 
 > d.2 = d %>% filter(type == "known" | type =="mitocarta")
