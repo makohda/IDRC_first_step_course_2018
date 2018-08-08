@@ -1804,13 +1804,14 @@ Load libraries, change working diretory, import data into R environments, conver
 ![](images/R1.png "")
 
 
-> “Preoccupied with a single leaf…you won’t see the tree.
+> Preoccupied with a single leaf…you won’t see the tree.
 > Preoccupied with a single tree…you ‘ll miss the entire forest.
 > Don’t be preoccupied with a single spot.
 > See everything in the entirety….effortlessly
-> That is what it means…to truly SEE”
+> That is what it means…to truly SEE
 
-In Japanese, "木を見て森を見ず"  
+When you see and think about some numbers, such as 0, 0.1, 0.9, and 1.  
+I believe You have to think about it's distribution at the same time.
 
 # Under construction :no_entry_sign:
 1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
