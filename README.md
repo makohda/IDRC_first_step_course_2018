@@ -1811,23 +1811,21 @@ Load libraries, change working diretory, import data into R environments, conver
 > That is what it means…to truly SEE”
 
 
-# Third step (underconstruction)
+# Under construction :no_entry_sign:
 1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
 1. Solve DRR006760, DRR001913 by yourself
 1. Ruby array hash case
 1. Exam. In other words, homework. But, don't move data to your home!  
 Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint. Most of cases are easy. Some cases are quit difficult. I solved all the cases. Happy to see your excellent result :satisfied:
+___
 
-# You have to learn
+## You have to learn for reproducing second step by yourself
 - bwa index command
-- Where you can download required files (human_g1k_v37_decoy.fasta, etc)
+- Where you can get required files (human_g1k_v37_decoy.fasta, etc)
 - How to set up annovar
 After these steps, you probably reproduce this course. Congrats :laughing:
 
 ___
-
-
-# Under construction :no_entry_sign:
 
 get latest dbsnp.vcf to increase the number of known mutations. It will increase the accuracy for estimating novel pathogenic allele frequencies.
 
@@ -1835,22 +1833,10 @@ get latest dbsnp.vcf to increase the number of known mutations. It will increase
 GATK | Workshop Materials https://software.broadinstitute.org/gatk/download/workshops
 presentations - Google ドライブ https://drive.google.com/drive/folders/1aJPswWdmMKLSmXB6jjHMltXj6XDjSHLJ
 
-bwa index
+性別チェックとか?
+echo "`grep \"^X\" DRR006760.avoutput.hg19_multianno.txt | grep -wF het | wc -l`\t`grep \"^X\" DRR006760.avoutput.hg19_multianno.txt | wc -l`" | perl -F"\t" -lane 'print $F[0]/$F[1]'
 
-human.fasta と dict ダウンロードのこと
-
-Insert R.txt here.
-
-bwa index, Annovar download 周りが自分で0からするには必要だ
-
-あと base_dir のことが必要
-
-
-    echo "`grep \"^X\" DRR006760.avoutput.hg19_multianno.txt | grep -wF het | wc -l`\t`grep \"^X\" DRR006760.avoutput.hg19_multianno.txt | wc -l`" | perl -F"\t" -lane 'print $F[0]/$F[1]'
-
-
-
---------
+___
 
 sequence depth 取ってないなぁ
 
@@ -1862,12 +1848,9 @@ bed file の部分どうするかな
 - Regular expression is frequently used in pattern matching like this. `$ echo Okazaki-sense` `$ echo Okazaki-sense | perl -pe 's/O.*i/Kohda/'`
 
 
-
-
 HaplotypeCaller and detection of large indels — GATK-Forum https://gatkforums.broadinstitute.org/gatk/discussion/3932/haplotypecaller-and-detection-of-large-indels
 
 GATK | Doc #1247 | What should I use as known variants/sites for running tool X? https://software.broadinstitute.org/gatk/documentation/article.php?id=1247
-
 
 $ samtools index ${id}.aligned_reads_dedup_recal_sorted.bam いらないかも。GATK が .bai 作ってる気がする -> 作るね
 
