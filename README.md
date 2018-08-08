@@ -1700,7 +1700,7 @@ AMR? ASJ? See FAQ of ExAC/gnomAD
 - Frequently Asked Questions gnomAD browser http://gnomad.broadinstitute.org/faq
 
 
-# Extrasession#3: Facing prediction scores (underconstruction :no_entry_sign:)
+# Extrasession#3: Facing prediction scores
 When you see and think about some numbers, such as 0, 0.1, 0.9, and 1.  
 I think You have to think about it's distribution at the same time.  
 
