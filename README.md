@@ -999,7 +999,10 @@ You can visualize the difference between before/after base quality recalibration
 Run BaseRecalibrator again with the generated table by 1st BaseRecalibrator run.  
 ![](images/BSQR3.png "")
 
-***For this task, you have to install some libraries for GNU R***
+For this task, you have to install some libraries for GNU R.  
+It requires gplots, reshape, gsalib.  
+Without these libs, you will have an error (R excutions or something) from GATK when you run AnalyzeCovariates.  
+You could find reasons for R excution errors by adding "-l DEBUG" option to GATK run.  
 ```
 $ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar -T BaseRecalibrator -R human_g1k_v37_decoy.fasta -I ${id}.aligned_reads_dedup_sorted.bam -knownSites dbsnp_138.b37.vcf -knownSites Mills_and_1000G_gold_standard.indels.b37.vcf -BQSR ${id}_recal.table -o post_${id}_recal.table
 
