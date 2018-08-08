@@ -1528,6 +1528,8 @@ Who is a candidate for next certified repeater? :repeat: :ng: :accept: :smiling_
 
 # We will start an extrasession from here :triumph:
 
+# Extrasession#1: gnomAD, 3.5KJPN, DRR006760 full data
+
 Let's add other resources for better fitering.  
 Here, we add gnomAD http://gnomad.broadinstitute.org/ and 3.5KJPN (Japanese)  
 
@@ -1567,6 +1569,10 @@ Do you get similar results?
     -rw-r--r-- 1 mako 93M  8  3 16:20 DRR006760.avoutput2.hg19_multianno.txt
     199695 DRR006760.avoutput2.hg19_multianno.txt
 
+Now, we use DRR006760 instead of DRR006760_chr1. So, we have to change the value of ${id} (variable).  
+`$ id=DRR006760`
+
+Move to filtering steps.  
 `$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput2.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.avoutput2.hg19_multianno.exonic.txt`
 
 Column 12 ExAC_ALL  
@@ -1618,7 +1624,7 @@ CFAP47 and SSX3 genes are located on chromosome X. Do not match inherited patter
 :tada::tada::tada::tada::tada::tada::tada::tada::tada::tada:
 
 
-# Extrasession: How can we estimate pathogenic allele frequencies? How do we archive it? :disappointed_relieved:
+# Extrasession#2: How can we estimate pathogenic allele frequencies? How do we archive it? :disappointed_relieved:
 In previous filtering steps, we used MAF 0.001 (0.1%) as the threshold. *Is this really appropriate?*  
 Do not stop thinking. Confirm the evidence by yourself.  
 
@@ -1694,7 +1700,7 @@ AMR? ASJ? See FAQ of ExAC/gnomAD
 - Frequently Asked Questions gnomAD browser http://gnomad.broadinstitute.org/faq
 
 
-# Extrasession: Facing prediction scores (underconstruction :no_entry_sign:)
+# Extrasession#3: Facing prediction scores (underconstruction :no_entry_sign:)
 When you see and think about some numbers, such as 0, 0.1, 0.9, and 1.  
 I think You have to think about it's distribution at the same time.  
 
