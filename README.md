@@ -1559,6 +1559,7 @@ This file is generated from full exome data of DRR006760.
 Download this file DRR006760.avoutput2.hg19_multianno.txt  
 ~~`$ wget -c https://www.dropbox.com/s/14va6q9s52cze0o/DRR006760.avoutput2.hg19_multianno.txt.gz`~~  
 `$ wget -c https://www.dropbox.com/s/wg8a17jcsv2m9cl/DRR006760.avoutput2.hg19_multianno.txt.gz`
+
 Decompress it.  
 `$ gunzip DRR006760.avoutput2.hg19_multianno.txt.gz`
 
