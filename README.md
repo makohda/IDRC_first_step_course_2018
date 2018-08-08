@@ -1583,7 +1583,7 @@ Move to filtering steps.
 Column 12 ExAC_ALL  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || $F[11] <= 0.001' > ${id}.avoutput2.hg19_multianno.exonic.filtered_1.txt`
 
-`$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt | ./tableview_darwin_amd64`
+`$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_1.txt | ./tableview_darwin_amd64`
 
 Column 15 ExAC_EAS (this remove IGFN1 variant)  
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.txt | perl -F"\t" -lane 'print $_ if $. == 1 || ($F[11] <= 0.001 && $F[14] <= 0.001)' > ${id}.avoutput2.hg19_multianno.exonic.filtered_2.txt`
@@ -1624,7 +1624,7 @@ It seems that we have 10 candidate genes in DRR006760.avoutput2.hg19_multianno.e
 
 Based on observing our internal data, chr8:10467589 RP1L1 nonframeshift and chr12:53207583 KRT4 nonframeshift are popular alleles. So we can ignore them.  
 CFAP47 and SSX3 genes are located on chromosome X. Do not match inherited pattern. So we can remove them, too.  
-`$ cat DRR006760.avoutput2.hg19_multianno.exonic.filtered_6.txt G -vwF -e RP1L1 -e KRT4 -e CFAP47 -e SSX3 | ./tableview_darwin_amd64`
+`$ cat DRR006760.avoutput2.hg19_multianno.exonic.filtered_6.txt | grep -vwF -e RP1L1 -e KRT4 -e CFAP47 -e SSX3 | ./tableview_darwin_amd64`
 
 :tada::tada::tada::tada::tada::tada::tada::tada::tada::tada:
 
@@ -1839,6 +1839,16 @@ $ ./annovar/table_annovar.pl combined_genotyped.MT.${id}.avinput annovar/humandb
                              --nastring NA --otherinfo \
                              --remove \
                              --outfile ${id}.MT.avoutput
+
+$ ./00_make_mitomap_data.sh
+
+$ MITOMAP=MITOMAP.cfrm_report_all.180808.genericdb
+
+$ grep -wF -e Chr -e MT ${id}.MT.avoutput.GRCh37_MT_multianno.txt | body grep -wFf <(grep -wF Cfrm ${MITOMAP} | \
+    ruby -F"\t" -lane 'puts [$F[0], $F[1], $F[1].to_i + $F[2].size - 1, $F[2], $F[3]].join("\t")') | \
+
+
+
 ```
 
 # Extra materials
