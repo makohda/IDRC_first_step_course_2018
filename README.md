@@ -1810,6 +1810,7 @@ Load libraries, change working diretory, import data into R environments, conver
 > See everything in the entirety….effortlessly
 > That is what it means…to truly SEE”
 
+In Japanese, "木を見て森を見ず"  
 
 # Under construction :no_entry_sign:
 1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
