@@ -1695,69 +1695,114 @@ AMR? ASJ? See FAQ of ExAC/gnomAD
 
 
 # Extrasession: Facing prediction scores (underconstruction :no_entry_sign:)
+When you see and think about some numbers, such as 0, 0.1, 0.9, and 1.  
+I think You have to think about it's distribution at the same time.  
 
-https://www.dropbox.com/s/u06avi5o5z02yd6/MutationTaster.merge.tab
+To do this, we need some computational skills for handling and exploring data.  
+The first step of data analysis is becoming familiar with your data.  
 
-`$ cat MutationTaster.merge.tab | cut -f1 | sort | uniq -c`
+I prepared some prediction scores from our mitochondrial project.  
+This file includes PP2HVAR score of all variants that still remained after our filterings (several MAFs, inherited traits).  
+(Original file is cases.exonic.filtered.add_ID.no_alt0.no_haplo.REC.common_less_than_12.all.txt)  
+You can download from here.  
+```
+$ wget -c https://www.dropbox.com/s/1dqeb4hsbv9ftg8/SIFT.merge.tab
+$ wget -c https://www.dropbox.com/s/wflhgevhcp5udn7/PP2HVAR.merge.tab
+$ wget -c https://www.dropbox.com/s/u06avi5o5z02yd6/MutationTaster.merge.tab
+```
+
+Check the file contents.  
+`$ less PP2HVAR.merge.tab`  
+
+    type    score   pred
+    known   0.999   D
+    known   1.0     D
+    known   0.776   P
+
+`$ wc -l PP2HVAR.merge.tab`
+
+    5360 PP2HVAR.merge.tab
+
+Count the number of each category.  
+You can archieve like this.  
+`$ cat PP2HVAR.merge.tab | cut -f1 | sort | uniq -c`
 
      113 known
-     140 mitocarta
-    5104 other
+     141 mitocarta
+    5105 other
        1 type
 
-In R,
+Let's make a plot using GNU R.  
+Firstly, you have to install GNU R via homebrew.  
+`$ brew install R`
 
-    library(data.table)
-    library(ggplot2)
-    library(dplyr)
-    
-    setwd("~/exome_analysis")
-    getwd()
-    
-    
-    #d = fread("SIFT.merge.tab") # >= 0.05 damaging
-    #d = fread("PP2HVAR.merge.tab") # >= 0.909 damaging
-    d = fread("MutationTaster.merge.tab") # >= 0.65 damaging
-    
-    is(d$score)
-    d$score = as.numeric(d$score)
-    
-    g = ggplot(data=d, aes(x=type, y=score))
-    g = g + geom_boxplot()
-    g = g + geom_point(alpha = 0.1) + geom_jitter(width = 0.3)
-    plot(g)
-    
-    g = ggplot(data=d, aes(score, colour = type))
-    g = g + geom_density()
-    #g = g + geom_vline(xintercept = 0.05, color="gray") # SIFT
-    #g = g + geom_vline(xintercept = 0.909, color="gray") # PolyPhen2
-    g = g + geom_vline(xintercept = 0.65, color="gray") # Mut. Taster
-    plot(g)
-    
-    d.2 = d %>% filter(type == "known" | type =="mitocarta")
-    g = ggplot(data=d.2, aes(score, colour = type))
-    g = g + geom_density()
-    g = g + geom_vline(xintercept = 0.65, color="gray")
-    plot(g)
+Then, start up R and install some R libraries.  
+`$ R`
 
-    d.3 = d %>% filter(type == "known" | type =="other")
-    g = ggplot(data=d.3, aes(score, colour = type))
-    g = g + geom_density()
-    g = g + geom_vline(xintercept = 0.65, color="gray")
-    plot(g)
+You will see following messages from R.
 
-When you see numbers, such as 0, 0.1, 0.9, and 1.  
-You have to imagine it's distribution. You have to.  
-Do not start thinking with only number you just see.  
+    R version 3.5.1 (2018-07-02) -- "Feather Spray"
+    Copyright (C) 2018 The R Foundation for Statistical Computing
+    Platform: x86_64-apple-darwin16.7.0 (64-bit)
+    ...
+
+You realize that the prompt (normarly $) has changed to ">". Now, you are in R environments.  
+So, I show you commands for R with ">" prompt.  
+```
+> install.packages("data.table")
+> install.packages("ggplot2")
+> install.packages("dplyr")
+```
+
+Load libraries, change working diretory, import data into R environments, convert data type, plot using ggplot
+```
+> library(data.table)
+> library(ggplot2)
+> library(dplyr)
+
+> setwd("~/exome_analysis")
+> getwd()
+
+# Number sign is used for Comment out. R ignore lines beginning with #
+> d = fread("PP2HVAR.merge.tab")        # >= 0.909 damaging
+#> d = fread("SIFT.merge.tab")           # >= 0.05 damaging
+#> d = fread("MutationTaster.merge.tab") # >= 0.65 damaging
+
+> is(d$score)
+> d$score = as.numeric(d$score)
+
+> g = ggplot(data=d, aes(x=type, y=score))
+> g = g + geom_boxplot()
+> g = g + geom_point(alpha = 0.1) + geom_jitter(width = 0.3)
+> plot(g)
+
+> g = ggplot(data=d, aes(score, colour = type))
+> g = g + geom_density()
+> g = g + geom_vline(xintercept = 0.909, color="gray") # PolyPhen2
+#> g = g + geom_vline(xintercept = 0.05, color="gray")  # SIFT
+#> g = g + geom_vline(xintercept = 0.65, color="gray")  # Mut. Taster
+> plot(g)
+
+> d.2 = d %>% filter(type == "known" | type =="mitocarta")
+> g = ggplot(data=d.2, aes(score, colour = type))
+> g = g + geom_density()
+> g = g + geom_vline(xintercept = 0.909, color="gray") # The value of xintercept depends on what data you are handling
+> plot(g)
+
+> d.3 = d %>% filter(type == "known" | type =="other")
+> g = ggplot(data=d.3, aes(score, colour = type))
+> g = g + geom_density()
+> g = g + geom_vline(xintercept = 0.909, color="gray") # The value of xintercept depends on what data you are handling
+> plot(g)
+```
+![](images/R1.png "")
+
 
 > “Preoccupied with a single leaf…you won’t see the tree.
 > Preoccupied with a single tree…you ‘ll miss the entire forest.
 > Don’t be preoccupied with a single spot.
 > See everything in the entirety….effortlessly
 > That is what it means…to truly SEE”
-
-So, we need some computational skills for handling and exploring data.  
-The first step of data analysis is becoming familiar with your data.  
 
 
 # Third step (underconstruction)
