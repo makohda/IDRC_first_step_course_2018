@@ -1892,6 +1892,8 @@ Download here https://www.dropbox.com/s/ntg3wo0gagvalrt/MITOMAP.cfrm_report_all.
                              --remove \
                              --outfile ${id}.MT.avoutput3
 
+:tada:
+
 Be careful, MitoMap have several unformatted entries.
 
 For annotating mitochodrial variants, read this section of Annovar site.  
