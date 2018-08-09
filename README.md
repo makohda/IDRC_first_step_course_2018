@@ -1872,7 +1872,8 @@ $ ./annovar/table_annovar.pl combined_genotyped.MT.${id}.avinput annovar/humandb
                              --genericdbfile MITOMAP.cfrm_report_all.180809.genericdb \
                              --operation g,f \
                              --argument '--hgvs --exonicsplicing --splicing_threshold 5', \
-                             --nastring NA --otherinfo \
+                             --nastring NA \
+                             --otherinfo \
                              --remove \
                              --outfile ${id}.MT.avoutput2
 
@@ -1886,7 +1887,8 @@ Download here https://www.dropbox.com/s/ntg3wo0gagvalrt/MITOMAP.cfrm_report_all.
                              --genericdbfile tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb,MITOMAP.cfrm_report_all.180809.genericdb \
                              --operation g,f,f \
                              --argument '--hgvs --exonicsplicing --splicing_threshold 5',, \
-                             --nastring NA --otherinfo \
+                             --nastring NA \
+                             --otherinfo \
                              --remove \
                              --outfile ${id}.MT.avoutput3
 
