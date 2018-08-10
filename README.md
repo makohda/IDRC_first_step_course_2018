@@ -1985,5 +1985,41 @@ perl -i -pe 's/gff36/omim.info/' ${id}.PASS.avoutput.hg19_multianno.txt
 grep -wF -e Func.refGene -e exonic -e splicing  ${id}.PASS.avoutput.hg19_multianno.txt | grep -vwF -e "synonymous SNV" > ${id}.PASS.avoutput.hg19_multianno.exonic.txt
 ```
 
+# How to use 3.5KJPN ver.2?
+See my two github codes
+- makohda/ToMMoVcf2Annovar: Convert ToMMo 3.5KJPNv2 vcf files to Annovar genericdb format https://github.com/makohda/ToMMoVcf2Annovar
+- This script is a mod version of "Creating index for Annovar database file - SEQanswers http://seqanswers.com/forums/showthread.php?t=23535" https://gist.github.com/makohda/732393a5de9341e411201404e30977f9
+
+```
+$ git clone https://github.com/makohda/ToMMoVcf2Annovar.git
+$ cd ToMMoVcf2Annovar
+$ mkdir data
+
+# put 3 vcf files into data directory
+data/tommo-3.5kjpnv2-20180625-af_snvall-autosome.vcf
+data/tommo-3.5kjpnv2-20180625-af_snvall-chrX_PAR3.vcf
+data/tommo-3.5kjpnv2-20180625-af_snvall-chrMT.vcf
+
+# git permissions for running
+$ chmod +x convert_35KJPNv2.sh
+$ chmod +x tommo_separate_alternatives.rb
+
+# run
+$ ./convert_35KJPNv2.sh
+
+# If you succeeded, you will get following response
+
+ 53735741 tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb
+ 53735741 tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb
 
 
+Then, make .idx (index) file for generated genericdb files. It reduces Annovar running time. Annovar could complete annotating tasks without index, but takes longer time.
+
+# Download perl script from https://gist.github.com/makohda/732393a5de9341e411201404e30977f9
+
+# run with MAF.genericdb
+$ perl ./compileAnnovarIndex_modified.pl tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb 1000 > tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb.idx
+
+# run with INFO.genericdb
+$ perl ./compileAnnovarIndex_modified.pl tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb 1000 > tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb.idx
+```
