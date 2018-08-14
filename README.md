@@ -1857,7 +1857,7 @@ Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/e
 Set id  
 `$ id=ngs_test # or your_sample_id`
 
-## Annotate example#1 (ensembl gene)  
+## Annotate example#1 (ensembl gene) (< 1 min)  
 ```
 $ ./annovar/table_annovar.pl combined_genotyped.MT.${id}.avinput annovar/humandb/ \
                              -buildver GRCh37_MT \
@@ -1870,7 +1870,7 @@ $ ./annovar/table_annovar.pl combined_genotyped.MT.${id}.avinput annovar/humandb
                              --outfile ${id}.MT.avoutput
 ```
 
-## Annotate example#2 (ensembl gene, MitoMap)  
+## Annotate example#2 (ensembl gene, MitoMap) (< 1 min)  
 ```
 ./annovar/table_annovar.pl combined_genotyped.MT.${id}.avinput annovar/humandb/ \
                              -buildver GRCh37_MT \
@@ -1887,7 +1887,7 @@ $ ./annovar/table_annovar.pl combined_genotyped.MT.${id}.avinput annovar/humandb
 Probably, you had an error in #2, due to missing MITOMAP.cfrm_report_all.180809.genericdb  
 Download here https://www.dropbox.com/s/ntg3wo0gagvalrt/MITOMAP.cfrm_report_all.180809.genericdb
 
-## Annotate example#3 (ensembl gene, 3.5KJPN, MitoMap)  
+## Annotate example#3 (ensembl gene, 3.5KJPN, MitoMap)  (< 1 min)  
 ```
 ./annovar/table_annovar.pl combined_genotyped.MT.${id}.avinput annovar/humandb/ \
                              -buildver GRCh37_MT \
