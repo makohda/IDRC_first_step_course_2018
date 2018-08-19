@@ -1908,7 +1908,7 @@ Be careful, MitoMap have several unformatted entries.
 For annotating mitochodrial variants, read this section of Annovar site.  
 Annotating mitochrondria variants  http://annovar.openbioinformatics.org/en/latest/user-guide/gene/
 
-# Extra materials
+# Extra materials/notes
 Example script: IDRC_first_step_run_full_fastq.sh  
 This is enhanced version of run_tools_01.sh  
 ```
@@ -1918,6 +1918,27 @@ $ chmod +x IDRC_first_step_run_full_fastq.sh
 # run with message logging
 $ ./IDRC_first_step_run_full_fastq.sh 2>&1 | tee IDRC_first_step_run_full_fastq.log
 ```
+
+## HGVS nomenclature
+- (documents) Sequence Variant Nomenclature http://varnomen.hgvs.org/ by HGVS
+- (tool) Mutalyzer 2.0.28 — Welcome to the Mutalyzer website https://mutalyzer.nl/ for annotation format check
+- (issue) the left versus right alignment dilemma http://blog.goldenhelix.com/goldenadmin/variant-notation-in-simplicity-we-find-complexity/
+
+## ACMG variant classification
+- see Fig. 1 of nihms697486.pdf and Fig. 2 of PIIS0002929717300046.pdf
+    - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4544753/pdf/nihms697486.pdf
+    - https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5294755/
+- these rules are not applied to ACMG Incidental, Secondary findings. They are assessed by other rules
+
+## Variant Annotation tools
+- (tool) Variant Effect Predictor - Homo sapiens - GRCh37 Archive browser 93 http://grch37.ensembl.org/Homo_sapiens/Tools/VEP
+- (tool) SnpEff and SnpSift http://snpeff.sourceforge.net/index.html
+- (tool) ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/
+- (tool) TransVar http://bioinformatics.mdanderson.org/transvarweb/
+SnpEff, Annovar are major program for variant annotating
+TransVar is useful for reverse annotation. e.g. Old paper or clinician/researcher who are not familier with genetics sometimes say "p.S65L" only. It is always taugh to determine exact genomic/coding position (reverse annotation). TransVar will help you.
+
+___
 
 # Under construction :no_entry_sign:
 1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
