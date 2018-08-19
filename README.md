@@ -3,11 +3,11 @@
 Simply saying, based on genetic knowledge, find out causative variants from not so big data.  
 It also requires some computational skills.
 
-## What are required to exome analysis?
+## What is required for exome analysis?
 1. knowledge of genetics
 1. knowledge of target diseases, especially for genetic background
 1. knowledge of associated databases (how to find the information you want)
-1. knowledge of exome sequencing/high speed sequencers/molecular biology
+1. knowledge of exome sequencing/high-speed sequencers/molecular biology
 1. computational skills
 1. knowledge of ethical problems/privacy protection/IF and SF
 
@@ -17,19 +17,19 @@ This is completely my biased list, so I can agree with 3 or 4 or 5 in reverse/ch
 
 # 2. Aim
 This mini-course is made for a lecture which let you get a first tiny step to bioinformatic analysis.  
-It assumes that this is made for **step by step hands-on style, but this could be applied to self studying.  
+It assumes that this is made for **step by step hands-on style, but this could be applied to self study.  
 Do not be afraid. If you failed something, nothing will happen. No sample lost. Not wasting any tips/chips/gels/solutions/enzymes/antibodies. Just gain your experiences. Practice makes perfect** :wink:
 
 ## This course will cover:
-- customise your macintosh environment for running bioinformatic programs
+- customize your Macintosh environment for running bioinformatic programs
 - experience simple target resequence data analysis
 - understand what steps are there (alignment, remove duplicate, variant call..etc)
 - how interpretate variants
 
 ## Not cover:
-- how algorithmn works
+- how algorithm works
 - how to handle massive amount data using cluster computers (SSH, Grid Job Scheduler, memory usage, disk I/O)
-- deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in heystacks)
+- deep/heuristic/complicated issues/knowledge/techniques/pitfalls (e.g. how can I sense abnormal data signs in haystacks)
 
 ## Prerequires
 
@@ -52,30 +52,30 @@ Do not be afraid. If you failed something, nothing will happen. No sample lost. 
     - dbsnp_138.b37.vcf.idx.gz
 
 ## Beyond this course
-For further advanced self studies, you already know there are so many pages in the internet :astonished:  
+For further advanced self-studies, you already know there are so many pages on the internet :astonished:  
 I think these materials might be nice for the next step.  
 - The Canadian Bioinformatics workshops (past workshop materials/videos are ready) https://bioinformatics.ca/workshops/
 - 平成28年度NGSハンズオン講習会カリキュラム NBDC https://biosciencedbc.jp/human/human-resources/workshop/h28-2
 
 # 3. Set up your mac :computer:
 #### :point_right: Ideally, you should try and complete this section before hands-on
-You have to set up your macintosh environment for informatic analyses.  
+You have to set up your Macintosh environment for informatic analyses.  
 I know this is a first barricade to step in learning informatic skills, but this shold be done. I tried to make it as easy as possible.
 
 ## Minimal knowledge
 - copy/paste shortcut keys in macOS: copy is Cmd + C, paste is Cmd + V
 - Terminal.app is a application to tell what you want to your computer via command lines
-- `$ ` means command line in this page. $ is a prompt, so you don't need type $. Just type following characters
+- `$ ` means command line in this page. $ is prompt, so you don't need type $. Just type following characters
 - `$ pwd` pwd means _**P**rint **W**orking **D**irectory_
-- **Directory** means Folders in your launguage. In Linux/Unix world, it's directories
+- **Directory** means Folders in your language. In Linux/Unix world, it's directories
 - `$ cd` cd means _**C**hange **D**irectory_
 - `$ mkdir new_diretory_name` mkdir means _**M**ake **D**irectory_
 - GNU/Linux is a kind of OS (Operation Systems). Same as Windows and macOS. Most of servers are Linux
-- Server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small/Mail/Web...too diverse to express
+- A server is a computer, but not for personal use. Expensive/Cheap/High speed/Slow/Big/Small/Mail/Web...too diverse to express
 - Linux is a open source copy of UNIX (not exactly)
 - macOS is a kind of FreeBSD OS. BSD is a kind of UNIX https://en.wikipedia.org/wiki/Unix-like#/media/File:Unix_history-simple.svg
-- UNIX is a OS developed by AT&T and MIT. It has several good features https://www.gotothings.com/unix/unix-features-and-advantages.htm
-- Therefore, we frequently recomment to use Mac when you start to use command lines
+- UNIX is an OS developed by AT&T and MIT. It has several good features https://www.gotothings.com/unix/unix-features-and-advantages.htm
+- Therefore, we frequently recommend to use Mac when you start to use command lines
 - **Google is your best friend** :+1:
 - may add later (frequently asked words or something)
 
@@ -87,8 +87,8 @@ I know this is a first barricade to step in learning informatic skills, but this
 All data should be gathered here.
 
 ## Install java (Java SE Development Kit 8u181 version)
-Java is a kind of programming launguage.  
-You need Java itself to run applications developed using Java launguage. For example, IGV, Picard and GATK are Java application. We will install them.
+Java is a kind of programming language.  
+You need Java itself to run applications developed using Java launguage. For example, IGV, Picard, and GATK are Java application. We will install them.
 
 Download Java SE Development Kit 8u181 from here  
 https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html  
@@ -98,14 +98,14 @@ After installation, confirm it by following procedures.
 Open Terminal.app (is located on /Application/Utilities), then type this shell command  
 `$ java -version`
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     java version "1.8.0_181"
     Java(TM) SE Runtime Environment (build 1.8.0_181-b13)
     Java HotSpot(TM) 64-Bit Server VM (build 25.181-b13, mixed mode)
 
-## Install homebrew, a nice packge manager for macOS :beer:
-A package manager maintains softwares (packages), such as install, update, and remove.  
+## Install homebrew, a nice package manager for macOS :beer:
+A package manager maintains software (packages), such as install, update, and remove.  
 Of course, you can manage your computer, but we usually use a package manager to make it easier.  
 Go to this page, https://brew.sh/ then, follow the install instruction.
 
@@ -114,9 +114,9 @@ Open Terminal.app (is located on /Application/Utilities), then type this shell c
 _The administrator password will be required in this process_
 curl is a command line tool for getting or sending files using URL syntax. Here, curl downloads homebrew install script from github, then Ruby runs the install script to install homebrew into your macOS system.
 
-**In the process, you might be asked "Xcode command line tool installation" by computer. Please permit it. Xcode is a programming environment for macOS. It mainly used by software developer, but it also contains some necessary parts for running command line tools.**  
+**In the process, you might be asked "Xcode command line tool installation" by computer. Please permit it. Xcode is a programming environment for macOS. It mainly used by software developers, but it also contains some necessary parts for running command line tools.**  
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     ==> Next steps:
     - Run `brew help` to get started
@@ -136,7 +136,7 @@ Or
 `$ less test_variant_data_01.tsv`  
 _Push Q key for quit_
 
-more/less is a viewer. Originally, there is more. Then, less was developped.
+more/less is a viewer. Originally, there is more. Then, less was developed.
 
 cat command means con**cat**enate. Concatenate multiple file, like this  
 `$ cat fileA fileB`  
@@ -152,15 +152,15 @@ $ less -S test_variant_data.concatenated.tsv
 ```
 _Push Q key for quit_  
 
-">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file. We call this function as "redict".  
--S is a option of less command. It change less behavior to chop-long-lines.  
+">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file. We call this function as "redirect".  
+-S is an option of less command. It changes less behavior into chop-long-lines.  
 Commands have their specific options. You can see like this.  
 ```
 $ less --help
 $ cat --help
 ```
 
-## Install softwares required for sequence analysis#1
+## Install software required for sequence analysis#1
 At first, type this, to tell homebrew much more scientific programs  
 `$ brew tap brewsci/bio`
 
@@ -178,7 +178,7 @@ $ brew install bwa
 Type to check the installation  
 `$ bwa`  
 
-If succeeded, you will get following response  
+If succeeded, you will get the following response  
 
     Program: bwa (alignment via Burrows-Wheeler transformation)
     Version: 0.7.17-r1188
@@ -196,7 +196,7 @@ $ brew install samtools
 Type to check the installation  
 `$ samtools --version`
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     samtools 1.9
     Using htslib 1.9
@@ -205,14 +205,14 @@ If succeeded, you will get following response
 ### Install IGV (< 3 min)
 Integrative Genomics Viewer is a viewer for NGS/Microarray data, developed by Broad Institute.  
 Go to https://software.broadinstitute.org/software/igv/download and click 'Download and unzip the Binary Distribution archive'  
-Then, double click downloaded item to expand. you will find IGV_2.4.13 directory.  
+Then, double-click the downloaded item to expand. you will find IGV_2.4.13 directory.  
 Or  
 ```
 $ wget http://data.broadinstitute.org/igv/projects/downloads/2.4/IGV_2.4.13.zip
 $ unzip IGV_2.4.13.zip
 ```
 Make sure directories. Now, I expect "~/exome_analysis/IGV_2.4.13".  
-Can you see following results by this command?  
+Can you see the following results by this command?  
 `$ ls -vlht ~/exome_analysis/IGV_2.4.13`
 
     total 69760
@@ -226,13 +226,13 @@ Can you see following results by this command?
 
 To start up IGV, type  
 `$ sh IGV_2.4.13/igv.sh -g 1kg_v37`  
-Java language will run IGV program. We will use IGV after sequece data alignment.
+Java language will run IGV program. We will use IGV after sequence data alignment.
 1kg_v37 specify the human genome version. If this is the first time IGV wake up, it will start downloading automatically.  
 You can download the specific version of reference human genome (Human 1kg, b37 + decoy), it can be found in Menu bar "Genomes > Load Genome From Server"  
 
 ### Tips: 1kg? b37?? decoy???
 - 1kg means 1000 genomes project http://www.internationalgenome.org/  
-- b37 is a version of human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
+- b37 is a version of the human genome (build 37), which is provided by Genome Reference Consortium https://www.ncbi.nlm.nih.gov/grc  
 - decoy is a sequence derived from HuRef, human BAC and Fosmid clones, and NA12878.
   - Scientific Notes/human genome - DNAnexus Wiki https://wiki.dnanexus.com/scientific-notes/human-genome
   - hs37d5.slides.pdfftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/reference/phase2_reference_assembly_sequence/hs37d5.slides.pdf
@@ -242,20 +242,20 @@ You can download the specific version of reference human genome (Human 1kg, b37 
 Let make your first step. Certainly, this is really small. But, it may become a giant step in the future.  
 
 ## First analysis (< 20 min)
-In this section, we will analyze following public data. 
+In this section, we will analyze the following public data. 
 We just prepare (**download by yourself!**) sequence reads, reference genome and related files. Then, align reads (fastq) to the reference human genome using BWA, see the result using IGV.
 
 Followings are summary of data we will use in this section.  
 - Title: Identification of autosomal recessive spastic paraplegia with cerebellar ataxia and neuropathy
 - Objective: To identify the gene mutation responsible for a family presenting spastic paraplegia, cerebellar ataxia and neuropathy with autosomal recessive transmission.
-- Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were underwent in two patients and two normal family members. We performed a genomewide linkage analysis employing SNP arrays with two patients’ DNAs and **exome sequencing using one patient’s sample.**
+- Methods: The present study included two patients in a Japanese consanguineous family. Their onset of symptoms was 48 and 58 years of age. Neurologic examination and DNA analysis were undergone in two patients and two normal family members. We performed a genome-wide linkage analysis employing SNP arrays with two patients’ DNAs and **exome sequencing using one patient’s sample.**
 - Results: **We identified a homozygous missense mutation in the lysosomal trafficking regulator (LYST) gene**
 - DRA: http://ddbj.nig.ac.jp/DRASearch/study?acc=DRP000999
 - **Causative gene: LYST c.4189T>G, p.F1397V**
 - Paper: Autosomal-recessive complicated spastic paraplegia with a novel lysosomal trafficking regulator gene mutation. - PubMed - NCBI https://www.ncbi.nlm.nih.gov/pubmed/24521565
 
 Firstly, download demo data and reference genome sequence files.  
-I made small data which aquired from public sequence database. It's already modified to contain chromosome 1 reads only. File size are 54M and 55M (original sizes are 4.8G and 4.9G).  
+I made small data which acquired from the public sequence database, DRA (DDBJ Sequence Read Archive; https://www.ddbj.nig.ac.jp/dra/index.html). It's already modified to contain chromosome 1 reads only. File size is 54M and 55M (original sizes are 4.8G and 4.9G).  
 ```
 $ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz
 $ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz
@@ -273,7 +273,7 @@ $ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa
 $ wget -c https://www.dropbox.com/s/drit0y6xu6dnpg7/human_g1k_v37_decoy.dict
 ```
 
-Secondary, align paired sequence reads to the 1000 genomes project-customised human reference genome build 37 (human_g1k_v37_decoy).  
+Secondary, align paired sequence reads to the 1000 genomes project-customized human reference genome build 37 (human_g1k_v37_decoy).  
 ```
 $ bwa mem -t4 -M \
               -R "@RG\tID:FLOWCELLID\tSM:DRR006760_chr1\tPL:illumina\tLB:DRR006760_chr1_library_1" \
@@ -284,7 +284,7 @@ Backslash "\", this is a special character which could supresses RETURN characte
 We use "\" for separating single command line to multi lines for easy viewing.  
 ">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.
 
-You will get following response. BWA MEM alignment will take about few min by my MacBookPro 2014 (2.2GHz).  
+You will get the following response. BWA MEM alignment will take about few min by my MacBookPro 2014 (2.2GHz).  
 
     [M::bwa_idx_load_from_disk] read 0 ALT contigs
     [M::process] read 396040 sequences (40000040 bp)...
@@ -311,13 +311,13 @@ bam (Binary Alignment Map) format is the binary version of sam.
 `$ samtools view -@4 -1 DRR006760_chr1.aligned_reads.sam > DRR006760_chr1.aligned_reads.bam`  
 Sort .bam contents.  
 `$ samtools sort -@4 DRR006760_chr1.aligned_reads.bam -o DRR006760_chr1.aligned_reads_sorted.bam`  
-If succeeded, you will get following response (but, some people get no response that is other normal behavior. So, no problem .I'm not sure what makes this difference. Machine dependent?)
+If succeeded, you will get the following response (but, some people get no response that is other normal behavior. So, no problem .I'm not sure what makes this difference. Machine dependent?)
 
     [bam_sort_core] merging from 0 files and 4 in-memory blocks...
 
-Make .bam index file to make search.  
+Make .bam index file for next steps.  
 `$ samtools index DRR006760_chr1.aligned_reads_sorted.bam`  
-If succeeded, you will get no response here. Some of commands give us no response when they succeeded. It's linux culture (no response means no warn/error). Adjust you to this.
+If succeeded, you will get no response here. Some of the commands give us no response when they succeeded. It's Linux culture (no response means no warn/error). Adjust you to this.
 
 You can see helpful messages like this.  
 ```
@@ -351,31 +351,27 @@ Can you find this? Genomic position of LYST:c.4189T>G:p.F1397V is 1:235955353 (b
 
 
 # 5. Second step (< 2 days; depend on you)
-More similar with real analysis.  
-Using same fastq, but add quality check, trimming, data cleaning for variant call, variant call, annotate variants, interpretation steps.  
-
-**And one more, how to estimate propar threshold for MAF (Minor Allele Frequency) for specific disease. (still progress)**
-
-**Making a tiny shell script for automatic proccessing. (still progress)**
-
-**加筆するかも**
+More similar to real analysis.  
+Using the same fastq, but add the quality check, trimming, data cleaning for variant call, variant calling, annotate variants, interpretation steps.  
+And one more, how to estimate proper threshold for MAF (Minor Allele Frequency) for a specific disease.  
+Making a tiny shell script for automatic processing. (still progress).  
 
 ## Workflow of today
 This picture shows you the flowchart of today. We add fastq quality check and trimming to this.  
 ![](images/GATK1_workflow.png "")
 https://software.broadinstitute.org/gatk/documentation/article.php?id=7870
 
-## Install softwares required for sequence analysis#2
+## Install software required for sequence analysis#2
 
 ### Install GNU grep (< 3 min)
-grep is a command-line utility for searching plain-text data sets for lines.  
+grep is a command-line utility for searching plain-text datasets for lines.  
 GNU version is faster than BSD grep.  
 `$ brew install grep --with-default-names`
 
 Type to check the installation  
 `$ grep --version`
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     grep (GNU grep) 3.1
     Packaged by Homebrew
@@ -396,7 +392,7 @@ $ chmod +x ./tableview_darwin_amd64
 Type to check the installation  
 `$ ./tableview_darwin_amd64 -version`
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     tableview : human friendly table viewer
     Version: v0.4.6(f7310cc7b05b43b7e8f5f9df9c09182bd98bd7f7)
@@ -408,7 +404,7 @@ FastQC is a quality control tool for high throughput sequence data.
 Type to check the installation  
 `$ fastqc --version`
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     FastQC v0.11.7
 
@@ -425,7 +421,7 @@ $ unzip Trimmomatic-0.38.zip
 Type to check the installation  
 `$ java -jar Trimmomatic-0.38/trimmomatic-0.38.jar`
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     Usage:
     PE [-version] [-threads <threads>] [-phred33|-phred64] [-trimlog <trimLogFile>] [-summary <statsSummaryFile>] [-quiet] [-validatePairs] [-basein <inputBase> | <inputFile1> <inputFile2>] [-baseout <outputBase> | <outputFile1P> <outputFile1U> <outputFile2P> <outputFile2U>] <trimmer1>...
@@ -446,7 +442,7 @@ $ brew install picard-tools
 Type to check the installation  
 `$ picard SortSam -h`
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     USAGE: SortSam [options]
     Documentation: http://broadinstitute.github.io/picard/command-line-overview.html#SortSam
@@ -459,7 +455,7 @@ This is the reason that you frequently see the screenshot of StarTrek in present
 ### Install GATK (< 3 min)
 GATK (**G**enome **A**nalysis **T**ool**k**it) is a tool for variant discovery in high-throughput sequencing data.  
 GATK | Home https://software.broadinstitute.org/gatk/  
-Newest version is 4.0.6. But, we use version 3.8.1 in this hands-on.  
+The newest version is 4.0.6. But, we use version 3.8.1 in this hands-on.  
 If you became familier with command lines, I strongly recommend to upgrade to latest version.  
 ```
 $ wget https://software.broadinstitute.org/gatk/download/auth\?package\=GATK-archive\&version\=3.8-1-0-gf15c1c3ef -O GATK-3.8-1-0-gf15c1c3ef.tar.gz
@@ -469,7 +465,7 @@ $ tar zxvf GATK-3.8-1-0-gf15c1c3ef.tar.gz
 Type to check the installation  
 `$ java -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar --version`
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     3.8-1-0-gf15c1c3ef
 
@@ -482,7 +478,7 @@ Luckly, we only need two files in this course :laughing:
 - dbsnp_138.b37.vcf
 - Mills_and_1000G_gold_standard.indels.b37.vcf
 
-Download following files, and expand them.
+Download the following files, and expand them.
 - Mills_and_1000G_gold_standard.indels.b37.vcf.gz
 - Mills_and_1000G_gold_standard.indels.b37.vcf.gz.md5
 - Mills_and_1000G_gold_standard.indels.b37.vcf.idx.gz
@@ -497,7 +493,7 @@ Totally, 1.4G. It takes about 10 mins.
 You notice .md5 files.  
 MD5 stands for Message Digest Algorithm 5, and is a hash value.  
 A hash value is a something like a fingerprint, unique identifier of the file.  
-Large files, such as 2G size, are sometime failed to download or copy. So, you should compare hash values of the original file and copied one. You can create the hash value of your copy, like this.  
+Large files, such as 2G size, are sometimes failed to download or copy. So, you should compare hash values of the original file and copied one. You can create the hash value of your copy, like this.  
 ```
 $ gmd5sum Mills_and_1000G_gold_standard.indels.b37.vcf.gz
 
@@ -520,35 +516,35 @@ $ gunzip -d dbsnp_138.b37.vcf.idx.gz
 More detail information of resource bundle https://software.broadinstitute.org/gatk/documentation/article.php?id=11017
 
 ### Install Annovar
-***You need regist to use Annovar***  
+***You need register to use Annovar***  
 ***This is very important. You have to know this.***  
 
-For database and software developer, their are researchers, same with you. Total number of active users are really important issue for appling grants. Because, the number of active users is the evidence of it's value.  
+For database and software developer, they are researchers, same with you. The total number of active users is a really important issue for applying grants. Because the number of active users is the evidence of its value.  
 To promote their scientific activities, please register.  
 ANNOVAR website http://www.openbioinformatics.org/annovar/annovar_download_form.php  
 ANNOVAR - Google グループ https://groups.google.com/forum/#!forum/annovar  
 
-***The day of mini course, I will provide annotation files. Because of it's huge size.*** So you only download annovar package.  
-You download annovar.latest.tar.gz from Annovar web site (I'm not sure the file name is correct or not.)  
+***The day of mini-course, I will provide annotation files. Because of its huge size.*** So you only download annovar package.  
+You download annovar.latest.tar.gz from Annovar website (I'm not sure the file name is correct or not.)  
 Please, put annovar.latest.tar.gz into exome_analysis directory, then decompressed it like this.  
 `$ tar zxvf annovar.latest.tar.gz`
 
-tar (manipulate tape archives) command is used for packing many file into single archive.  
+tar (manipulate tape archives) command is used for packing many files into the single archive.  
 Here, file extension is .tar.gz, so this tar archive is compressed using gzip (.gz means compressed using gzip).  
 When you met .tar.gz, you will chant "tar zxvf"! If you met other tar archives, like .tar.Z, you will chant "tar xvf".  
-If you met other simir file extension, google it.  
+When you met other simir file extensions, google it.  
 
-After decompress annovar.latest.tar.gz, you will see annovar directory.  
+After decompressing annovar.latest.tar.gz, you will see the annovar directory.  
 You will see help message by this command.  
 `$ ./annovar/annotate_variation.pl`
 
 You can know what databases are downloadable from Annovar web site. ***Today, I will distribute annovar resource files***  
 Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
 
-***I know you are tired for downloading. To be honest, I'm too.***  
-Most part of molecular work are occupied by pipetting, most part of bioinformatic work are occupied by preparing and data cleaning. Please calm down :sob:  
+***I know you are tired of downloading. To be honest, I'm too.***  
+Most parts of molecular work is occupied by pipetting, most parts of bioinformatic work are occupied by preparing and data cleaning. Please calm down :sob:  
 
-Before starting analysis, we have to check your directory and files. To avoid bad slippings.  
+Before starting the analysis, we have to check your directory and files. To avoid bad slippings.  
 `$ pwd`  
 Are you in the working directory (exome_analysis)? If not, change directory by type this command.  
 `$ cd ~/exome_analysis`  
@@ -570,7 +566,7 @@ $ ./annovar/annotate_variation.pl
 
 Then, check files.  
 `$ ls -vlhrt`  
-Do you have same files?
+Do you have the same files?
 
     DRR006760_chr1_1.fastq.gz
     DRR006760_chr1_2.fastq.gz
@@ -597,7 +593,7 @@ $ mv DRR006760_chr1.aligned_reads_sorted.bam.bai zzold/
 ## Let's step forward
 
 ### Preparation: set the variable
-From now, we will use variables. One of shell functions. It memorise a value.  
+From now, we will use variables. One of the shell functions. It memorises a value.  
 We will use this variable to have the sample name.
 ```
 $ id=DRR006760_chr1
@@ -621,7 +617,7 @@ _Push Q key for quit_
 
 fast**q** is a extended format for sequence data.  
 It has both sequence letter and quality score, which is each encoded with a single ASCII character for brevity. Here, you can see,  
-(zless has almost same function with less, but it can work with compressed file.)  
+(zless has the almost same function with less, but it can work with a compressed file.)  
 `$ zless DRR006760_chr1_1.fastq.gz`
 
     @DRR006760.35495851/1
@@ -644,7 +640,7 @@ If you were familiar with fastq data, you can get more information.
 
     @M01934:11:000000000-A8CLN:1:1101:15986:1347 1:N:0:27
 
-- This data is seqeunced by MiSeq
+- This data is sequenced by MiSeq
 - Used flowcell id is 000000000-A8CLN
 - Used flowcell lane is 1
 - Tile number within the lane is 1101
@@ -668,7 +664,7 @@ Using fastQC program, summarize and visualize data features.
 This option means that we use four threads.  
 Thread means threads of execution. Roughly saying, dividing a single task into four parts to reduce the calculation time.  
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     Approx 95% complete for DRR006760_chr1_1.fastq.gz
     Approx 90% complete for DRR006760_chr1_2.fastq.gz
@@ -684,7 +680,7 @@ You will find generated by this process.
     -rw-r--r--  1 mako 227K  7 26 18:19 DRR006760_chr1_1_fastqc.zip
     -rw-r--r--  1 mako 218K  7 26 18:19 DRR006760_chr1_1_fastqc.html
 
-To see the results, type like this. **open** is a special command of macOS. It opens file usin apropriate application.  
+To see the results, type like this. **open** is a special command of macOS. It opens file using appropriate application.  
 `$ open ${id}_1_fastqc.html`
 
 ![](images/fastqc1.png "")
@@ -709,7 +705,7 @@ threads 4?
 Thread means threads of execution. Roughly saying, dividing a single task to four parts to reduce the calculation time.  
 
 phred33??  
-Phred score is originally developed for Sanger sequence. So, I expect you already know well. 
+Phred score is originally developed for the Sanger sequence. So, I expect you already know well. 
 More detail about options for Trimmomatic, see their page http://www.usadellab.org/cms/?page=trimmomatic 
 
 This fastq file encodes quality values with Sanger institute-style. It's offset is 33.  
@@ -717,7 +713,7 @@ There is another option, phred64. It is for Solexa-style, Illumina 1.3+-style, I
 The offset of Illumina 1.8+ is 33. Crazy. Unbelievable. I can't understand what they want to do :weary:  
 See more detail at https://en.wikipedia.org/wiki/FASTQ_format
 
-You will get following respond
+You will get the following response
 
     TrimmomaticPE: Started with arguments:
      -threads 4 -phred33 -trimlog DRR006760_chr1.trimlog DRR006760_chr1_1.fastq.gz DRR006760_chr1_2.fastq.gz DRR006760_chr1_1.paired.fastq.gz DRR006760_chr1_1.unpaired.fastq.gz DRR006760_chr1_2.paired.fastq.gz DRR006760_chr1_2.unpaired.fastq.gz TRAILING:20 MINLEN:50
@@ -745,12 +741,12 @@ $ samtools sort -@4 ${id}.aligned_reads.bam -o ${id}.aligned_reads_sorted.bam
 
 $ samtools index ${id}.aligned_reads_sorted.bam
 ```
-These lines are almost same with previous bwa/samtools commands.
+These lines are almost the same with previous bwa/samtools commands.
 
 Check the file size of generated .bam files.  
 `$ ls -vlhrt ${id}.aligned_reads.bam ${id}.aligned_reads_sorted.bam`
 
-### (Optional) Tips: using memory, avoid using slow hard disk for speeding up
+### (Optional) Tips: using memory, avoid using a slow hard disk for speeding up
 This is another way. Connect bwa and samtools view/sort to speed up.  
 ***#Slightly Modified: 180807***  
 ```
@@ -763,8 +759,8 @@ $ bwa mem -t4 -M \
 $ samtools index -@ 4 ${id}.aligned_reads_sorted.bam
 ```
 
-Here, as you can see, this command line is long, and includes bwa and samtools view/sort commands.  
-This is done by "|". **Pipe**. "|" connects two command. Here, it connected bwa and samtools. The result of bwa aligned data passed to samtools.  
+Here, as you can see, this command line is long and includes bwa and samtools view/sort commands.  
+This is done by "|". **Pipe**. "|" connects two commands. Here, it connected bwa and samtools. The result of bwa aligned data passed to samtools.  
 This is very important. Why? If we used "|", we can use memory space instead of writing data to the very slow hard disk. Memory speed is faster than SSD, at least 10x. SSD is faster than HDD, at least 10x.  
 
 ***#Added: 180807***
@@ -837,8 +833,8 @@ Moving
 Editing  
 - Ctr+D: Delete (call this as forward delete in Windows?)
 - Ctr+H: Backspace; you may have seen such kind of joke in SNS "Be nice to this fool^H^H^H^Hgentleman"
-- Ctr+W: Delete previous single word
-- Ctr+K: Yank (not Yankees). Yank is similar with Paste. Use with Ctr+K or Ctr+W (similar with Cut)
+- Ctr+W: Delete a previous single word
+- Ctr+K: Yank (not Yankees). Yank is similar to Paste. Use with Ctr+K or Ctr+W (similar to Cut)
 
 Command line history  
 - Ctr+P (or Up arrow): Previous command in the history
@@ -875,11 +871,11 @@ Learning the shell - Lesson 1: What is the shell? http://linuxcommand.org/lc3_lt
 ### Shell scripting
 Now, time to consider that you may learn a little about shell scripting techniques.  
 You may be tired to type or copy & paste command lines repeatedly.  
-Imagine, you will analyze other 100 samples. Would you copy & paste all command lines for each analysis? I think nobody want to do.  
+Imagine, you will analyze other 100 samples. Would you copy & paste all command lines for each analysis? I think nobody wants to do.  
 
-I prepared example script.  
+I prepared the example script.  
 `$ wget https://www.dropbox.com/s/fxy8zxllpr0nism/run_tools_01.sh`  
-This one runs some steps that we have exprienced, instead of you.
+This one runs some steps that we have experienced, instead of you.
 
 See the file contents.  
 `$ less -S run_tools_01.sh`  
@@ -892,7 +888,7 @@ To run this script, give the permission for excution to the script.
 OK. Run it.  
 `$ ./run_tools_01.sh`
 
-If succeeded, you will see response that you saw yesterday.  
+If succeeded, you will see the response that you saw yesterday.  
 
 Let's try (very small, but surely) advance script.  
 `$ wget https://www.dropbox.com/s/leahpo9si7c1kv6/run_tools_02.sh`  
@@ -905,11 +901,11 @@ Or
 OK. Run it.  
 `$ ./run_tools_02.sh`
 
-What's happed?  
+What's happen?  
 Now, we will learn about $1.
 
 OK. Now, you have two samples (DRR001913_chr12,DRR006760_chr1).  
-I believe that all of us want to avoid typing a keybord as possible as we can.  
+I believe that all of us want to avoid typing a keyboad as possible as we can.  
 `$ https://www.dropbox.com/s/3u4wfw5ecz5nrgr/run_tools_03.sh`
 
 See the file contents and find the differences.  
@@ -970,11 +966,11 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               -o ${id}_recal.table
 ```
 
--L is a option for specifying chromosome, or chromosomal location. e.g. -L chr1:123-123450  
+-L is an option for specifying chromosome, or chromosomal location. e.g. -L chr1:123-123450  
 If you were doing whole genome analysis, you don't use this option.  
 If you were doing whole exome analysis, there may be several choices.
 
-You will get following respond.
+You will get the following response.
 
     INFO  11:30:01,851 ProgressMeter - Total runtime 87.25 secs, 1.45 min, 0.02 hours
     INFO  11:30:01,852 MicroScheduler - 53278 reads were filtered out during the traversal out of approximately 1604532 total reads (3.32%)
@@ -1016,7 +1012,7 @@ See more detail here. Base Quality Score Recalibration (BQSR) — GATK-Forum htt
 
 
 ### PrintReads (< 3 min)
-PrintReads is a tool to extract subset reads by genomic interval. Here, we use PrintRead combined with BQSR base recabrilation data to make the .bam file which have recabrilated sequence base quality scores.
+PrintReads is a tool to extract subset reads by a genomic interval. Here, we use PrintRead combined with BQSR base recabrilation data to make the .bam file which has recabrilated sequence base quality scores.
 ```
 $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               -rf BadCigar -rf FailsVendorQualityCheck -rf MappingQualityUnavailable \
@@ -1029,7 +1025,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
 $ samtools index ${id}.aligned_reads_dedup_recal_sorted.bam
 ```
 
-You will get following respond.
+You will get the following response.
 
     INFO  11:31:51,182 ProgressMeter -            done   1611084.0    79.0 s      49.0 s       99.1%    79.0 s       0.0 s
     INFO  11:31:51,183 ProgressMeter - Total runtime 79.15 secs, 1.32 min, 0.02 hours
@@ -1049,7 +1045,7 @@ For detail information, see
 Check the file size of generated .bam files.  
 `$ ls -vlhrt ${id}.aligned_reads_dedup_recal_sorted.bam`  
 
-You will get following respond.
+You will get the following response.
 
     -rw-r--r-- 1 mako 183M  7 24 11:31 DRR006760_chr1.aligned_reads_dedup_recal_sorted.bam
 
@@ -1068,7 +1064,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               -o ${id}_raw_variants.g.vcf
 ```
 
-You will get following respond.
+You will get the following response.
 
     INFO  11:38:06,498 ProgressMeter - Total runtime 308.10 secs, 5.14 min, 0.09 hours
     INFO  11:38:06,498 MicroScheduler - 57465 reads were filtered out during the traversal out of approximately 1604532 total reads (3.58%)
@@ -1111,8 +1107,8 @@ For detail information, see
 
 
 ### Gather .g.vcf files
-This step have less meaning in this course, because this step is mainly for mutli sample processing.  
-But, in almost cases, you need to analyze multi samples at once. So, we should experience this way.  
+This step has less meaning in this course because this step is mainly for multi sample processing.  
+But, in most cases, you need to analyze multi-samples at once. So, we should experience this way.  
 `$ ls -1 *_raw_variants.g.vcf > gVCF.list`  
 ">" is a kind of shell function. Here, ">" works for redirecting command output to the specific file.  
 
@@ -1129,7 +1125,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               -o combined_genotyped.vcf
 ```
 
-You will get following respond.
+You will get the following response.
 
     INFO  11:41:03,733 ProgressMeter -     1:113574901      1.13E8    30.0 s       0.0 s       45.6%    65.0 s      35.0 s
     WARN  11:41:25,911 HaplotypeScore - Annotation will not be calculated, must be called from UnifiedGenotyper, not GenotypeGVCFs
@@ -1155,11 +1151,11 @@ Check generated combined_genotyped.vcf size.
 
 Better understanding what GenotypeGVCFs step do, read this slides first.  
 https://drive.google.com/open?id=10auFLOIaCyetwnqX-Msb1LgjkZJiEUdj
-Historically, there was joint calling for multi-samples. But, it have N+1 problem for huge samples. This is very famous problem from microarray era. To solve this, joint genotyping was developed. Now, it can do joint calling via two steps.
+Historically, there was jointly calling for multi-samples. But, it had N+1 problem for huge samples. This is the well-known problem from microarray era. To solve this, joint genotyping was developed. Now, it can do joint calling via two steps.
 
 
 ### Select SNP (< few seconds)
-In coming several steps, we treat two seprated data, SNVs and INDELs.  
+Coming several steps, we treat two separated data, SNVs and INDELs.  
 Firstly, divide data, then filtering variant solely. Finally, filtered data will be combined to single vcf file.  
 ![](images/variant_filtration.png "")
 ref: https://drive.google.com/drive/folders/1PTEV_h2gWyOQpqztqCGQsH_OMbI6_oNE
@@ -1217,7 +1213,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
 For detail information, see 
 - https://software.broadinstitute.org/gatk/documentation/tooldocs/3.8-0/org_broadinstitute_gatk_tools_walkers_filters_VariantFiltration.php
 
-これの Broad workshop スライドどこにあるかな fitering threshold
+これの Broad workshop スライドどこにあるかな filtering threshold
 
 Check generated combined_genotyped_filtered_snps.vcf size.  
 `$ ls -vlhrt combined_genotyped_filtered_snps.vcf`
@@ -1256,7 +1252,7 @@ Check generated file.
 $ ls -vlhrt combined_genotyped_raw_indels.vcf
 $ wc -l combined_genotyped_raw_indels.vcf
 ```
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     -rw-r--r-- 1 mako 125K  7 24 11:45 combined_genotyped_raw_indels.vcf
     734 combined_genotyped_raw_indels.vcf
@@ -1275,7 +1271,7 @@ $ java -Xmx4g -jar GenomeAnalysisTK-3.8-1-0-gf15c1c3ef/GenomeAnalysisTK.jar \
               --genotypeFilterExpression 'DP < 10'        --genotypeFilterName 'LowDP' \
               -o combined_genotyped_filtered_indels.vcf
 
-You will get following respond.
+You will get the following response.
 
     WARN  11:45:36,993 Interpreter - ![0,14]: 'ReadPosRankSum < -20.0;' undefined variable ReadPosRankSum
     INFO  11:45:37,034 ProgressMeter -            done      1584.0     0.0 s       7.2 m        7.9%     0.0 s       0.0 s
@@ -1290,7 +1286,7 @@ Check generated file.
 $ ls -vlhrt combined_genotyped_filtered_indels.vcf
 $ wc -l combined_genotyped_filtered_indels.vcf
 ```
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     -rw-r--r-- 1 mako 129K  7 24 11:45 combined_genotyped_filtered_indels.vcf
     738 combined_genotyped_filtered_indels.vcf
@@ -1323,7 +1319,7 @@ check generated file.
 $ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.vcf
 $ wc -l combined_genotyped_filtered_snps_indels_mixed.vcf
 ```
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     -rw-r--r-- 1 mako 969K  7 24 11:46 combined_genotyped_filtered_snps_indels_mixed.vcf
     5750 combined_genotyped_filtered_snps_indels_mixed.vcf
@@ -1357,7 +1353,7 @@ Check generated file.
 $ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
 $ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
 ```
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     -rw-r--r-- 1 mako 644K  7 24 11:47 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
     3826 combined_genotyped_filtered_snps_indels_mixed.PASS.vcf
@@ -1384,7 +1380,7 @@ Check generated file.
 $ ls -vlhrt combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
 $ wc -l combined_genotyped_filtered_snps_indels_mixed.PASS.*.avinput
 ```
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     -rw-r--r-- 1 mako 761K  7 24 12:03 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput
     3693 combined_genotyped_filtered_snps_indels_mixed.PASS.DRR006760_chr1.avinput
@@ -1453,7 +1449,7 @@ table_annovar.pl is a wrapper script of annotate_variation.pl. It runs annotate_
                            -out ${id}.avoutput
 ```
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     NOTICE: Processing next batch with 3693 unique variants in 3693 input lines
     NOTICE: Database index loaded. Total number of bins is 557362 and the number of bins to be scanned is 721
@@ -1471,13 +1467,13 @@ Let's see the generated file contents :+1:
 Too much...but you got annotated variant by yourself :tada:
 
 
-### Fiter variants more
+### Filter variants more
 Now, we have ${id}.avoutput.hg19_multianno.txt.  
 This file contains all variant obtained from exome sequencing.  
 From now, we will remove unnecessary variant information using some command lines.  
 `$ grep -wF -e Func.refGeneWithVer -e exonic -e splicing ${id}.avoutput.hg19_multianno.txt | grep -vwF -e synonymous > ${id}.avoutput.hg19_multianno.exonic.txt`
 
-grep is a command-line utility for searching plain-text data sets for lines.  
+grep is a command-line utility for searching plain-text datasets for lines.  
 To be a friend with grep, do some practices.
 
 Extract lines that contain splicing.  
@@ -1489,14 +1485,14 @@ Extract lines that contain synonymous or splicing.
 I want to see nonsynonymous, not synonymous.  
 `$ grep -e splicing -e synonymous ${id}.avoutput.hg19_multianno.txt | grep -vwF synonymous less -S`
 
-"-v" changes grep's behaviour to opposite.
+"-v" changes grep's behavior to the opposite.
 "-wF" fix given query as a word.  
 hmmm... :confused:  
 Don't Think. Try.  
 `$ echo nonsynonymous | grep synonymous`  
 `$ echo nonsynonymous | grep -wF synonymous`
 
-Now, ${id}.avoutput.hg19_multianno.exonic.txt has header line, splicing line and exonic lines without synonymous.  
+Now, ${id}.avoutput.hg19_multianno.exonic.txt has a header line, splicing line and exonic lines without synonymous.  
 Next is filtering by allele frequencies.  
 `$ cat ${id}.avoutput.hg19_multianno.exonic.txt | ./tableview_darwin_amd64 --header`
 
@@ -1533,7 +1529,7 @@ Who is a candidate for next certified repeater? :repeat: :ng: :accept: :smiling_
 
 # Extrasession#1: gnomAD, 3.5KJPN, DRR006760 full data
 
-Let's add other resources for better fitering.  
+Let's add other resources for better filtering.  
 Here, we add gnomAD http://gnomad.broadinstitute.org/ and 3.5KJPN (Japanese)  
 
 ```
@@ -1549,11 +1545,11 @@ Here, we add gnomAD http://gnomad.broadinstitute.org/ and 3.5KJPN (Japanese)
                            -out ${id}.avoutput2
 ```
 
-Let's compare with previous version using http://difff.jp/en/
+Let's compare with the previous version using http://difff.jp/en/
 ![](images/difff.png "")
 
 ***#Modified: 180808***
-Now, we will use annotated variant file named as "DRR006760.avoutput2.hg19_multianno.txt", instead of "DRR006760_chr1.avoutput2.hg19_multianno.txt".  
+Now, we will use the annotated variant file named as "DRR006760.avoutput2.hg19_multianno.txt", instead of "DRR006760_chr1.avoutput2.hg19_multianno.txt".  
 This file is generated from full exome data of DRR006760.  
 
 Download this file DRR006760.avoutput2.hg19_multianno.txt  
@@ -1623,14 +1619,14 @@ It seems that we have 10 candidate genes in DRR006760.avoutput2.hg19_multianno.e
 `$ cat ${id}.avoutput2.hg19_multianno.exonic.filtered_6.txt | ./tableview_darwin_amd64`
 
 Based on observing our internal data, chr8:10467589 RP1L1 nonframeshift and chr12:53207583 KRT4 nonframeshift are popular alleles. So we can ignore them.  
-CFAP47 and SSX3 genes are located on chromosome X. Do not match inherited pattern. So we can remove them, too.  
+CFAP47 and SSX3 genes are located on chromosome X. Do not match the inherited pattern. So we can remove them, too.  
 `$ cat DRR006760.avoutput2.hg19_multianno.exonic.filtered_6.txt | grep -vwF -e RP1L1 -e KRT4 -e CFAP47 -e SSX3 | ./tableview_darwin_amd64`
 
 :tada::tada::tada::tada::tada::tada::tada::tada::tada::tada:
 
 
 # Extrasession#2: How can we estimate pathogenic allele frequencies? How can we archive it? :disappointed_relieved:
-In previous filtering steps, we used MAF 0.001 (0.1%) as the threshold. *Is this really appropriate?*  
+In the previous filtering steps, we used MAF 0.001 (0.1%) as the threshold. *Is this really appropriate?*  
 Do not stop thinking. Confirm the evidence by yourself.  
 
 I prepared a similar annotated variant file which contains known pathogenic mutations for ARHSP. It can be downloaded here.  
@@ -1639,9 +1635,9 @@ I prepared a similar annotated variant file which contains known pathogenic muta
 Let's check allele frequencies of known mutations.  
 `$ cat clinvar_20180729.ARHSP_OMIM.avoutput2.hg19_multianno.exonic.txt | ./tableview_darwin_amd64 --header`
 
-As you can see, most of known pathogenic mutations are less frequent than 0.001 (0.1%). So, I used this threshold in previous steps.  
+As you can see, most of known pathogenic mutations are less frequent than 0.001 (0.1%). So, I used this threshold in the previous steps.  
 Minor Allele Frequency is the only one data which generated by observing mass populations, not by predicting. This is important fact for filtering steps.  
-Now, available genetic resources being bigger and bigger. If you could handle such a data, you can get clearer results. So, some skills for data handling/analyses/visualizing are required.  
+Now, available genetic resources being bigger and bigger. If you could handle such data, you can get clearer results. So, some skills for data handling/analyses/visualizing are required.  
 
 From here, we will follow How the known mutation data was generated.  
 I used ClinVar data here.  
@@ -1671,7 +1667,7 @@ Check the generated file.
 
 Can you see the same result?
 
-Using zgrep (grep for .gz gnu-zip file format), extract specific lines which contains OMIM_Allelic_Variant from clinvar data.  
+Using zgrep (grep for .gz gnu-zip file format), extract specific lines which contain OMIM_Allelic_Variant from clinvar data.  
 Then, piping, extract lines contains interested gene symbols using grep -wFf  
 `$ zgrep -wF OMIM_Allelic_Variant clinvar_20180729.vcf.gz | grep -wFf ARHSP_known_genes.txt > clinvar_20180729.ARHSP_OMIM.vcf`
 
@@ -1691,7 +1687,7 @@ $ ./annovar/table_annovar.pl clinvar_20180729.ARHSP_OMIM.avinput annovar/humandb
                            -out clinvar_20180729.ARHSP_OMIM.avoutput2
 ```
 
-If succeeded, you will get following response
+If succeeded, you will get the following response
 
     -----------------------------------------------------------------
     NOTICE: Processing operation=g protocol=refGeneWithVer
@@ -1718,7 +1714,7 @@ AMR? ASJ? See FAQ of ExAC/gnomAD
 
 # Extrasession#3: Facing prediction scores
 When you see and think about some numbers, such as 0, 0.1, 0.9, and 1.  
-I think You have to think about it's distribution at the same time.  
+I think You have to think about its distribution at the same time.  
 
 To do this, we need some computational skills for handling and exploring data.  
 The first step of data analysis is becoming familiar with your data.  
@@ -1761,14 +1757,14 @@ Firstly, you have to install GNU R via homebrew.
 Then, start up R and install some R libraries.  
 `$ R`
 
-You will see following messages from R.
+You will see the following messages from R.
 
     R version 3.5.1 (2018-07-02) -- "Feather Spray"
     Copyright (C) 2018 The R Foundation for Statistical Computing
     Platform: x86_64-apple-darwin16.7.0 (64-bit)
     ...
 
-You realize that the prompt (normarly $) has changed to ">". Now, you are in R environments.  
+You realize that the prompt (normarlly $) has changed to ">". Now, you are in R environments.  
 So, I show you commands for R with ">" prompt.  
 ```
 > install.packages("data.table")
@@ -1827,12 +1823,12 @@ Load libraries, change working diretory, import data into R environments, conver
 > That is what it means…to truly SEE
 
 When you see and think about some numbers, such as 0, 0.1, 0.9, and 1.  
-I believe You have to think about it's distribution at the same time.
+I believe You have to think about its distribution at the same time.
 
 # Extrasession#4 Annotate mitochondrial variants (draft, you may have errors somewhere)
 Prerequires:  
 - Ideally, you have a combined_genotyped.vcf that contains mitochondrial variants
-- combined_genotyped.vcf must be generated by specific human reference genome sequences that contains rCRS (revised Cambridge Reference Sequence) mitochondrial sequence.
+- combined_genotyped.vcf must be generated by specific human reference genome sequences that contain rCRS (revised Cambridge Reference Sequence) mitochondrial sequence.
 
 Make the .vcf that contains mitochondrial variants only.  
 `$ grep -e "^#" -e "^MT" combined_genotyped.vcf > combined_genotyped.MT.vcf`
@@ -1851,7 +1847,7 @@ After this step, you will find one or more combined_genotyped.MT.YOUR_SAMPLE_ID.
 Here, you will find combined_genotyped.MT.ngs_test.avinput
 
 Make sure you have two files (GRCh37_MT_ensGene.txt and GRCh37_MT_ensGeneMrna.fa) in your annovar/humandb/ directory.  
-These are supplied with Annovar program. If you couldn't find, download annovar from original site.  
+These are supplied with Annovar program. If you couldn't find, download annovar from the original site.  
 Download ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/user-guide/download/  
 
 Set id  
@@ -1935,22 +1931,22 @@ $ ./IDRC_first_step_run_full_fastq.sh 2>&1 | tee IDRC_first_step_run_full_fastq.
 - (tool) SnpEff and SnpSift http://snpeff.sourceforge.net/index.html
 - (tool) ANNOVAR - ANNOVAR Documentation http://annovar.openbioinformatics.org/en/latest/
 - (tool) TransVar http://bioinformatics.mdanderson.org/transvarweb/
-SnpEff, Annovar are major program for variant annotating
-TransVar is useful for reverse annotation. e.g. Old paper or clinician/researcher who are not familier with genetics sometimes say "p.S65L" only. It is always taugh to determine exact genomic/coding position (reverse annotation). TransVar will help you.
+SnpEff, Annovar are the major program for variant annotating
+TransVar is useful for reverse annotation. e.g. Old paper or clinician/researcher who are not familiar with genetics sometimes say "p.S65L" only. It is always tough to determine an exact genomic/coding position (reverse annotation). TransVar will help you.
 
 ___
 
 # Under construction :no_entry_sign:
-1. Reproduce second step by yourself. Remove all file; then prepare all files again by yourself.
+1. Reproduce the second step by yourself. Remove all file; then prepare all files again by yourself.
 1. Solve DRR006760, DRR001913 by yourself
 1. Ruby array hash case
 1. Exam. In other words, homework. But, don't move data to your home!  
-Solve our 200 cases, include many unknown cases. Patient ID are removed. No hint. Most of cases are easy. Some cases are quit difficult. I solved all the cases. Happy to see your excellent result :satisfied:
+Solve our 200 cases, including many unknown cases. Patient ID is removed. No hint. Most of the cases are easy. Some cases are quite difficult. I solved all the cases. Happy to see your excellent result :satisfied:
 ___
 
-## You have to learn for reproducing second step by yourself
+## You have to learn for reproducing the second step by yourself
 - bwa index command
-- Where you can get required files (human_g1k_v37_decoy.fasta, etc)
+- Where you can get the required files (human_g1k_v37_decoy.fasta, etc)
 - How to set up annovar
 After these steps, you probably reproduce this course. Congrats :laughing:
 
@@ -2035,7 +2031,7 @@ $ chmod +x tommo_separate_alternatives.rb
 # run
 $ ./convert_35KJPNv2.sh
 
-# If you succeeded, you will get following response
+# If you succeeded, you will get the following response
 
  53735741 tommo-3.5kjpnv2-20180625-af_snvall.MAF.genericdb
  53735741 tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb
