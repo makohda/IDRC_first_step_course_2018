@@ -2047,3 +2047,6 @@ $ perl ./compileAnnovarIndex_modified.pl tommo-3.5kjpnv2-20180625-af_snvall.MAF.
 # run with INFO.genericdb
 $ perl ./compileAnnovarIndex_modified.pl tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb 1000 > tommo-3.5kjpnv2-20180625-af_snvall.INFO.genericdb.idx
 ```
+
+# Ref
+ゲノム解析入門カリキュラム - Genomon https://genomon-project.github.io/GenomonPagesR/general/post-curriculum/
