@@ -257,20 +257,21 @@ Followings are summary of data we will use in this section.
 Firstly, download demo data and reference genome sequence files.  
 I made small data which acquired from the public sequence database, DRA (DDBJ Sequence Read Archive; https://www.ddbj.nig.ac.jp/dra/index.html). It's already modified to contain chromosome 1 reads only. File size is 54M and 55M (original sizes are 4.8G and 4.9G).  
 ```
-$ wget -c https://www.dropbox.com/s/eg8k4xmmw23nfnq/DRR006760_chr1_1.fastq.gz
-$ wget -c https://www.dropbox.com/s/b4awju0mkt8q3bn/DRR006760_chr1_2.fastq.gz
+$ wget -c https://www.dropbox.com/s/ckx75wzcekug1uc/DRR006760_chr1_1.fastq.gz
+$ wget -c https://www.dropbox.com/s/ctgcde2flx9oqg7/DRR006760_chr1_2.fastq.gz
+
 ```
 
 You also need reference genome sequence files. Totally, 8.1G will be downloaded (< 10 min).  
 ```
-$ wget -c https://www.dropbox.com/s/9qmtqwgq8pxyj99/human_g1k_v37_decoy.fasta
-$ wget -c https://www.dropbox.com/s/9dpu7ver996c8m0/human_g1k_v37_decoy.fasta.amb
-$ wget -c https://www.dropbox.com/s/b3rmp79xgixiyk5/human_g1k_v37_decoy.fasta.ann
-$ wget -c https://www.dropbox.com/s/oplswegvl68fd96/human_g1k_v37_decoy.fasta.bwt
-$ wget -c https://www.dropbox.com/s/4lgsboui7l01mq1/human_g1k_v37_decoy.fasta.fai
-$ wget -c https://www.dropbox.com/s/6dkq2f6dokddyqs/human_g1k_v37_decoy.fasta.pac
-$ wget -c https://www.dropbox.com/s/4braaqyewooqt4p/human_g1k_v37_decoy.fasta.sa
-$ wget -c https://www.dropbox.com/s/drit0y6xu6dnpg7/human_g1k_v37_decoy.dict
+$ wget -c https://www.dropbox.com/s/9ftf6fab3ss1j0u/human_g1k_v37_decoy.fasta
+$ wget -c https://www.dropbox.com/s/9sys2qu8lf8faoj/human_g1k_v37_decoy.fasta.amb
+$ wget -c https://www.dropbox.com/s/rr0i95jsc78h3ww/human_g1k_v37_decoy.fasta.ann
+$ wget -c https://www.dropbox.com/s/62qvupfhlaluxfm/human_g1k_v37_decoy.fasta.bwt
+$ wget -c https://www.dropbox.com/s/dmo314lve5pc4t9/human_g1k_v37_decoy.fasta.fai
+$ wget -c https://www.dropbox.com/s/edz32h4ta1o65fb/human_g1k_v37_decoy.fasta.pac
+$ wget -c https://www.dropbox.com/s/oj8y9by6xjj9ech/human_g1k_v37_decoy.fasta.sa
+$ wget -c https://www.dropbox.com/s/f6fsedrg6x0g9aj/human_g1k_v37_decoy.dict
 ```
 
 Secondary, align paired sequence reads to the 1000 genomes project-customized human reference genome build 37 (human_g1k_v37_decoy).  
